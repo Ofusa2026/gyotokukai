@@ -328,7 +328,11 @@ main{min-width:0}
 .kk-banner .t{display:block;font-family:var(--mincho);font-weight:800;font-size:1.2rem;margin:8px 0 6px;line-height:1.5}
 .kk-banner .d{display:block;font-size:.82rem;color:rgba(243,244,242,.75);max-width:36em;line-height:1.9;word-break:auto-phrase;line-break:strict;overflow-wrap:anywhere}
 .kk-banner .nb{white-space:nowrap}
-.kk-banner .go{display:block;font-family:var(--mono);font-size:.7rem;margin-top:10px;color:#7FB6B8}
+.kk-banner .go{display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  background:var(--shiro);color:var(--ai);font-family:var(--gothic);font-weight:700;font-size:.84rem;letter-spacing:.04em;
+  padding:11px 22px;border-radius:2px;transition:gap .18s ease}
+.kk-banner:hover .go{gap:14px}
+.kk-banner .go .ar{font-family:var(--mono)}
 .kk-src{font-size:.76rem;color:var(--nezumi);font-family:var(--mono);letter-spacing:.03em;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:20px}
 .kk-src b{color:var(--kachi);font-family:var(--gothic);letter-spacing:0}
 .kk-sec{margin-bottom:38px}
@@ -587,7 +591,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.25</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.26</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1368,7 +1372,7 @@ function kkBanner(){
     <span class="k">法務省 / 令和8年5月許可分</span>
     <span class="t">在留審査処理期間（日数）</span>
     <span class="d"><span class="nb">特定技能1号・2号</span>の<span class="nb">認定・更新・変更</span>にかかる日数。<span class="nb">依頼者への答え方</span>と、<span class="nb">1年前との増減</span>、<span class="nb">大房の実測値</span>との対照。</span>
-    <span class="go">開く →</span>
+    <span class="go">日数を見る<span class="ar">→</span></span>
   </button>`;
 }
 function kkCard(title, main, mainLbl, sub, subLbl, dv, noSub){
