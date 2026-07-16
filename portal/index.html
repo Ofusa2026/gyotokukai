@@ -308,6 +308,13 @@ main{min-width:0}
 .introrow .h .dt{margin-left:auto;font-family:var(--mono);font-size:.64rem;color:var(--nezumi)}
 .introrow .b{color:var(--nezumi);font-size:.82rem;margin-top:4px}
 
+
+.prow{background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:8px}
+.prow .ph{display:flex;gap:12px;align-items:baseline}
+.prow .ph b{font-family:var(--mincho);font-size:.98rem}
+.prow .pn{font-family:var(--mono);font-size:.68rem;color:var(--asagi)}
+.prow .po{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -371,7 +378,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.09</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.10</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -410,7 +417,7 @@ const CATS = [
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
 let TOKEN = localStorage.getItem('tgk_token') || '';
-let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, MEMBER_TOTAL = 0, UNREG = 0, HIDDEN = 0, view = 'home', region = '', query = '';
+let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, PREF_OFFICES = {}, PREF_HIDDEN = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
 async function api(payload){
@@ -463,9 +470,10 @@ async function enter(){
   PROFILE = r.profile||null;
   IS_ADMIN = !!r.is_admin;
   PREF_MEMBERS = r.pref_members||{};
+  PREF_OFFICES = r.pref_offices||{};
+  PREF_HIDDEN = r.pref_hidden||{};
   MEMBER_TOTAL = r.member_total||0;
   UNREG = r.unregistered||0;
-  HIDDEN = r.hidden_members||0;
   [$('askBtn'),$('askBtnM')].forEach(a=>{ a.href='#'; a.addEventListener('click',e=>{e.preventDefault(); go('shitsumon');}); });
   $('whoami').textContent = (PROFILE?PROFILE.name+'　':'')+(r.email||'');
   renderNav();
@@ -617,7 +625,7 @@ function mapHTML(){
     </g>`;
   }).join('');
   const mrows = PREFS
-    .map(p=>({name:p.name, n:PREF_MEMBERS[p.code]||0}))
+    .map(p=>({code:p.code, name:p.name, n:PREF_MEMBERS[p.code]||0}))
     .filter(x=>x.n>0)
     .sort((a,b)=>b.n-a.n);
   return `
@@ -666,9 +674,15 @@ function mapHTML(){
       done.concat(talking).map(p=>`<div class="row"><span class="nm">${esc(p.name)}</span><span class="st ${p.status}" style="font-family:var(--mono);font-size:.66rem">${STLBL[p.status]}</span>${p.note?'<span>'+esc(p.note)+'</span>':''}<span class="dt">${fdate(p.updated_at)}</span></div>`).join('')
     }</div>`:''}
     <div class="map-list">
-      <h4>MEMBERS ─ 会員分布（計 ${MEMBER_TOTAL}名${HIDDEN?'＋非公開 '+HIDDEN+'名':''}${UNREG?'＋未登録 '+UNREG+'名':''}）</h4>
-      ${mrows.length?`<div class="mchips">${mrows.map(x=>`<span class="mchip"><b>${esc(x.name)}</b> ${x.n}</span>`).join('')}${UNREG?`<span class="mchip un"><b>未登録</b> ${UNREG}</span>`:''}</div>`
-        :(UNREG?`<div class="mchips"><span class="mchip un"><b>未登録</b> ${UNREG}</span></div>`:'<div style="font-size:.84rem;color:var(--nezumi)">まだ登録がありません。</div>')}
+      <h4>MEMBERS ─ 都道府県別の会員（計 ${MEMBER_TOTAL}名${UNREG?'＋都道府県未登録 '+UNREG+'名':''}）</h4>
+      ${mrows.length?mrows.map(x=>{
+        const offices = PREF_OFFICES[x.code]||[];
+        const hid = PREF_HIDDEN[x.code]||0;
+        return `<div class="prow">
+          <div class="ph"><b>${esc(x.name)}</b><span class="pn">${x.n}名</span></div>
+          <div class="po">${offices.map(o=>'<span class="mchip">'+esc(o)+'</span>').join('')}${hid?'<span class="mchip un">ほか非表示 '+hid+'名</span>':''}</div>
+        </div>`;
+      }).join(''):'<div style="font-size:.84rem;color:var(--nezumi)">まだ登録がありません。</div>'}
     </div>`;
 }
 function bindMap(){
@@ -726,10 +740,10 @@ function mypageHTML(){
       <input type="text" id="mpOffice" value="${PROFILE?esc(PROFILE.office):''}" placeholder="〇〇行政書士事務所">
       <label class="fl" for="mpPref">都道府県</label>
       <select id="mpPref"><option value="">選択してください</option>${prefOpts}</select>
-      <label class="fl">連携マップでの表示</label>
+      <label class="fl">都道府県別の会員一覧での表示</label>
       <label style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;cursor:pointer">
         <input type="checkbox" id="mpShow" style="margin-top:5px"${(!PROFILE||PROFILE.show_in_map!==false)?' checked':''}>
-        <span>連携マップの会員分布（都道府県別の人数）に自分を含める<br><span style="font-size:.74rem;color:var(--nezumi)">氏名は表示されません。人数の集計に含まれるだけです。外すと「非公開」として人数のみ別枠で表示されます。</span></span>
+        <span>都道府県別の会員一覧に、事務所名を表示する<br><span style="font-size:.74rem;color:var(--nezumi)">全国に特定技能を扱う仲間がいることを、行政書士会や社会に示す連帯の意味があります。できるだけ表示にご協力ください。非表示にしても人数には含まれます（人数のカウントは全会員必須です）。</span></span>
       </label>
       <div style="margin-top:22px"><button class="pbtn" id="mpSave">保存する</button></div>
       <p class="fmsg" id="mpMsg"></p>
@@ -878,7 +892,7 @@ function bindShitsumon(){
 }
 async function reloadData(){
   const r = await api({action:'get_posts', token:TOKEN});
-  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; HIDDEN=r.hidden_members||0; renderNav(); }
+  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; PREF_OFFICES=r.pref_offices||{}; PREF_HIDDEN=r.pref_hidden||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; renderNav(); }
 }
 
 /* ---- 質問詳細＋コメント ---- */
