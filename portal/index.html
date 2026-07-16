@@ -345,7 +345,7 @@ main{min-width:0}
 
 /* ---------- 随時届出チェッカー（share.html より移植） ---------- */
 /* ===== 随時届出チェッカー (zc-) share.html より移植 ===== */
-#zc-view{--zc-navy:#0f2040;--zc-navy2:#1F4E79;--zc-line:#e2e8f0;--zc-ink:#1e293b;--zc-sub:#64748b;--zc-need:#b91c1c;--zc-need-bg:#fef2f2;--zc-no:#047857;--zc-no-bg:#ecfdf5;--zc-ask:#1d4ed8;--zc-ask-bg:#eff6ff;--zc-card:#ffffff;max-width:860px;margin:0 auto;color:var(--zc-ink);line-height:1.7;}
+#zc-view{--zc-navy:var(--kachi);--zc-navy2:var(--ai);--zc-line:var(--line);--zc-ink:var(--kachi);--zc-sub:var(--nezumi);--zc-need:var(--shu);--zc-need-bg:rgba(185,50,39,.05);--zc-no:var(--asagi);--zc-no-bg:rgba(46,143,145,.07);--zc-ask:var(--ai);--zc-ask-bg:rgba(30,59,110,.05);--zc-card:#fff;max-width:860px;margin:0 auto;color:var(--zc-ink);line-height:1.85;font-family:var(--gothic);}
 #zc-view .zc-head{background:var(--zc-navy);color:#fff;padding:18px 18px;border-radius:12px;margin-bottom:16px;}
 #zc-view .zc-head h2{margin:0;font-size:18px;letter-spacing:.5px;}
 #zc-view .zc-head p{margin:6px 0 0;font-size:12.5px;color:#c7d2e6;}
@@ -398,6 +398,40 @@ main{min-width:0}
 #zc-view .zc-soon{font-size:11px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:1px 7px;font-weight:700;}
 #zc-view .zc-detail li a.zc-dl{margin-left:4px;padding:1px 8px;}
 #zc-view .zc-hidden{display:none;}
+/* --- ポータル意匠に合わせた上書き（藍・明朝・角丸2px） --- */
+#zc-view .zc-head{border-radius:2px;padding:26px 26px;background-color:var(--ai);
+  background-image:linear-gradient(rgba(11,18,32,.45),rgba(11,18,32,.45)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px);}
+#zc-view .zc-head h2{font-family:var(--mincho);font-weight:800;font-size:1.3rem;letter-spacing:.06em;line-height:1.5;}
+#zc-view .zc-head p{color:rgba(243,244,242,.7);font-size:.78rem;margin-top:8px;}
+#zc-view .zc-deadline{border-radius:2px;background:rgba(185,50,39,.05);border:1px solid rgba(185,50,39,.25);color:var(--shu);font-size:.78rem;}
+#zc-view .zc-deadline b{color:var(--shu);}
+#zc-view .zc-search input{border-radius:2px;font-family:var(--gothic);font-size:.9rem;}
+#zc-view .zc-search input:focus{border-color:var(--ai);box-shadow:none;}
+#zc-view .zc-search-hint{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;}
+#zc-view .zc-steplabel{font-family:var(--mono);font-size:.66rem;font-weight:400;letter-spacing:.12em;color:var(--nezumi);}
+#zc-view .zc-cat{border-radius:2px;border-left:3px solid var(--ai);transition:border-color .15s;}
+#zc-view .zc-cat:hover{border-color:var(--ai);box-shadow:none;transform:none;}
+#zc-view .zc-cat span{font-size:.72rem;}
+#zc-view .zc-scn{border-radius:2px;}
+#zc-view .zc-scn:hover{border-color:var(--ai);background:#fff;}
+#zc-view .zc-scn.active{border-color:var(--ai);background:#fff;}
+#zc-view .zc-scn .zc-scn-cat{font-family:var(--mono);font-size:.62rem;color:var(--asagi);letter-spacing:.06em;font-weight:400;}
+#zc-view .zc-result{border-radius:2px;border-top:3px solid var(--ai);}
+#zc-view .zc-stamp{font-family:var(--mincho);border-width:1px;}
+#zc-view .zc-headline{font-family:var(--mincho);font-weight:600;font-size:1.15rem;}
+#zc-view .zc-vsub{font-size:.78rem;}
+#zc-view .zc-k{font-family:var(--mono);font-size:.66rem;font-weight:400;letter-spacing:.06em;}
+#zc-view .zc-detail{font-size:.84rem;}
+#zc-view .zc-tag{border-radius:2px;background:rgba(30,59,110,.07);color:var(--ai);font-size:.72rem;}
+#zc-view .zc-note{background:rgba(46,143,145,.07);border-left:3px solid var(--asagi);border-radius:0;color:var(--kachi);font-size:.78rem;}
+#zc-view .zc-dl{border-radius:2px;background:var(--ai);letter-spacing:.04em;font-size:.7rem;}
+#zc-view .zc-dl:hover{background:var(--kachi);}
+#zc-view .zc-soon{border-radius:2px;font-family:var(--mono);font-size:.64rem;background:rgba(185,50,39,.05);border-color:rgba(185,50,39,.25);color:var(--shu);}
+#zc-view .zc-back{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--nezumi);}
+#zc-view .zc-back:hover{color:var(--ai);}
+#zc-view .zc-empty{border-radius:2px;font-size:.84rem;}
+#zc-view .zc-disc{font-size:.72rem;line-height:1.9;}
 @media(max-width:520px){#zc-view .zc-cats{grid-template-columns:1fr;}
 </style>
 </head>
@@ -435,7 +469,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.11</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.12</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
