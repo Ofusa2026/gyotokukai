@@ -587,7 +587,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.24</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.25</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -693,6 +693,8 @@ function count(k){
   if(k==='map') return PREFS.filter(p=>p.status==='partnered').length+'/47';
   if(k==='shitsumon') return QUESTIONS.length + (IS_ADMIN&&PENDING.length?('+'+PENDING.length):'');
   if(k==='mypage'||k==='admin'||k==='zuiji') return '';
+  // 審査情報には記事のほかに「在留審査処理期間」が常設されているため、その1件を含める
+  if(k==='shinsa') return POSTS.filter(p=>p.category==='shinsa').length + 1;
   return POSTS.filter(p=>p.category===k).length;
 }
 function navItems(){
