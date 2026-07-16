@@ -276,6 +276,38 @@ main{min-width:0}
 .danger p{font-size:.8rem;color:var(--nezumi);margin-bottom:14px}
 .pbtn.ghost{background:#fff;color:var(--shu);border:1px solid var(--shu)}
 
+
+/* ============ 管理画面 ============ */
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:34px}
+.scard{background:#fff;border:1px solid var(--line);border-radius:2px;padding:16px 18px}
+.scard .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--nezumi)}
+.scard .v{font-family:var(--mincho);font-weight:800;font-size:1.8rem;color:var(--ai);line-height:1.2;margin-top:4px}
+.scard.alert .v{color:var(--shu)}
+.atable-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:2px}
+.atable{width:100%;border-collapse:collapse;font-size:.84rem;min-width:720px}
+.atable th{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--nezumi);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);background:#FAFBFA;white-space:nowrap}
+.atable td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.atable tr:last-child td{border-bottom:none}
+.atable .nm{display:flex;align-items:center;gap:9px;white-space:nowrap}
+.atable .mono{font-family:var(--mono);font-size:.7rem;color:var(--nezumi)}
+.badge.noprofile{background:#E9EBE8;color:var(--nezumi)}
+.badge.hasprofile{background:#DCEAEA;color:var(--asagi)}
+.afilter{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.afilter input{padding:9px 13px;border:1px solid var(--line);border-radius:2px;font-size:.86rem;background:#fff;min-width:220px}
+.afilter input:focus{outline:none;border-color:var(--ai)}
+.acsv{margin-left:auto;background:#fff;border:1px solid var(--ai);color:var(--ai);padding:8px 16px;border-radius:2px;font-size:.78rem;font-weight:700}
+.postrow{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:8px;font-size:.86rem}
+.postrow .cat{font-family:var(--mono);font-size:.62rem;color:var(--asagi);white-space:nowrap}
+.postrow .ttl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.postrow .off{opacity:.45}
+.postrow button{background:none;border:1px solid var(--line);border-radius:2px;padding:5px 12px;font-size:.72rem;color:var(--nezumi);white-space:nowrap}
+.postrow button.danger2{color:var(--shu);border-color:rgba(185,50,39,.4)}
+.introrow{background:#fff;border:1px solid var(--line);border-left:3px solid var(--shu);border-radius:2px;padding:14px 18px;margin-bottom:10px;font-size:.86rem}
+.introrow .h{display:flex;gap:12px;align-items:baseline}
+.introrow .h b{font-family:var(--mincho)}
+.introrow .h .dt{margin-left:auto;font-family:var(--mono);font-size:.64rem;color:var(--nezumi)}
+.introrow .b{color:var(--nezumi);font-size:.82rem;margin-top:4px}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -339,7 +371,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.06</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.07</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -376,7 +408,7 @@ const CATS = [
   ['home','ホーム'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['qa','Q&A'],
   ['shitsumon','質問箱'],['case','ケーススタディ'],['tool','資料・ツール'],['seminar','セミナー'],['mypage','マイページ']
 ];
-const CATNAME = Object.fromEntries(CATS);
+const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
 let TOKEN = localStorage.getItem('tgk_token') || '';
 let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
 
@@ -442,13 +474,18 @@ function count(k){
   if(k==='home') return '';
   if(k==='map') return PREFS.filter(p=>p.status==='partnered').length+'/47';
   if(k==='shitsumon') return QUESTIONS.length + (IS_ADMIN&&PENDING.length?('+'+PENDING.length):'');
-  if(k==='mypage') return '';
+  if(k==='mypage'||k==='admin') return '';
   return POSTS.filter(p=>p.category===k).length;
 }
+function navItems(){
+  const items = CATS.slice();
+  if(IS_ADMIN) items.push(['admin','管理']);
+  return items;
+}
 function renderNav(){
-  $('nav').innerHTML = CATS.map(([k,l],i)=>
+  $('nav').innerHTML = navItems().map(([k,l],i)=>
     `<button class="nv${k===view?' on':''}" data-k="${k}"><span class="no">${String(i).padStart(2,'0')}</span>${l}<span class="ct">${count(k)}</span></button>`).join('');
-  $('mnav').innerHTML = CATS.map(([k,l])=>`<button class="${k===view?'on':''}" data-k="${k}">${l}</button>`).join('');
+  $('mnav').innerHTML = navItems().map(([k,l])=>`<button class="${k===view?'on':''}" data-k="${k}">${l}</button>`).join('');
   document.querySelectorAll('#nav .nv, #mnav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.k)));
 }
 function go(v){
@@ -475,6 +512,7 @@ function render(){
   if(view==='map'){ c.innerHTML = mapHTML(); bindMap(); return; }
   if(view==='mypage'){ c.innerHTML = mypageHTML(); bindMypage(); return; }
   if(view==='shitsumon'){ c.innerHTML = shitsumonHTML(); bindShitsumon(); return; }
+  if(view==='admin'){ c.innerHTML = '<div class="loading">読み込み中…</div>'; loadAdmin(); return; }
   if(view==='search'){ c.innerHTML = listHTML(POSTS.filter(match)); bindList(); return; }
   let rows = POSTS.filter(p=>p.category===view).filter(match);
   let head = '';
@@ -895,6 +933,129 @@ async function loadComments(id){
     const r=await api({action:'delete_comment', token:TOKEN, comment_id:el.dataset.id});
     if(r.ok) loadComments(id);
   }));
+}
+
+
+/* ---- 管理画面 ---- */
+let ADMIN = null, memFilter = '';
+async function loadAdmin(){
+  const r = await api({action:'admin_overview', token:TOKEN});
+  if(!r.ok){ $('content').innerHTML='<div class="empty">権限がありません。</div>'; return; }
+  ADMIN = r;
+  renderAdmin();
+}
+const VOLLBL = {'0':'0件','1-10':'1〜10件','11-100':'11〜100件','100+':'100件〜'};
+function renderAdmin(){
+  const st = ADMIN.stats;
+  const mem = ADMIN.members.filter(m=>{
+    if(!memFilter) return true;
+    const t = (m.reg_name+m.reg_office+m.email+(m.profile?m.profile.name+m.profile.office+m.profile.pref:'')).toLowerCase();
+    return t.includes(memFilter);
+  });
+  $('content').innerHTML = `
+    <div class="stat-cards">
+      <div class="scard"><div class="k">登録会員</div><div class="v">${st.registrations}</div></div>
+      <div class="scard"><div class="k">プロフィール済</div><div class="v">${st.profiles}</div></div>
+      <div class="scard${st.pending?' alert':''}"><div class="k">承認待ち質問</div><div class="v">${st.pending}</div></div>
+      <div class="scard"><div class="k">掲載質問</div><div class="v">${st.questions - st.pending}</div></div>
+      <div class="scard"><div class="k">コメント</div><div class="v">${st.comments}</div></div>
+      <div class="scard"><div class="k">紹介</div><div class="v">${st.intros}</div></div>
+    </div>
+
+    <div class="sect-h"><h3>会員一覧</h3></div>
+    <div class="afilter">
+      <input type="search" id="memQ" placeholder="氏名・事務所・メールで絞り込み" value="${esc(memFilter)}">
+      <span style="font-size:.78rem;color:var(--nezumi)">${mem.length} / ${ADMIN.members.length} 名</span>
+      <button class="acsv" id="csvBtn">CSVで保存</button>
+    </div>
+    <div class="atable-wrap">
+      <table class="atable">
+        <thead><tr><th>氏名（マイページ）</th><th>事務所</th><th>都道府県</th><th>取扱/月</th><th>メール</th><th>LP登録日</th><th>状態</th></tr></thead>
+        <tbody>${mem.map(m=>`
+          <tr>
+            <td><span class="nm">${avatarHTML(m.profile&&m.profile.photo_url, (m.profile?m.profile.name:m.reg_name), true)}<span>${esc(m.profile?m.profile.name:m.reg_name)}</span></span></td>
+            <td>${esc(m.profile?m.profile.office:m.reg_office)}</td>
+            <td>${m.profile?esc(m.profile.pref):'—'}</td>
+            <td>${VOLLBL[m.volume]||esc(m.volume)}</td>
+            <td class="mono">${esc(m.email)}</td>
+            <td class="mono">${fdate(m.registered_at)}</td>
+            <td>${m.profile?'<span class="badge hasprofile">登録済</span>':'<span class="badge noprofile">未登録</span>'}</td>
+          </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--nezumi)">該当なし</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sect"><div class="sect-h"><h3>行政書士会の紹介</h3></div>
+      ${ADMIN.intros.length?ADMIN.intros.map(i=>`
+        <div class="introrow">
+          <div class="h"><b>${esc(i.pref)}</b><span>${esc(i.member)}</span><span class="dt">${fdate(i.created_at)}</span></div>
+          <div class="b">窓口：${esc(i.contact)}　／　関係性：${esc(i.relation)}${i.message?'<br>補足：'+esc(i.message):''}</div>
+        </div>`).join(''):'<div style="font-size:.86rem;color:var(--nezumi)">まだ届いていません。</div>'}
+    </div>
+
+    <div class="sect"><div class="sect-h"><h3>記事を投稿</h3></div>
+      <div class="formbox">
+        <label class="fl">カテゴリ</label>
+        <select id="apCat">
+          <option value="news">お知らせ</option><option value="shinsa">審査情報</option><option value="qa">Q&A</option>
+          <option value="case">ケーススタディ</option><option value="tool">資料・ツール</option><option value="seminar">セミナー</option>
+        </select>
+        <label class="fl">地域（審査情報のみ・任意）</label>
+        <input type="text" id="apRegion" placeholder="例：東京、福岡">
+        <label class="fl">タイトル</label>
+        <input type="text" id="apTitle">
+        <label class="fl">本文（## 見出し、- 箇条書き、**強調** が使えます）</label>
+        <textarea id="apBody" style="min-height:180px"></textarea>
+        <label style="display:flex;gap:8px;align-items:center;margin-top:14px;font-size:.84rem"><input type="checkbox" id="apPin">ホームに固定表示する</label>
+        <div style="margin-top:16px"><button class="pbtn" id="apSend">投稿する</button></div>
+        <p class="fmsg" id="apMsg"></p>
+      </div>
+    </div>
+
+    <div class="sect"><div class="sect-h"><h3>記事の管理</h3></div>
+      ${ADMIN.posts_all.map(p=>`
+        <div class="postrow" data-id="${p.id}">
+          <span class="cat">${CATNAME[p.category]||p.category}${p.region?'・'+esc(p.region):''}</span>
+          <span class="ttl${p.published?'':' off'}">${p.pinned?'📌 ':''}${esc(p.title)}</span>
+          <span class="mono">${fdate(p.created_at)}</span>
+          <button class="tgl">${p.published?'非公開にする':'公開する'}</button>
+          <button class="danger2 del2">削除</button>
+        </div>`).join('')}
+    </div>`;
+
+  $('memQ').addEventListener('input', e=>{ memFilter=e.target.value.trim().toLowerCase(); renderAdmin(); });
+  $('csvBtn').addEventListener('click', ()=>{
+    const head=['氏名','事務所','都道府県','取扱件数月平均','メール','LP登録日','プロフィール'];
+    const rows=ADMIN.members.map(m=>[
+      m.profile?m.profile.name:m.reg_name, m.profile?m.profile.office:m.reg_office,
+      m.profile?m.profile.pref:'', VOLLBL[m.volume]||m.volume, m.email, fdate(m.registered_at), m.profile?'登録済':'未登録']);
+    const csvEsc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+    const csv='\uFEFF'+[head].concat(rows).map(r=>r.map(csvEsc).join(',')).join('\r\n');
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+    a.download='tokugyokai_members.csv'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  $('apSend').addEventListener('click', async ()=>{
+    const msg=$('apMsg');
+    const payload={action:'admin_create_post', token:TOKEN, category:$('apCat').value, region:$('apRegion').value.trim(), title:$('apTitle').value.trim(), body:$('apBody').value.trim(), pinned:$('apPin').checked};
+    if(!payload.title||!payload.body){ msg.textContent='タイトルと本文を入力してください。'; msg.className='fmsg show ng'; return; }
+    const b=$('apSend'); b.disabled=true;
+    const r=await api(payload); b.disabled=false;
+    if(r.ok){ await reloadData(); await loadAdmin(); }
+    else{ msg.textContent='投稿に失敗しました。'; msg.className='fmsg show ng'; }
+  });
+  document.querySelectorAll('.postrow').forEach(row=>{
+    row.querySelector('.tgl').addEventListener('click', async ()=>{
+      const p=ADMIN.posts_all.find(x=>x.id===row.dataset.id);
+      await api({action:'admin_toggle_post', token:TOKEN, post_id:row.dataset.id, published:!p.published});
+      await reloadData(); await loadAdmin();
+    });
+    row.querySelector('.del2').addEventListener('click', async ()=>{
+      if(!confirm('この記事を削除しますか？（取り消せません）')) return;
+      await api({action:'admin_delete_post', token:TOKEN, post_id:row.dataset.id});
+      await reloadData(); await loadAdmin();
+    });
+  });
 }
 
 /* ---- 簡易マークダウン ---- */
