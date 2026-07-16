@@ -261,6 +261,21 @@ main{min-width:0}
 .cform .crow{display:flex;align-items:center;gap:12px;margin-top:10px}
 .cform .cmsg{font-size:.78rem;color:var(--shu)}
 
+
+.map-intro{background:#fff;border:1px solid var(--line);border-left:3px solid var(--shu);border-radius:2px;padding:20px 24px;margin-bottom:26px;max-width:680px}
+.map-intro h3{font-family:var(--mincho);font-weight:800;font-size:1.06rem;margin-bottom:8px}
+.map-intro p{font-size:.88rem;color:var(--nezumi)}
+.map-intro .cta{margin-top:10px;color:var(--kachi)}
+.map-intro .cta a{margin-left:10px;font-weight:700}
+.mchips{display:flex;flex-wrap:wrap;gap:8px}
+.mchip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:.8rem}
+.mchip b{font-family:var(--mincho);font-weight:600;margin-right:4px}
+.mchip.un{border-style:dashed;color:var(--nezumi)}
+.danger{margin-top:34px;border:1px solid rgba(185,50,39,.35);border-radius:2px;background:#FDF8F7;padding:20px 24px;max-width:560px}
+.danger h4{font-family:var(--mincho);font-size:.96rem;color:var(--shu);margin-bottom:6px}
+.danger p{font-size:.8rem;color:var(--nezumi);margin-bottom:14px}
+.pbtn.ghost{background:#fff;color:var(--shu);border:1px solid var(--shu)}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -324,7 +339,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.04</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.05</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -363,7 +378,7 @@ const CATS = [
 ];
 const CATNAME = Object.fromEntries(CATS);
 let TOKEN = localStorage.getItem('tgk_token') || '';
-let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, view = 'home', region = '', query = '';
+let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
 async function api(payload){
@@ -415,6 +430,9 @@ async function enter(){
   PENDING = r.pending||[];
   PROFILE = r.profile||null;
   IS_ADMIN = !!r.is_admin;
+  PREF_MEMBERS = r.pref_members||{};
+  MEMBER_TOTAL = r.member_total||0;
+  UNREG = r.unregistered||0;
   [$('askBtn'),$('askBtnM')].forEach(a=>{ a.href='#'; a.addEventListener('click',e=>{e.preventDefault(); go('shitsumon');}); });
   $('whoami').textContent = (PROFILE?PROFILE.name+'　':'')+(r.email||'');
   renderNav();
@@ -434,6 +452,7 @@ function renderNav(){
   document.querySelectorAll('#nav .nv, #mnav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.k)));
 }
 function go(v){
+  if(!PROFILE && v!=='mypage') v='mypage';
   view=v; region=''; query=''; $('q').value='';
   renderNav();
   $('viewTitle').textContent = CATNAME[v]||'';
@@ -558,7 +577,16 @@ function mapHTML(){
       <text x="${x+U/2}" y="${y+U/2+2.3}">${esc(p.name.replace(/[都府県]$/,''))}</text>
     </g>`;
   }).join('');
+  const mrows = PREFS
+    .map(p=>({name:p.name, n:PREF_MEMBERS[p.code]||0}))
+    .filter(x=>x.n>0)
+    .sort((a,b)=>b.n-a.n);
   return `
+    <div class="map-intro">
+      <h3>なぜ、行政書士会と連携するのか</h3>
+      <p>登録支援機関による違法な申請手続きのサポートを防止するため、特行会は各都道府県の行政書士会との連携を進めています。書類作成は行政書士の仕事です。現場の実態を集め、各地の行政書士会と手を組んで、適正化を図ります。</p>
+      <p class="cta">お近くの行政書士会とご縁のある方は、<b>ぜひ繋いでください。</b><a href="mailto:${ASK_TO}?subject=${encodeURIComponent('【特行会】行政書士会のご紹介')}&body=${encodeURIComponent('都道府県：\nご紹介いただける方・窓口：\n関係性：\n')}">紹介の連絡をする →</a></p>
+    </div>
     <div class="map-head">
       <div class="map-count">${done.length}<small> / 47</small></div>
       <div class="map-sub">全国の行政書士会との連携状況です。連携が成立した都道府県から、藍に染まっていきます。</div>
@@ -572,7 +600,12 @@ function mapHTML(){
     <div class="map-note" id="mapNote"></div>
     ${(done.length||talking.length)?`<div class="map-list"><h4>PROGRESS</h4>${
       done.concat(talking).map(p=>`<div class="row"><span class="nm">${esc(p.name)}</span><span class="st ${p.status}" style="font-family:var(--mono);font-size:.66rem">${STLBL[p.status]}</span>${p.note?'<span>'+esc(p.note)+'</span>':''}<span class="dt">${fdate(p.updated_at)}</span></div>`).join('')
-    }</div>`:''}`;
+    }</div>`:''}
+    <div class="map-list">
+      <h4>MEMBERS ─ 会員分布（計 ${MEMBER_TOTAL}名${UNREG?'＋都道府県未登録 '+UNREG+'名':''}）</h4>
+      ${mrows.length?`<div class="mchips">${mrows.map(x=>`<span class="mchip"><b>${esc(x.name)}</b> ${x.n}</span>`).join('')}${UNREG?`<span class="mchip un"><b>未登録</b> ${UNREG}</span>`:''}</div>`
+        :(UNREG?`<div class="mchips"><span class="mchip un"><b>未登録</b> ${UNREG}</span></div>`:'<div style="font-size:.84rem;color:var(--nezumi)">まだ登録がありません。</div>')}
+    </div>`;
 }
 function bindMap(){
   const note=$('mapNote');
@@ -581,7 +614,7 @@ function bindMap(){
     el.addEventListener('click',()=>{
       const p=PREFS.find(x=>String(x.code)===el.dataset.code); if(!p) return;
       note.style.display='block';
-      note.innerHTML=`<b>${esc(p.name)}</b><span class="st ${p.status}">${STLBL[p.status]}</span>${p.note?'<div style="margin-top:6px">'+esc(p.note)+'</div>':''}`;
+      note.innerHTML=`<b>${esc(p.name)}</b><span class="st ${p.status}">${STLBL[p.status]}</span><span style="margin-left:12px;font-size:.78rem;color:var(--nezumi)">会員 ${PREF_MEMBERS[p.code]||0}名</span>${p.note?'<div style="margin-top:6px">'+esc(p.note)+'</div>':''}`;
     });
   });
 }
@@ -596,7 +629,7 @@ function avatarHTML(url,name,sm){
 function mypageHTML(){
   const prefOpts = PREFS.map(p=>`<option value="${p.code}"${PROFILE&&PROFILE.pref_code===p.code?' selected':''}>${esc(p.name)}</option>`).join('');
   return `
-    ${PROFILE?'':'<div class="guideline">はじめに、お名前・事務所名・都道府県のご登録をお願いします。質問箱への投稿・コメントには登録が必要です。</div>'}
+    ${PROFILE?'':'<div class="guideline" style="border-left-color:var(--shu)"><b>はじめに会員情報のご登録をお願いします。</b>氏名・事務所名・都道府県を登録すると、ポータルの各ページ（お知らせ・審査情報・質問箱など）が閲覧できるようになります。</div>'}
     <div class="formbox">
       <label class="fl">プロフィール写真（任意）</label>
       <div class="avatar-row">
@@ -615,6 +648,11 @@ function mypageHTML(){
       <select id="mpPref"><option value="">選択してください</option>${prefOpts}</select>
       <div style="margin-top:22px"><button class="pbtn" id="mpSave">保存する</button></div>
       <p class="fmsg" id="mpMsg"></p>
+    </div>
+    <div class="danger">
+      <h4>退会</h4>
+      <p>会員情報（氏名・事務所名・写真・メールアドレス）を削除し、ポータルにログインできなくなります。過去に掲載された質問・コメントは氏名なしの「会員」表示で残ります。この操作は取り消せません。</p>
+      <button class="pbtn ghost" id="mpDelete">退会する（会員情報を削除）</button>
     </div>`;
 }
 function bindMypage(){
@@ -646,8 +684,22 @@ function bindMypage(){
       $('whoami').textContent = name;
       msg.textContent='保存しました。'; msg.className='fmsg show ok';
       renderNav();
+      setTimeout(()=>go('home'), 600);
     }else if(r.error==='ng_word'){ msg.textContent='使用できない表現が含まれています。'; msg.className='fmsg show ng'; }
     else{ msg.textContent='保存に失敗しました。'; msg.className='fmsg show ng'; }
+  });
+  $('mpDelete').addEventListener('click', async ()=>{
+    if(!confirm('退会すると会員情報が削除され、ログインできなくなります。よろしいですか？')) return;
+    const t = prompt('確認のため「退会」と入力してください。');
+    if(t !== '退会') return;
+    const r = await api({action:'delete_account', token:TOKEN});
+    if(r.ok){
+      localStorage.removeItem('tgk_token');
+      alert('退会が完了しました。ご参加ありがとうございました。');
+      location.href='../';
+    }else{
+      alert('処理に失敗しました。時間をおいてお試しください。');
+    }
   });
 }
 function shrinkImage(file, max){
@@ -741,7 +793,7 @@ function bindShitsumon(){
 }
 async function reloadData(){
   const r = await api({action:'get_posts', token:TOKEN});
-  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; renderNav(); }
+  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; renderNav(); }
 }
 
 /* ---- 質問詳細＋コメント ---- */
