@@ -316,15 +316,18 @@ main{min-width:0}
 .prow .po{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 
 /* ============ 在留審査処理期間 ============ */
-.kk-banner{background-color:var(--ai);color:var(--shiro);border-radius:2px;padding:24px 26px;margin-bottom:18px;cursor:pointer;position:relative;overflow:hidden;
+.kk-banner{display:block;width:100%;text-align:left;border:0;font-family:var(--gothic);
+  background-color:var(--ai);color:var(--shiro);border-radius:2px;padding:24px 26px;margin-bottom:18px;cursor:pointer;position:relative;overflow:hidden;
   background-image:linear-gradient(rgba(11,18,32,.5),rgba(11,18,32,.5)),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px);
-  transition:transform .18s ease,box-shadow .18s ease}
+  transition:transform .18s ease,box-shadow .18s ease;-webkit-tap-highlight-color:transparent}
+.kk-banner *{pointer-events:none}
 .kk-banner:hover{transform:translateY(-3px);box-shadow:0 16px 40px -14px rgba(30,59,110,.55)}
+.kk-banner:active{transform:translateY(0);opacity:.9}
 .kk-banner .wm{position:absolute;right:-24px;top:-24px;width:120px;height:120px;opacity:.1}
-.kk-banner .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:#7FB6B8}
-.kk-banner h3{font-family:var(--mincho);font-weight:800;font-size:1.2rem;margin:8px 0 6px}
-.kk-banner p{font-size:.82rem;color:rgba(243,244,242,.75);max-width:38em}
-.kk-banner .go{font-family:var(--mono);font-size:.7rem;margin-top:10px;color:#7FB6B8}
+.kk-banner .k{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:#7FB6B8}
+.kk-banner .t{display:block;font-family:var(--mincho);font-weight:800;font-size:1.2rem;margin:8px 0 6px;line-height:1.5}
+.kk-banner .d{display:block;font-size:.82rem;color:rgba(243,244,242,.75);max-width:38em;line-height:1.8}
+.kk-banner .go{display:block;font-family:var(--mono);font-size:.7rem;margin-top:10px;color:#7FB6B8}
 .kk-src{font-size:.76rem;color:var(--nezumi);font-family:var(--mono);letter-spacing:.03em;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:20px}
 .kk-src b{color:var(--kachi);font-family:var(--gothic);letter-spacing:0}
 .kk-sec{margin-bottom:38px}
@@ -583,7 +586,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.18</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.19</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -736,7 +739,7 @@ function render(){
     head += kkBanner();
     const rs=[...new Set(POSTS.filter(p=>p.category==='shinsa'&&p.region).map(p=>p.region))];
     if(rs.length){
-      head = '<div class="regions">'+
+      head += '<div class="regions">'+
         `<button class="rg${region===''?' on':''}" data-r=""><h4>全地域</h4><span class="n">${POSTS.filter(p=>p.category==='shinsa').length}件</span></button>`+
         rs.map(r=>`<button class="rg${r===region?' on':''}" data-r="${esc(r)}"><h4>${esc(r)}</h4><span class="n">${POSTS.filter(p=>p.category==='shinsa'&&p.region===r).length}件</span></button>`).join('')+'</div>';
       if(region) rows = rows.filter(p=>p.region===region);
@@ -1356,13 +1359,13 @@ function kkDH(d){
   return '<span class="kk-'+(d>0?'up':'down')+'">'+(d>0?'▲ +':'▼ ')+d.toFixed(1)+' 日</span>';
 }
 function kkBanner(){
-  return `<div class="kk-banner" id="kkGo">
-    <svg class="wm" viewBox="-80 -80 160 160"><g fill="#F3F4F2"><use href="#p8"/></g></svg>
-    <p class="k">法務省 / 令和8年5月許可分</p>
-    <h3>在留審査処理期間（日数）</h3>
-    <p>資格を選べば、認定・更新・変更の日数が出ます。1年前との増減、大房行政書士事務所の実測値との対照つき。</p>
-    <p class="go">開く →</p>
-  </div>`;
+  return `<button type="button" class="kk-banner" id="kkGo">
+    <svg class="wm" viewBox="-80 -80 160 160" aria-hidden="true"><g fill="#F3F4F2"><use href="#p8"/></g></svg>
+    <span class="k">法務省 / 令和8年5月許可分</span>
+    <span class="t">在留審査処理期間（日数）</span>
+    <span class="d">資格を選べば、認定・更新・変更の日数が出ます。1年前との増減、大房行政書士事務所の実測値との対照つき。</span>
+    <span class="go">開く →</span>
+  </button>`;
 }
 function kkCard(title, main, mainLbl, sub, subLbl, dv, noSub){
   if(main===null) return `<div class="kk-card na"><span class="ct">${title}</span><div class="main">公表なし</div><div class="sub">公表資料で斜線の区分です。</div></div>`;
