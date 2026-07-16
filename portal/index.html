@@ -335,6 +335,8 @@ main{min-width:0}
 .kk-banner .go .ar{font-family:var(--mono)}
 .kk-src{font-size:.76rem;color:var(--nezumi);font-family:var(--mono);letter-spacing:.03em;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:20px}
 .kk-src b{color:var(--kachi);font-family:var(--gothic);letter-spacing:0}
+.kk-src a{color:var(--ai);font-family:var(--gothic);letter-spacing:0;font-weight:500}
+.kk-src{line-height:2}
 .kk-sec{margin-bottom:38px}
 .kk-sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .kk-sh .no{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--asagi)}
@@ -421,6 +423,7 @@ main{min-width:0}
 .kk-notes li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--asagi)}
 .kk-notes li.imp::before{background:var(--shu)}
 .kk-notes li b{color:var(--kachi)}
+.kk-notes li a{word-break:break-all}
 
 
 /* ---- 依頼者への回答 ---- */
@@ -591,7 +594,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.26</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.27</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1419,7 +1422,9 @@ function kkHTML(){
   return `
   <div class="backbar"><button id="kkBack">← 審査情報へ戻る</button></div>
   <div class="kk-src">
-    出典：<b>法務省「在留審査処理期間（日数）」令和8年5月許可分</b>　／　比較用：同 令和7年2月許可分<br>
+    出典：<b>法務省「在留審査処理期間（日数）」</b><br>
+    <a href="https://www.moj.go.jp/isa/content/001466245.pdf" target="_blank" rel="noopener">令和8年5月許可分（PDF）</a>
+    　／　比較用：<a href="https://www.moj.go.jp/isa/content/001435769.pdf" target="_blank" rel="noopener">令和7年2月許可分（PDF）</a><br>
     数値は公表資料のままで、改変していません。
   </div>
 
@@ -1555,6 +1560,12 @@ function kkHTML(){
         <li>例年、4月の就職時期に向けて、申請が増加するため、就労資格について、審査期間が長期化する傾向にあります。</li>
         <li class="imp">令和7年2月許可分には、<b>外食業分野の除外に関する注記はありません</b>。特定技能1号の認定交付・変更許可を1年前と比較する際は、算出範囲が異なる点にご注意ください。</li>
       </ul>
+      <h4>原典</h4>
+      <ul>
+        <li>法務省「在留審査処理期間（日数）」令和8年5月許可分 ─ <a href="https://www.moj.go.jp/isa/content/001466245.pdf" target="_blank" rel="noopener">https://www.moj.go.jp/isa/content/001466245.pdf</a></li>
+        <li>同 令和7年2月許可分（比較用） ─ <a href="https://www.moj.go.jp/isa/content/001435769.pdf" target="_blank" rel="noopener">https://www.moj.go.jp/isa/content/001435769.pdf</a></li>
+      </ul>
+
       <h4>大房行政書士事務所の実測値について</h4>
       <ul>
         <li class="imp"><b>起点が公表値と異なります。</b>公表値は入管が申請を受理した日を起点としますが、実測値は<b>受付通知メールを受け取った日</b>を起点とし、<b>審査完了メールを受け取った日</b>を終点としています。受付通知は受付時点で届くため、実測値は原理上わずかに短く出ます。</li>
