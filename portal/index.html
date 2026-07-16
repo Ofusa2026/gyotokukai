@@ -201,6 +201,66 @@ main{min-width:0}
 .map-list .row .nm{font-family:var(--mincho);font-weight:600;min-width:5em}
 .map-list .row .dt{font-family:var(--mono);font-size:.66rem;color:var(--nezumi);margin-left:auto}
 
+
+/* ============ 質問箱・マイページ ============ */
+.pbtn{border:0;background:var(--shu);color:#fff;padding:12px 22px;border-radius:2px;font-weight:700;font-size:.88rem;letter-spacing:.04em}
+.pbtn.sec{background:#fff;color:var(--ai);border:1px solid var(--ai)}
+.pbtn:disabled{opacity:.5;cursor:default}
+.formbox{background:#fff;border:1px solid var(--line);border-radius:2px;padding:clamp(22px,4vw,32px);max-width:560px}
+.formbox .fl{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--nezumi);margin:18px 0 8px}
+.formbox .fl:first-child{margin-top:0}
+.formbox input[type=text],.formbox select,.formbox textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.94rem;background:#F7F8F7;font-family:var(--gothic)}
+.formbox textarea{min-height:130px;resize:vertical;line-height:1.8}
+.formbox input:focus,.formbox select:focus,.formbox textarea:focus{outline:none;border-color:var(--ai);background:#fff}
+.formbox .fmsg{font-size:.8rem;margin-top:12px;display:none}
+.formbox .fmsg.show{display:block}
+.formbox .fmsg.ng{color:var(--shu)}
+.formbox .fmsg.ok{color:var(--asagi)}
+.avatar-row{display:flex;align-items:center;gap:16px}
+.avatar{width:72px;height:72px;border-radius:50%;background:var(--ai);color:#fff;display:grid;place-items:center;font-family:var(--mincho);font-weight:800;font-size:1.5rem;overflow:hidden;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.sm{width:34px;height:34px;font-size:.9rem}
+.guideline{background:#fff;border-left:3px solid var(--asagi);border-radius:2px;padding:12px 16px;font-size:.78rem;color:var(--nezumi);margin:18px 0}
+.qitem{background:#fff;border:1px solid var(--line);border-left:3px solid var(--asagi);border-radius:2px;padding:18px 22px;margin-bottom:10px;cursor:pointer;transition:border-color .15s}
+.qitem:hover{border-color:var(--asagi)}
+.qitem .qm{display:flex;gap:10px;align-items:center;font-size:.76rem;color:var(--nezumi)}
+.qitem .qm .cc{margin-left:auto;font-family:var(--mono);font-size:.68rem}
+.qitem h3{font-family:var(--mincho);font-weight:600;font-size:1.04rem;margin-top:6px;line-height:1.6}
+.mypend{margin:22px 0}
+.mypend .row{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:3px 9px;border-radius:2px}
+.badge.pending{background:#F2E7C9;color:#8A6D1A}
+.badge.rejected{background:#EFDBDA;color:var(--shu)}
+.admin-pend{border:1px solid var(--shu);border-radius:2px;background:#FDF8F7;padding:20px 22px;margin-bottom:26px}
+.admin-pend h3{font-family:var(--mincho);font-size:1rem;color:var(--shu);margin-bottom:12px}
+.admin-pend .pq{background:#fff;border:1px solid var(--line);border-radius:2px;padding:14px 16px;margin-bottom:10px}
+.admin-pend .pq .t{font-weight:700;font-size:.92rem}
+.admin-pend .pq .b{font-size:.84rem;color:var(--nezumi);margin:6px 0 10px;white-space:pre-wrap}
+.admin-pend .pq .who{font-size:.74rem;color:var(--nezumi)}
+.admin-pend .acts{display:flex;gap:8px;margin-top:8px}
+.abtn{border:0;padding:8px 16px;border-radius:2px;font-size:.8rem;font-weight:700;cursor:pointer}
+.abtn.ok{background:var(--ai);color:#fff}
+.abtn.no{background:#fff;color:var(--shu);border:1px solid var(--shu)}
+/* コメント */
+.cwrap{margin-top:30px}
+.cwrap h4{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--nezumi);margin-bottom:14px}
+.cm{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cm .cbody{flex:1;min-width:0}
+.cm .chead{display:flex;gap:10px;align-items:baseline;font-size:.8rem}
+.cm .chead b{font-weight:700}
+.cm .chead .dt{font-family:var(--mono);font-size:.62rem;color:var(--nezumi)}
+.cm .chead .del{margin-left:auto;background:none;border:none;font-size:.7rem;color:var(--nezumi);text-decoration:underline}
+.cm .ctext{font-size:.9rem;margin-top:4px;white-space:pre-wrap;word-break:break-word}
+.cm.admin{background:#FDF8F7;border:1px solid rgba(185,50,39,.3);border-radius:2px;padding:14px 16px;margin:0 0 10px}
+.cm.admin .avatar{background:var(--shu)}
+.cm.admin .chead b{color:var(--shu)}
+.cm.admin .chead b::after{content:"運営";font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;background:var(--shu);color:#fff;padding:2px 7px;border-radius:2px;margin-left:8px;vertical-align:1px}
+.cform{margin-top:20px}
+.cform textarea{width:100%;min-height:88px;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.92rem;background:#fff;font-family:var(--gothic);line-height:1.8;resize:vertical}
+.cform textarea:focus{outline:none;border-color:var(--ai)}
+.cform .crow{display:flex;align-items:center;gap:12px;margin-top:10px}
+.cform .cmsg{font-size:.78rem;color:var(--shu)}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -264,7 +324,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.03</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.04</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -299,11 +359,11 @@ const API = 'https://vzpahholgvkvwtwooejf.supabase.co/functions/v1/portal';
 const ASK_TO = 'mail@gyosei-cambo.com';
 const CATS = [
   ['home','ホーム'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['qa','Q&A'],
-  ['case','ケーススタディ'],['tool','資料・ツール'],['seminar','セミナー']
+  ['shitsumon','質問箱'],['case','ケーススタディ'],['tool','資料・ツール'],['seminar','セミナー'],['mypage','マイページ']
 ];
 const CATNAME = Object.fromEntries(CATS);
 let TOKEN = localStorage.getItem('tgk_token') || '';
-let POSTS = [], PREFS = [], view = 'home', region = '', query = '';
+let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
 async function api(payload){
@@ -350,14 +410,21 @@ async function enter(){
   if(r.error==='auth'){ localStorage.removeItem('tgk_token'); TOKEN=''; location.reload(); return; }
   POSTS = r.posts||[];
   PREFS = r.prefs||[];
-  const mail='mailto:'+ASK_TO+'?subject='+encodeURIComponent('【特行会】質問：')+'&body='+encodeURIComponent('お名前：\n事務所名：\n質問内容：\n');
-  $('askBtn').href=mail; $('askBtnM').href=mail;
-  $('whoami').textContent = r.email||'';
-  renderNav(); go('home');
+  QUESTIONS = r.questions||[];
+  MYQ = r.my_questions||[];
+  PENDING = r.pending||[];
+  PROFILE = r.profile||null;
+  IS_ADMIN = !!r.is_admin;
+  [$('askBtn'),$('askBtnM')].forEach(a=>{ a.href='#'; a.addEventListener('click',e=>{e.preventDefault(); go('shitsumon');}); });
+  $('whoami').textContent = (PROFILE?PROFILE.name+'　':'')+(r.email||'');
+  renderNav();
+  go(PROFILE ? 'home' : 'mypage');
 }
 function count(k){
   if(k==='home') return '';
   if(k==='map') return PREFS.filter(p=>p.status==='partnered').length+'/47';
+  if(k==='shitsumon') return QUESTIONS.length + (IS_ADMIN&&PENDING.length?('+'+PENDING.length):'');
+  if(k==='mypage') return '';
   return POSTS.filter(p=>p.category===k).length;
 }
 function renderNav(){
@@ -387,6 +454,8 @@ function render(){
   const c=$('content');
   if(view==='home'){ c.innerHTML = homeHTML(); bindHome(); return; }
   if(view==='map'){ c.innerHTML = mapHTML(); bindMap(); return; }
+  if(view==='mypage'){ c.innerHTML = mypageHTML(); bindMypage(); return; }
+  if(view==='shitsumon'){ c.innerHTML = shitsumonHTML(); bindShitsumon(); return; }
   if(view==='search'){ c.innerHTML = listHTML(POSTS.filter(match)); bindList(); return; }
   let rows = POSTS.filter(p=>p.category===view).filter(match);
   let head = '';
@@ -515,6 +584,224 @@ function bindMap(){
       note.innerHTML=`<b>${esc(p.name)}</b><span class="st ${p.status}">${STLBL[p.status]}</span>${p.note?'<div style="margin-top:6px">'+esc(p.note)+'</div>':''}`;
     });
   });
+}
+
+
+/* ---- マイページ ---- */
+function avatarHTML(url,name,sm){
+  const c='avatar'+(sm?' sm':'');
+  return url?`<span class="${c}"><img src="${esc(url)}" alt=""></span>`
+            :`<span class="${c}">${esc((name||'？').slice(0,1))}</span>`;
+}
+function mypageHTML(){
+  const prefOpts = PREFS.map(p=>`<option value="${p.code}"${PROFILE&&PROFILE.pref_code===p.code?' selected':''}>${esc(p.name)}</option>`).join('');
+  return `
+    ${PROFILE?'':'<div class="guideline">はじめに、お名前・事務所名・都道府県のご登録をお願いします。質問箱への投稿・コメントには登録が必要です。</div>'}
+    <div class="formbox">
+      <label class="fl">プロフィール写真（任意）</label>
+      <div class="avatar-row">
+        <span id="avPrev">${avatarHTML(PROFILE&&PROFILE.photo_url, PROFILE&&PROFILE.name)}</span>
+        <div>
+          <button class="pbtn sec" id="btnPhoto" type="button">写真を選ぶ</button>
+          <input type="file" id="photoFile" accept="image/*" style="display:none">
+          <div style="font-size:.72rem;color:var(--nezumi);margin-top:6px">JPEG/PNG。自動で縮小されます。</div>
+        </div>
+      </div>
+      <label class="fl" for="mpName">氏名</label>
+      <input type="text" id="mpName" value="${PROFILE?esc(PROFILE.name):''}" placeholder="大房 太郎">
+      <label class="fl" for="mpOffice">事務所名</label>
+      <input type="text" id="mpOffice" value="${PROFILE?esc(PROFILE.office):''}" placeholder="〇〇行政書士事務所">
+      <label class="fl" for="mpPref">都道府県</label>
+      <select id="mpPref"><option value="">選択してください</option>${prefOpts}</select>
+      <div style="margin-top:22px"><button class="pbtn" id="mpSave">保存する</button></div>
+      <p class="fmsg" id="mpMsg"></p>
+    </div>`;
+}
+function bindMypage(){
+  $('btnPhoto').addEventListener('click',()=>$('photoFile').click());
+  $('photoFile').addEventListener('change', async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const msg=$('mpMsg');
+    msg.textContent='写真をアップロード中…'; msg.className='fmsg show ok';
+    try{
+      const b64 = await shrinkImage(f, 512);
+      const r = await api({action:'upload_photo', token:TOKEN, data:b64, mime:'image/jpeg'});
+      if(r.ok){
+        if(!PROFILE) PROFILE={};
+        PROFILE.photo_url=r.url;
+        $('avPrev').innerHTML=avatarHTML(r.url, PROFILE.name);
+        msg.textContent='写真を登録しました。'; msg.className='fmsg show ok';
+      }else throw 0;
+    }catch(_){ msg.textContent='アップロードに失敗しました。別の画像でお試しください。'; msg.className='fmsg show ng'; }
+  });
+  $('mpSave').addEventListener('click', async ()=>{
+    const name=$('mpName').value.trim(), office=$('mpOffice').value.trim(), pref=$('mpPref').value;
+    const msg=$('mpMsg');
+    if(!name||!office||!pref){ msg.textContent='氏名・事務所名・都道府県は必須です。'; msg.className='fmsg show ng'; return; }
+    const b=$('mpSave'); b.disabled=true;
+    const r = await api({action:'save_profile', token:TOKEN, name, office, pref_code:pref});
+    b.disabled=false;
+    if(r.ok){
+      PROFILE = Object.assign(PROFILE||{}, {name, office, pref_code:parseInt(pref,10)});
+      $('whoami').textContent = name;
+      msg.textContent='保存しました。'; msg.className='fmsg show ok';
+      renderNav();
+    }else if(r.error==='ng_word'){ msg.textContent='使用できない表現が含まれています。'; msg.className='fmsg show ng'; }
+    else{ msg.textContent='保存に失敗しました。'; msg.className='fmsg show ng'; }
+  });
+}
+function shrinkImage(file, max){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const sc=Math.min(1, max/Math.max(img.width,img.height));
+      const cv=document.createElement('canvas');
+      cv.width=Math.round(img.width*sc); cv.height=Math.round(img.height*sc);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      res(cv.toDataURL('image/jpeg',.85).split(',')[1]);
+    };
+    img.onerror=rej;
+    img.src=URL.createObjectURL(file);
+  });
+}
+
+/* ---- 質問箱 ---- */
+const QGUIDE = '<div class="guideline">投稿は運営の承認後に掲載されます。氏名・事務所名が表示されます。誹謗中傷・個人攻撃・特定の個人や機関への攻撃的な内容は掲載されず、コメントも運営の判断で削除されることがあります。</div>';
+function shitsumonHTML(){
+  const admin = IS_ADMIN && PENDING.length ? `
+    <div class="admin-pend">
+      <h3>承認待ちの質問（${PENDING.length}件）</h3>
+      ${PENDING.map(q=>`<div class="pq" data-id="${q.id}">
+        <div class="t">${esc(q.title)}</div>
+        <div class="b">${esc(q.body)}</div>
+        <div class="who">${esc(q.author_name)}${q.author_office?'（'+esc(q.author_office)+'）':''}　${fdate(q.created_at)}</div>
+        <div class="acts"><button class="abtn ok" data-d="approved">承認して掲載</button><button class="abtn no" data-d="rejected">却下</button></div>
+      </div>`).join('')}
+    </div>`:'';
+  const mine = MYQ.length ? `
+    <div class="mypend">
+      <h4 style="font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--nezumi);margin-bottom:6px">あなたの投稿（未掲載）</h4>
+      ${MYQ.map(q=>`<div class="row"><span>${esc(q.title)}</span><span class="badge ${q.status}">${q.status==='pending'?'承認待ち':'非掲載'}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--nezumi)">${fdate(q.created_at)}</span></div>`).join('')}
+    </div>`:'';
+  const list = QUESTIONS.length ? QUESTIONS.map(q=>`
+    <div class="qitem" data-id="${q.id}">
+      <div class="qm">${avatarHTML(q.author_photo,q.author_name,true)}<span><b>${esc(q.author_name)}</b>${q.author_office?'　'+esc(q.author_office):''}</span><span class="cc">💬 ${q.comment_count}　${fdate(q.created_at)}</span></div>
+      <h3>${esc(q.title)}</h3>
+    </div>`).join('') : '<div class="empty">掲載中の質問はまだありません。最初の質問をどうぞ。</div>';
+  return `
+    ${admin}
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">
+      <button class="pbtn" id="btnNewQ">質問を投稿する</button>
+    </div>
+    ${QGUIDE}
+    <div id="qForm" style="display:none" class="formbox">
+      <label class="fl" for="qTitle">タイトル</label>
+      <input type="text" id="qTitle" maxlength="120" placeholder="例：特定技能2号の実務経験の疎明について">
+      <label class="fl" for="qBody">質問内容</label>
+      <textarea id="qBody" maxlength="2000" placeholder="状況と、聞きたいことを具体的に。"></textarea>
+      <div style="margin-top:18px;display:flex;gap:10px">
+        <button class="pbtn" id="qSubmit">投稿する（承認後に掲載）</button>
+        <button class="pbtn sec" id="qCancel">やめる</button>
+      </div>
+      <p class="fmsg" id="qMsg"></p>
+    </div>
+    ${mine}
+    <div style="margin-top:10px">${list}</div>`;
+}
+function bindShitsumon(){
+  const form=$('qForm');
+  $('btnNewQ').addEventListener('click',()=>{
+    if(!PROFILE){ alert('先にマイページで氏名・事務所名・都道府県をご登録ください。'); go('mypage'); return; }
+    form.style.display = form.style.display==='none'?'block':'none';
+  });
+  if($('qCancel')) $('qCancel').addEventListener('click',()=>{ form.style.display='none'; });
+  $('qSubmit').addEventListener('click', async ()=>{
+    const title=$('qTitle').value.trim(), qb=$('qBody').value.trim(), msg=$('qMsg');
+    if(!title||!qb){ msg.textContent='タイトルと内容を入力してください。'; msg.className='fmsg show ng'; return; }
+    const b=$('qSubmit'); b.disabled=true;
+    const r=await api({action:'ask_question', token:TOKEN, title, body:qb});
+    b.disabled=false;
+    if(r.ok){
+      MYQ.unshift({id:'',title,status:'pending',created_at:new Date().toISOString()});
+      render();
+    }else if(r.error==='ng_word'){ msg.textContent='不適切な表現が含まれている可能性があるため、投稿できませんでした。'; msg.className='fmsg show ng'; }
+    else if(r.error==='rate'){ msg.textContent='投稿の間隔が短すぎます。少し待ってからお試しください。'; msg.className='fmsg show ng'; }
+    else if(r.error==='profile_required'){ msg.textContent='先にマイページの登録が必要です。'; msg.className='fmsg show ng'; }
+    else{ msg.textContent='投稿に失敗しました。'; msg.className='fmsg show ng'; }
+  });
+  document.querySelectorAll('.qitem').forEach(el=>el.addEventListener('click',()=>openQuestion(el.dataset.id)));
+  document.querySelectorAll('.admin-pend .pq').forEach(el=>{
+    el.querySelectorAll('.abtn').forEach(b=>b.addEventListener('click', async e=>{
+      e.stopPropagation();
+      b.disabled=true;
+      const r=await api({action:'moderate_question', token:TOKEN, question_id:el.dataset.id, decision:b.dataset.d});
+      if(r.ok){ await reloadData(); render(); }
+    }));
+  });
+}
+async function reloadData(){
+  const r = await api({action:'get_posts', token:TOKEN});
+  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; renderNav(); }
+}
+
+/* ---- 質問詳細＋コメント ---- */
+async function openQuestion(id){
+  const q = QUESTIONS.find(x=>x.id===id); if(!q) return;
+  $('viewTitle').textContent='質問箱';
+  $('content').innerHTML = `
+    <div class="backbar"><button id="backQ">← 質問箱へ戻る</button></div>
+    <div class="article" style="border-top-color:var(--asagi)">
+      <div class="qm" style="display:flex;gap:10px;align-items:center;font-size:.8rem;color:var(--nezumi)">
+        ${avatarHTML(q.author_photo,q.author_name,true)}<span><b style="color:var(--kachi)">${esc(q.author_name)}</b>${q.author_office?'　'+esc(q.author_office):''}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.66rem">${fdate(q.created_at)}</span>
+      </div>
+      <h1>${esc(q.title)}</h1>
+      <div class="abody" style="white-space:pre-wrap">${esc(q.body)}</div>
+      <div class="cwrap">
+        <h4>COMMENTS</h4>
+        <div id="cAdmin"></div>
+        <div id="cList"><div class="loading" style="padding:30px 0">読み込み中…</div></div>
+        <div class="cform">
+          <textarea id="cBody" maxlength="1000" placeholder="コメントを書く（氏名が表示されます）"></textarea>
+          <div class="crow"><button class="pbtn" id="cSend">コメントする</button><span class="cmsg" id="cMsg"></span></div>
+        </div>
+      </div>
+    </div>`;
+  $('backQ').addEventListener('click',()=>go('shitsumon'));
+  $('cSend').addEventListener('click', async ()=>{
+    const t=$('cBody').value.trim(), msg=$('cMsg');
+    if(!t){ msg.textContent='内容を入力してください。'; return; }
+    if(!PROFILE&&!IS_ADMIN){ alert('先にマイページのご登録が必要です。'); go('mypage'); return; }
+    const b=$('cSend'); b.disabled=true;
+    const r=await api({action:'add_comment', token:TOKEN, question_id:id, body:t});
+    b.disabled=false;
+    if(r.ok){ $('cBody').value=''; msg.textContent=''; loadComments(id); }
+    else if(r.error==='ng_word'){ msg.textContent='不適切な表現が含まれている可能性があります。'; }
+    else if(r.error==='rate'){ msg.textContent='間隔が短すぎます。少し待ってください。'; }
+    else{ msg.textContent='送信に失敗しました。'; }
+  });
+  loadComments(id);
+  window.scrollTo({top:0});
+}
+async function loadComments(id){
+  const r = await api({action:'get_comments', token:TOKEN, question_id:id});
+  const cs = r.comments||[];
+  const admin = cs.filter(c=>c.is_admin), member = cs.filter(c=>!c.is_admin);
+  const cmHTML = c=>`
+    <div class="cm${c.is_admin?' admin':''}" data-id="${c.id}">
+      ${avatarHTML(c.author_photo, c.author_name, true)}
+      <div class="cbody">
+        <div class="chead"><b>${esc(c.author_name)}</b><span class="dt">${fdate(c.created_at)}</span>${(c.mine||IS_ADMIN)?'<button class="del">削除</button>':''}</div>
+        <div class="ctext">${esc(c.body)}</div>
+      </div>
+    </div>`;
+  $('cAdmin').innerHTML = admin.map(cmHTML).join('');
+  $('cList').innerHTML = member.length?member.map(cmHTML).join(''):'<div style="font-size:.84rem;color:var(--nezumi);padding:8px 0">コメントはまだありません。</div>';
+  document.querySelectorAll('.cm .del').forEach(b=>b.addEventListener('click', async ()=>{
+    if(!confirm('このコメントを削除しますか？')) return;
+    const el=b.closest('.cm');
+    const r=await api({action:'delete_comment', token:TOKEN, comment_id:el.dataset.id});
+    if(r.ok) loadComments(id);
+  }));
 }
 
 /* ---- 簡易マークダウン ---- */
