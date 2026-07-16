@@ -586,7 +586,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.21</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.22</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1351,7 +1351,8 @@ const KK=[
  {n:'永住者',              r8:[null,null,null,292.1,276.8],  r7:[null,null,null,329.3,315.8]}
 ];
 const kkLbl = d => d.n + (d.s ? '（'+d.s+'）' : '');
-let kkSel = KK.findIndex(d=>d.n==='特定技能1号'), kkMv='up', kkCol='shinsa', kkQ='';
+const KKP = KK.filter(d=>d.n==='特定技能1号'||d.n==='特定技能2号');
+let kkSel = 0;
 function kkD(a,b){ return (a===null||b===null)?null:Math.round((a-b)*10)/10; }
 function kkDH(d){
   if(d===null) return '<span class="kk-flat">前年比 ―</span>';
@@ -1378,7 +1379,7 @@ function kkCard(title, main, mainLbl, sub, subLbl, dv, noSub){
   </div>`;
 }
 function kkCardsHTML(){
-  const d=KK[kkSel];
+  const d=KKP[kkSel];
   return kkCard('在留資格認定証明書 交付', d.r8[0], '処分（交付）まで', null, '', kkD(d.r8[0],d.r7[0]), true)
        + kkCard('在留期間 更新', d.r8[2], '審査終了まで', d.r8[1], '処分（告知）まで', kkD(d.r8[2],d.r7[2]))
        + kkCard('在留資格 変更', d.r8[4], '審査終了まで', d.r8[3], '処分（告知）まで', kkD(d.r8[4],d.r7[4]));
@@ -1430,11 +1431,11 @@ function kkHTML(){
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">02</span></div>
-    <h3>在留資格から調べる。</h3>
+    <h3>特定技能の日数を、資格から見る。</h3>
     <p class="kk-lead">令和8年5月許可分の数値です。下段は令和7年2月許可分からの増減。</p>
     <div class="kk-picker">
       <label for="kkSel">在留資格</label>
-      <select id="kkSel">${KK.map((d,i)=>`<option value="${i}"${i===kkSel?' selected':''}>${esc(kkLbl(d))}</option>`).join('')}</select>
+      <select id="kkSel">${KKP.map((d,i)=>`<option value="${i}"${i===kkSel?' selected':''}>${esc(kkLbl(d))}</option>`).join('')}</select>
       <div class="kk-cards" id="kkCards">${kkCardsHTML()}</div>
     </div>
   </div>
@@ -1442,7 +1443,7 @@ function kkHTML(){
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">03</span></div>
     <h3>依頼者に聞かれたら、こう答える。</h3>
-    <p class="kk-lead">「審査ってどれくらいかかりますか」への標準的な答えです。公表平均（令和8年5月許可分）に<b>1ヶ月の余裕を足した幅</b>でお伝えします。他の在留資格は「在留資格から調べる」で引けます。</p>
+    <p class="kk-lead">「審査ってどれくらいかかりますか」への標準的な答えです。公表平均（令和8年5月許可分）に<b>1ヶ月の余裕を足した幅</b>でお伝えします。</p>
     <div class="kk-say">${kkSayHTML()}</div>
     <div class="kk-say-note">
       <b>なぜ幅で答えるのか。</b><br>
@@ -1487,11 +1488,11 @@ function kkHTML(){
         <div class="gap"><span class="kk-down">−0.4 日</span></div>
       </div>
       <div class="kk-crow">
-        <div class="nm">特定活動 <small>在留資格変更／審査終了まで</small></div>
+        <div class="nm">特定活動（特定技能移行準備） <small>在留資格変更／審査終了まで</small></div>
         <div class="box"><span class="l">公表値</span><span class="v">36.9</span></div>
         <div class="box"><span class="l">大房 実測（平均）</span><span class="v own">32.5</span><span class="med">中央値 27</span></div>
         <div class="gap"><span class="kk-down">−4.4 日</span></div>
-        <div class="kk-refnote">特定活動は、行おうとする活動によって審査期間が大きく異なります。</div>
+        <div class="kk-refnote"><b>対象がそろっていません。</b>大房の実測は、すべて<b>特定技能への移行準備のための特定活動</b>です。一方の公表値は、活動の種類を問わず合算した数字です（公表資料の注記どおり、特定活動は行おうとする活動によって審査期間が異なります）。同じ「特定活動」でも中身が違う点にご注意ください。</div>
       </div>
       <div class="kk-crow note-row">
         <div class="nm">特定技能1号 <small>在留資格認定証明書交付</small></div>
