@@ -315,6 +315,105 @@ main{min-width:0}
 .prow .pn{font-family:var(--mono);font-size:.68rem;color:var(--asagi)}
 .prow .po{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 
+/* ============ 在留審査処理期間 ============ */
+.kk-banner{background-color:var(--ai);color:var(--shiro);border-radius:2px;padding:24px 26px;margin-bottom:18px;cursor:pointer;position:relative;overflow:hidden;
+  background-image:linear-gradient(rgba(11,18,32,.5),rgba(11,18,32,.5)),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px);
+  transition:transform .18s ease,box-shadow .18s ease}
+.kk-banner:hover{transform:translateY(-3px);box-shadow:0 16px 40px -14px rgba(30,59,110,.55)}
+.kk-banner .wm{position:absolute;right:-24px;top:-24px;width:120px;height:120px;opacity:.1}
+.kk-banner .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:#7FB6B8}
+.kk-banner h3{font-family:var(--mincho);font-weight:800;font-size:1.2rem;margin:8px 0 6px}
+.kk-banner p{font-size:.82rem;color:rgba(243,244,242,.75);max-width:38em}
+.kk-banner .go{font-family:var(--mono);font-size:.7rem;margin-top:10px;color:#7FB6B8}
+.kk-src{font-size:.76rem;color:var(--nezumi);font-family:var(--mono);letter-spacing:.03em;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:20px}
+.kk-src b{color:var(--kachi);font-family:var(--gothic);letter-spacing:0}
+.kk-sec{margin-bottom:38px}
+.kk-sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.kk-sh .no{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--asagi)}
+.kk-sh::after{content:"";flex:1;height:1px;background:var(--line)}
+.kk-sec h3{font-family:var(--mincho);font-weight:800;font-size:1.16rem;letter-spacing:.03em}
+.kk-lead{font-size:.86rem;color:var(--nezumi);max-width:44em;margin-top:8px}
+.kk-defs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.kk-def{background:#fff;border:1px solid var(--line);border-radius:2px;padding:18px 20px}
+.kk-def.key{border-left:3px solid var(--asagi)}
+.kk-def .tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--nezumi);display:block;margin-bottom:5px}
+.kk-def.key .tag{color:var(--asagi)}
+.kk-def h4{font-family:var(--mincho);font-size:1rem;font-weight:600}
+.kk-def p{font-size:.8rem;color:var(--nezumi);margin-top:6px}
+.kk-callout{background:#fff;border-left:3px solid var(--ai);border-radius:2px;padding:12px 16px;margin-top:14px;font-size:.82rem}
+.kk-picker{background:#fff;border:1px solid var(--line);border-radius:2px;padding:22px;margin-top:18px}
+.kk-picker label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--nezumi);display:block;margin-bottom:8px}
+.kk-picker select{width:100%;max-width:400px;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.98rem;background:#F7F8F7;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--nezumi) 50%),linear-gradient(135deg,var(--nezumi) 50%,transparent 50%);
+  background-position:calc(100% - 20px) calc(50% + 1px),calc(100% - 15px) calc(50% + 1px);background-size:5px 5px,5px 5px;background-repeat:no-repeat;font-family:var(--gothic)}
+.kk-picker select:focus{outline:none;border-color:var(--ai);background-color:#fff}
+.kk-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.kk-card{border:1px solid var(--line);border-radius:2px;padding:18px;background:#FCFDFC}
+.kk-card .ct{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--nezumi)}
+.kk-card .main{font-family:var(--mincho);font-weight:800;font-size:clamp(2rem,5vw,2.6rem);color:var(--ai);line-height:1.05;margin:6px 0 2px}
+.kk-card .main small{font-size:.32em;color:var(--nezumi);font-weight:600;margin-left:4px}
+.kk-card .mlbl{font-size:.7rem;color:var(--asagi);font-weight:700}
+.kk-card .sub{font-size:.74rem;color:var(--nezumi);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+.kk-card .sub b{font-family:var(--mono);color:var(--kachi);font-size:.84rem}
+.kk-card .yoy{font-family:var(--mono);font-size:.7rem;margin-top:7px}
+.kk-card.na{background:#F7F8F7}
+.kk-card.na .main{color:var(--nezumi);font-size:1.2rem;font-family:var(--gothic);font-weight:500}
+.kk-up{color:var(--shu)}.kk-down{color:var(--asagi)}.kk-flat{color:var(--nezumi)}
+.kk-tools{display:flex;gap:10px;align-items:center;margin:18px 0 10px;flex-wrap:wrap}
+.kk-tools input{padding:9px 13px;border:1px solid var(--line);border-radius:2px;font-size:.84rem;background:#fff;min-width:180px;flex:1;max-width:280px}
+.kk-tools input:focus{outline:none;border-color:var(--ai)}
+.kk-seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.kk-seg button{border:0;background:#fff;color:var(--nezumi);padding:9px 13px;font-size:.74rem;cursor:pointer;white-space:nowrap}
+.kk-seg button.on{background:var(--ai);color:#fff}
+.kk-twrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:2px}
+.kk-tbl{width:100%;border-collapse:collapse;font-size:.84rem;min-width:640px}
+.kk-tbl thead th{background:#F0F2F4;font-size:.66rem;font-weight:700;letter-spacing:.05em;color:var(--ai);padding:8px 9px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.kk-tbl thead tr:first-child th{font-size:.7rem;background:#E7EBEF}
+.kk-tbl thead th.g,.kk-tbl tbody td.g{border-left:1px solid var(--line)}
+.kk-tbl tbody th{font-family:var(--mincho);font-weight:600;font-size:.86rem;text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);white-space:nowrap;background:#FAFBFA}
+.kk-tbl tbody td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-size:.84rem}
+.kk-tbl tbody td.key{font-weight:500;color:var(--ai);background:rgba(46,143,145,.05)}
+.kk-tbl tbody td.nav{color:#C5C9C6;text-align:center;font-size:.78rem}
+.kk-tbl tbody tr:hover td,.kk-tbl tbody tr:hover th{background:#F5F8F8}
+.kk-cmp{margin-top:20px;display:grid;gap:10px}
+.kk-crow{background:#fff;border:1px solid var(--line);border-radius:2px;padding:15px 18px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;gap:14px;align-items:center}
+.kk-crow .nm{font-family:var(--mincho);font-weight:600;font-size:.94rem}
+.kk-crow .nm small{display:block;font-family:var(--gothic);font-size:.68rem;color:var(--nezumi);font-weight:400;margin-top:2px}
+.kk-crow .box .l{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;color:var(--nezumi);display:block}
+.kk-crow .box .v{font-family:var(--mincho);font-weight:800;font-size:1.5rem;line-height:1.2}
+.kk-crow .box .v.own{color:var(--ai)}
+.kk-crow .box .med{font-family:var(--mono);font-size:.7rem;color:var(--nezumi)}
+.kk-crow .gap{font-family:var(--mono);font-size:.84rem;text-align:right}
+.kk-crow.note-row{border-left:3px solid var(--shu);background:#FDFAF9}
+.kk-crow.note-row .v.own{color:var(--shu)}
+.kk-refnote{font-size:.74rem;color:var(--nezumi);grid-column:1/-1;border-top:1px dashed var(--line);padding-top:9px;margin-top:3px}
+@media(max-width:860px){
+  .kk-defs,.kk-cards{grid-template-columns:1fr}
+  .kk-crow{grid-template-columns:1fr 1fr;gap:10px}
+  .kk-crow .nm{grid-column:1/-1}
+  .kk-crow .gap{grid-column:1/-1;text-align:left;border-top:1px dashed var(--line);padding-top:7px}
+}
+.kk-warn{background:#FDF8F7;border:1px solid rgba(185,50,39,.3);border-radius:2px;padding:14px 18px;margin-top:16px;font-size:.8rem}
+.kk-warn b{color:var(--shu);font-family:var(--mincho)}
+.kk-movers{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:16px}
+.kk-mv{background:#fff;border:1px solid var(--line);border-radius:2px;padding:14px 16px}
+.kk-mv.u{border-left:3px solid var(--shu)}
+.kk-mv.d{border-left:3px solid var(--asagi)}
+.kk-mv .nm{font-family:var(--mincho);font-weight:600;font-size:.88rem}
+.kk-mv .nm small{font-family:var(--gothic);font-size:.66rem;color:var(--nezumi);font-weight:400}
+.kk-mv .fig{display:flex;align-items:baseline;gap:8px;margin-top:6px;font-family:var(--mono)}
+.kk-mv .old{color:var(--nezumi);font-size:.82rem}
+.kk-mv .new{font-family:var(--mincho);font-weight:800;font-size:1.4rem}
+.kk-mv .d{font-family:var(--mono);font-size:.7rem;margin-top:2px}
+.kk-notes{background:#fff;border:1px solid var(--line);border-radius:2px;padding:24px;margin-top:16px}
+.kk-notes h4{font-family:var(--mincho);font-size:.98rem;font-weight:600;margin-bottom:10px}
+.kk-notes h4:not(:first-child){margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.kk-notes ul{list-style:none}
+.kk-notes li{font-size:.82rem;color:var(--nezumi);padding:6px 0 6px 19px;position:relative;line-height:1.8}
+.kk-notes li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--asagi)}
+.kk-notes li.imp::before{background:var(--shu)}
+.kk-notes li b{color:var(--kachi)}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -469,7 +568,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.13</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.14</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -613,11 +712,13 @@ function render(){
   if(view==='mypage'){ c.innerHTML = mypageHTML(); bindMypage(); return; }
   if(view==='shitsumon'){ c.innerHTML = shitsumonHTML(); bindShitsumon(); return; }
   if(view==='admin'){ c.innerHTML = '<div class="loading">読み込み中…</div>'; loadAdmin(); return; }
+  if(view==='kikan'){ $('viewTitle').textContent='審査情報'; c.innerHTML = kkHTML(); bindKikan(); window.scrollTo({top:0}); return; }
   if(view==='zuiji'){ renderZuiji(); return; }
   if(view==='search'){ c.innerHTML = listHTML(POSTS.filter(match)); bindList(); return; }
   let rows = POSTS.filter(p=>p.category===view).filter(match);
   let head = '';
   if(view==='shinsa'){
+    head += kkBanner();
     const rs=[...new Set(POSTS.filter(p=>p.category==='shinsa'&&p.region).map(p=>p.region))];
     if(rs.length){
       head = '<div class="regions">'+
@@ -627,6 +728,7 @@ function render(){
     }
   }
   c.innerHTML = head + listHTML(rows);
+  if($('kkGo')) $('kkGo').addEventListener('click', ()=>{ view='kikan'; renderNav(); render(); });
   c.querySelectorAll('.rg').forEach(b=>b.addEventListener('click',()=>{ region=b.dataset.r; render(); }));
   bindList();
 }
@@ -1187,6 +1289,271 @@ function renderAdmin(){
       await reloadData(); await loadAdmin();
     });
   });
+}
+
+/* ---- 在留審査処理期間（法務省 令和8年5月許可分／比較：令和7年2月許可分） ----
+   [認定(交付まで), 更新(処分まで), 更新(審査終了まで), 変更(処分まで), 変更(審査終了まで)]
+   null = 公表資料で斜線（該当データなし）／数値は公表資料のまま */
+const KK=[
+ {n:'教授',                r8:[26.3,37.2,24.6,31.6,19.1],    r7:[26.6,26.6,16.3,33.1,19.0]},
+ {n:'芸術',                r8:[37.7,31.9,20.8,42.0,33.8],    r7:[33.4,38.0,25.0,32.3,26.6]},
+ {n:'宗教',                r8:[36.4,42.1,31.1,null,null],    r7:[53.7,32.4,21.1,11.7,9.6]},
+ {n:'報道',                r8:[24.7,24.3,18.3,16.0,11.0],    r7:[null,43.4,35.2,45.0,38.0]},
+ {n:'高度専門職',s:'1号イ', r8:[85.0,43.5,27.8,39.2,30.3],    r7:[16.8,21.9,13.7,29.8,18.7]},
+ {n:'高度専門職',s:'1号ロ', r8:[60.8,40.3,30.5,43.4,31.3],    r7:[40.6,31.6,20.4,38.7,28.2]},
+ {n:'高度専門職',s:'1号ハ', r8:[81.0,38.0,31.0,189.7,183.7],  r7:[88.3,29.8,21.8,50.3,35.3]},
+ {n:'高度専門職',s:'2号',   r8:[null,null,null,72.1,59.5],    r7:[null,null,null,70.6,62.9]},
+ {n:'経営・管理',          r8:[153.4,48.5,39.9,157.2,141.3], r7:[106.2,37.4,27.2,56.1,47.4]},
+ {n:'法律・会計業務',      r8:[30.5,37.5,24.5,131.0,125.0],  r7:[null,35.3,22.0,null,null]},
+ {n:'医療',                r8:[23.5,33.9,20.7,36.9,24.3],    r7:[50.8,25.6,12.4,17.7,11.3]},
+ {n:'研究',                r8:[24.4,45.7,31.3,39.5,29.2],    r7:[48.4,22.8,11.2,27.3,14.6]},
+ {n:'教育',                r8:[39.2,34.9,21.8,35.5,24.0],    r7:[38.6,32.0,15.4,26.4,15.0]},
+ {n:'技術・人文知識・国際業務', r8:[62.9,46.0,35.3,48.8,38.5], r7:[54.9,27.6,17.2,39.9,25.9]},
+ {n:'企業内転勤',          r8:[45.1,49.7,37.1,69.5,63.8],    r7:[54.3,32.6,21.8,18.9,5.1]},
+ {n:'介護',                r8:[42.1,29.1,16.8,21.3,13.6],    r7:[45.5,24.5,14.0,33.6,19.4]},
+ {n:'興行',                r8:[21.4,34.3,21.4,43.7,32.0],    r7:[16.3,28.0,15.1,15.2,12.4]},
+ {n:'技能',                r8:[85.5,33.9,24.3,35.1,24.9],    r7:[95.7,34.4,25.4,32.5,26.2]},
+ {n:'特定技能1号',         r8:[68.6,45.8,32.6,64.7,44.9],    r7:[58.4,42.1,28.9,63.3,43.8]},
+ {n:'特定技能2号',         r8:[59.5,45.7,33.3,54.8,41.5],    r7:[50.3,27.7,17.0,53.8,39.5]},
+ {n:'技能実習',s:'1号イ',   r8:[24.5,null,null,null,null],    r7:[23.2,null,null,null,null]},
+ {n:'技能実習',s:'1号ロ',   r8:[18.0,34.4,21.5,24.4,15.0],    r7:[18.2,31.6,22.3,27.5,19.3]},
+ {n:'技能実習',s:'2号イ',   r8:[34.0,34.3,15.4,48.4,25.6],    r7:[null,28.4,11.4,41.9,19.2]},
+ {n:'技能実習',s:'2号ロ',   r8:[22.1,39.4,23.5,51.2,31.6],    r7:[21.9,32.0,20.6,46.9,27.1]},
+ {n:'技能実習',s:'3号イ',   r8:[21.2,38.5,13.5,40.0,21.7],    r7:[15.0,55.7,34.9,null,null]},
+ {n:'技能実習',s:'3号ロ',   r8:[20.3,35.0,18.7,51.0,30.4],    r7:[23.2,29.9,17.0,72.6,53.5]},
+ {n:'文化活動',            r8:[32.1,35.6,21.5,33.1,21.5],    r7:[31.2,26.7,17.8,27.9,11.1]},
+ {n:'短期滞在',            r8:[null,8.5,5.6,5.4,5.2],        r7:[null,13.0,7.7,8.0,7.6]},
+ {n:'留学',                r8:[70.6,34.9,22.1,36.4,26.2],    r7:[86.1,60.8,45.9,47.6,37.2]},
+ {n:'研修',                r8:[25.0,24.0,16.0,41.0,34.7],    r7:[53.8,29.5,17.5,null,null]},
+ {n:'家族滞在',            r8:[69.1,40.1,30.3,39.9,31.4],    r7:[88.7,30.5,20.8,25.8,19.0]},
+ {n:'特定活動',            r8:[30.3,37.0,23.5,49.3,36.9],    r7:[28.5,31.7,20.1,42.6,30.6]},
+ {n:'日本人の配偶者等',    r8:[111.5,47.0,34.0,51.2,39.8],   r7:[69.2,35.0,20.9,43.2,33.4]},
+ {n:'永住者の配偶者等',    r8:[137.5,46.0,32.1,47.5,35.9],   r7:[83.3,33.9,19.6,40.6,30.4]},
+ {n:'定住者',              r8:[84.7,42.7,29.2,53.0,42.6],    r7:[78.4,32.6,19.5,37.3,29.0]},
+ {n:'永住者',              r8:[null,null,null,292.1,276.8],  r7:[null,null,null,329.3,315.8]}
+];
+const kkLbl = d => d.n + (d.s ? '（'+d.s+'）' : '');
+let kkSel = KK.findIndex(d=>d.n==='特定技能1号'), kkMv='up', kkCol='shinsa', kkQ='';
+function kkD(a,b){ return (a===null||b===null)?null:Math.round((a-b)*10)/10; }
+function kkDH(d){
+  if(d===null) return '<span class="kk-flat">前年比 ―</span>';
+  if(d===0) return '<span class="kk-flat">±0 日</span>';
+  return '<span class="kk-'+(d>0?'up':'down')+'">'+(d>0?'▲ +':'▼ ')+d.toFixed(1)+' 日</span>';
+}
+function kkBanner(){
+  return `<div class="kk-banner" id="kkGo">
+    <svg class="wm" viewBox="-80 -80 160 160"><g fill="#F3F4F2"><use href="#p8"/></g></svg>
+    <p class="k">法務省 / 令和8年5月許可分</p>
+    <h3>在留審査処理期間（日数）</h3>
+    <p>資格を選べば、認定・更新・変更の日数が出ます。1年前との増減、大房行政書士事務所の実測値との対照つき。</p>
+    <p class="go">開く →</p>
+  </div>`;
+}
+function kkCard(title, main, mainLbl, sub, subLbl, dv, noSub){
+  if(main===null) return `<div class="kk-card na"><span class="ct">${title}</span><div class="main">公表なし</div><div class="sub">公表資料で斜線の区分です。</div></div>`;
+  return `<div class="kk-card">
+    <span class="ct">${title}</span>
+    <div class="main">${main.toFixed(1)}<small>日</small></div>
+    <div class="mlbl">${mainLbl}</div>
+    <div class="sub">${noSub?'審査終了までの日数は公表されていません。':subLbl+'：<b>'+(sub===null?'―':sub.toFixed(1))+'</b> 日'}</div>
+    <div class="yoy">令和7年2月比 ${kkDH(dv)}</div>
+  </div>`;
+}
+function kkCardsHTML(){
+  const d=KK[kkSel];
+  return kkCard('在留資格認定証明書 交付', d.r8[0], '処分（交付）まで', null, '', kkD(d.r8[0],d.r7[0]), true)
+       + kkCard('在留期間 更新', d.r8[2], '審査終了まで', d.r8[1], '処分（告知）まで', kkD(d.r8[2],d.r7[2]))
+       + kkCard('在留資格 変更', d.r8[4], '審査終了まで', d.r8[3], '処分（告知）まで', kkD(d.r8[4],d.r7[4]));
+}
+function kkMoversHTML(){
+  let rows=[];
+  if(kkMv==='cert'){
+    rows = KK.filter(d=>d.r8[0]!==null&&d.r7[0]!==null)
+      .map(d=>({nm:kkLbl(d),sub:'認定証明書 交付／処分（交付）まで',o:d.r7[0],v:d.r8[0],d:kkD(d.r8[0],d.r7[0])}))
+      .sort((a,b)=>b.d-a.d).slice(0,8);
+  }else{
+    const all=[];
+    KK.forEach(d=>{
+      if(d.r8[2]!==null&&d.r7[2]!==null) all.push({nm:kkLbl(d),sub:'更新／審査終了まで',o:d.r7[2],v:d.r8[2],d:kkD(d.r8[2],d.r7[2])});
+      if(d.r8[4]!==null&&d.r7[4]!==null) all.push({nm:kkLbl(d),sub:'変更／審査終了まで',o:d.r7[4],v:d.r8[4],d:kkD(d.r8[4],d.r7[4])});
+    });
+    rows = all.sort((a,b)=> kkMv==='up' ? b.d-a.d : a.d-b.d).slice(0,8);
+  }
+  return rows.map(r=>`<div class="kk-mv ${r.d>0?'u':'d'}">
+    <div class="nm">${esc(r.nm)}<br><small>${r.sub}</small></div>
+    <div class="fig"><span class="old">${r.o.toFixed(1)}</span><span class="kk-${r.d>0?'up':'down'}">→</span><span class="new kk-${r.d>0?'up':'down'}">${r.v.toFixed(1)}</span></div>
+    <div class="d">${kkDH(r.d)}</div>
+  </div>`).join('');
+}
+function kkTableHTML(){
+  const sho = kkCol!=='shinsa', shin = kkCol!=='shobun';
+  const cols=(sho?1:0)+(shin?1:0);
+  const head=`<thead>
+    <tr><th rowspan="2">在留資格</th><th class="g">認定証明書 交付</th><th class="g" colspan="${cols}">在留期間 更新</th><th class="g" colspan="${cols}">在留資格 変更</th></tr>
+    <tr><th class="g">処分（交付）まで</th>
+      ${sho?'<th class="g">処分まで</th>':''}${shin?`<th class="${sho?'':'g'}">審査終了まで</th>`:''}
+      ${sho?'<th class="g">処分まで</th>':''}${shin?`<th class="${sho?'':'g'}">審査終了まで</th>`:''}
+    </tr></thead>`;
+  const rows=KK.filter(d=>!kkQ||kkLbl(d).toLowerCase().includes(kkQ));
+  const cell=(v,cls)=> v===null?`<td class="nav ${cls||''}">―</td>`:`<td class="${cls||''}">${v.toFixed(1)}</td>`;
+  const body=rows.length?rows.map(d=>`<tr><th>${esc(kkLbl(d))}</th>${cell(d.r8[0],'g')}
+    ${sho?cell(d.r8[1],'g'):''}${shin?cell(d.r8[2],sho?'key':'g key'):''}
+    ${sho?cell(d.r8[3],'g'):''}${shin?cell(d.r8[4],sho?'key':'g key'):''}</tr>`).join('')
+    :`<tr><td colspan="6" style="text-align:center;color:var(--nezumi);font-family:var(--gothic)">該当する在留資格がありません。</td></tr>`;
+  return head+'<tbody>'+body+'</tbody>';
+}
+function kkHTML(){
+  return `
+  <div class="backbar"><button id="kkBack">← 審査情報へ戻る</button></div>
+  <div class="kk-src">
+    出典：<b>法務省「在留審査処理期間（日数）」令和8年5月許可分</b>　／　比較用：同 令和7年2月許可分<br>
+    数値は公表資料のままで、改変していません。
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">01</span></div>
+    <h3>まず、2つの「日数」を分けて読む。</h3>
+    <p class="kk-lead">同じ表に2種類の日数が並んでいます。実務で効くのは<b style="color:var(--asagi)">審査終了までの日数</b>のほうです。</p>
+    <div class="kk-defs">
+      <div class="kk-def"><span class="tag">A ─ 処分までの日数</span><h4>処分（告知）まで</h4>
+        <p>申請の受理から、許可を告知するまで。<b>審査が終わったあと、実際に入管へ受け取りに行った日までが含まれます。</b>本人がいつ入管に行けるか次第で伸びるため、審査そのものの長さとはズレます。</p></div>
+      <div class="kk-def key"><span class="tag">B ─ 審査終了までの日数</span><h4>審査終了まで</h4>
+        <p>申請の受理から、審査が終わるまで。<b>入管側の処理の実力値がここに出ます。</b>「いつ結果が出るか」を依頼者に伝えるなら、見るべきはこちらです。</p></div>
+    </div>
+    <div class="kk-callout">在留資格認定証明書の交付だけは<b>「処分（交付）までの日数」しか公表されていません</b>。認定の列と、更新・変更の「審査終了まで」の列は、定義が違うため単純には比べられません。</div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">02</span></div>
+    <h3>在留資格から調べる。</h3>
+    <p class="kk-lead">令和8年5月許可分の数値です。下段は令和7年2月許可分からの増減。</p>
+    <div class="kk-picker">
+      <label for="kkSel">在留資格</label>
+      <select id="kkSel">${KK.map((d,i)=>`<option value="${i}"${i===kkSel?' selected':''}>${esc(kkLbl(d))}</option>`).join('')}</select>
+      <div class="kk-cards" id="kkCards">${kkCardsHTML()}</div>
+    </div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">03</span></div>
+    <h3>公表値と、大房の実測値。</h3>
+    <p class="kk-lead">同時期（公表＝令和8年5月許可分／実測＝2026年5月以降）の、審査終了までの日数どうしで並べました。実測は平均と中央値の両方を出しています。</p>
+    <div class="kk-warn"><b>測り方が違います。</b>公表値の起点は入管が申請を<b>受理した日</b>、大房の実測値の起点は<b>受付通知メールを受け取った日</b>です。受付通知はオンライン申請の受付時点で届くため、実測値は原理上わずかに短く出ます。数字を並べていますが、同じ物差しではありません。</div>
+    <div class="kk-cmp">
+      <div class="kk-crow">
+        <div class="nm">特定技能1号 <small>在留期間更新／審査終了まで</small></div>
+        <div class="box"><span class="l">公表値</span><span class="v">32.6</span></div>
+        <div class="box"><span class="l">大房 実測（平均）</span><span class="v own">29.7</span><span class="med">中央値 26</span></div>
+        <div class="gap"><span class="kk-down">−2.9 日</span></div>
+      </div>
+      <div class="kk-crow">
+        <div class="nm">特定技能1号 <small>在留資格変更／審査終了まで</small></div>
+        <div class="box"><span class="l">公表値</span><span class="v">44.9</span></div>
+        <div class="box"><span class="l">大房 実測（平均）</span><span class="v own">46.7</span><span class="med">中央値 44</span></div>
+        <div class="gap"><span class="kk-up">＋1.8 日</span></div>
+        <div class="kk-refnote">公表値は外食業分野を除外して算出されています。大房の実測に外食業分野の案件が含まれる場合、そもそも<b>算出範囲が異なります</b>。</div>
+      </div>
+      <div class="kk-crow">
+        <div class="nm">特定技能2号 <small>在留資格変更／審査終了まで</small></div>
+        <div class="box"><span class="l">公表値</span><span class="v">41.5</span></div>
+        <div class="box"><span class="l">大房 実測（平均）</span><span class="v own">41.1</span><span class="med">中央値 36</span></div>
+        <div class="gap"><span class="kk-down">−0.4 日</span></div>
+      </div>
+      <div class="kk-crow">
+        <div class="nm">特定活動 <small>在留資格変更／審査終了まで</small></div>
+        <div class="box"><span class="l">公表値</span><span class="v">36.9</span></div>
+        <div class="box"><span class="l">大房 実測（平均）</span><span class="v own">32.5</span><span class="med">中央値 27</span></div>
+        <div class="gap"><span class="kk-down">−4.4 日</span></div>
+        <div class="kk-refnote">特定活動は、行おうとする活動によって審査期間が大きく異なります。</div>
+      </div>
+      <div class="kk-crow note-row">
+        <div class="nm">特定技能1号 <small>在留資格認定証明書交付</small></div>
+        <div class="box"><span class="l">公表値（処分＝交付まで）</span><span class="v">68.6</span></div>
+        <div class="box"><span class="l">大房 実測（参考値）</span><span class="v own">40.1</span><span class="med">中央値 ─</span></div>
+        <div class="gap"><span class="kk-flat">比較不可</span></div>
+        <div class="kk-refnote"><b>この行だけは他と同列に扱えません。</b>理由は2つです。<br>
+          ① 列の定義が違う ─ 公表値は<b>交付までの日数</b>で、審査終了までの日数は公表されていません。<br>
+          ② <b>大房の実測は母数が小さく、参考値です。</b>平均値の安定性が他の4行と同じ水準にありません。<br>
+          あわせて、公表値は外食業分野を除外して算出されています。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">04</span></div>
+    <h3>1年で、どう変わったか。</h3>
+    <p class="kk-lead">令和7年2月許可分との比較です。<b class="kk-up">朱は長期化</b>、<b class="kk-down">浅葱は短縮</b>。伸びの大きい順に並べています（審査終了までの日数／両月に数値がある区分のみ）。</p>
+    <div class="kk-tools"><div class="kk-seg" id="kkMvSeg">
+      <button class="${kkMv==='up'?'on':''}" data-k="up">長期化した順</button>
+      <button class="${kkMv==='down'?'on':''}" data-k="down">短縮した順</button>
+      <button class="${kkMv==='cert'?'on':''}" data-k="cert">認定（交付まで）</button>
+    </div></div>
+    <div class="kk-movers" id="kkMovers">${kkMoversHTML()}</div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">05</span></div>
+    <h3>全在留資格の一覧。</h3>
+    <p class="kk-lead">令和8年5月許可分。「―」は該当データなし（公表資料で斜線の区分）。</p>
+    <div class="kk-tools">
+      <input type="search" id="kkQ" placeholder="在留資格で絞り込む（例：特定技能）" value="${esc(kkQ)}">
+      <div class="kk-seg" id="kkColSeg">
+        <button class="${kkCol==='shinsa'?'on':''}" data-k="shinsa">審査終了まで</button>
+        <button class="${kkCol==='shobun'?'on':''}" data-k="shobun">処分まで</button>
+        <button class="${kkCol==='both'?'on':''}" data-k="both">両方</button>
+      </div>
+    </div>
+    <div class="kk-twrap"><table class="kk-tbl" id="kkTbl">${kkTableHTML()}</table></div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">06</span></div>
+    <h3>注記（公表資料より、省略なし）。</h3>
+    <div class="kk-notes">
+      <h4>令和8年5月許可分の注記</h4>
+      <ul>
+        <li class="imp">本件は申請の受理から許可に至るまでの期間（許可を告知するまで）であり、<b>追加資料の提出を求めた場合は、当該資料が提出されるまでの日数が含まれています</b>。また、<b>不許可処分・申請取下げ等は含まれません</b>。</li>
+        <li>在留期間更新許可申請、在留資格変更許可申請の場合、処分日は許可の告知時（入管局にお越しいただく日）となるため、「処分（告知）までの日数」には、<b>審査終了から実際に入管局で許可を受けた日までの期間が含まれます</b>。</li>
+        <li>「在留資格変更等」には、永住許可申請（一般永住のみ・取得申請を除く）も含まれます。</li>
+        <li>特定活動は行おうとする活動によって、審査期間が異なります。</li>
+        <li>「技能実習3号」への在留資格変更について、申請後1か月以上一時帰国した後に許可を受ける事例が含まれています。</li>
+        <li>例年、日本語学校のコース開講（4月、10月）に向けて、申請が増加するため、在留資格「留学」について、審査期間が長期化する傾向にあります。</li>
+        <li>例年、4月の就職時期に向けて、申請が増加するため、就労資格について、審査期間が長期化する傾向にあります。</li>
+        <li class="imp">特定技能1号に係る在留資格認定証明書交付及び在留資格変更許可の審査処理期間について、令和8年3月27日付「特定技能「外食業分野」における受入れ上限の運用について」に基づいた措置をとっていることから、<b>外食業分野に係る申請を除外した上で算出しています</b>。</li>
+      </ul>
+      <h4>比較対象（令和7年2月許可分）の注記</h4>
+      <ul>
+        <li>本件は申請の受理から許可に至るまでの期間（許可を告知するまで）であり、追加資料の提出を求めた場合は、当該資料が提出されるまでの日数が含まれています。また、不許可処分・申請取下げ等は含まれません。</li>
+        <li>在留期間更新許可申請、在留資格変更許可申請の場合、処分日は許可の告知時（入管局にお越しいただく日）となるため、「処分（告知）までの日数」には、審査終了から実際に入管局で許可を受けた日までの期間が含まれます。</li>
+        <li>「在留資格変更等」には、永住許可申請（一般永住のみ・取得申請を除く）も含まれます。</li>
+        <li>特定活動は行おうとする活動によって、審査期間が異なります。</li>
+        <li>「技能実習3号」への在留資格変更について、申請後1か月以上一時帰国した後に許可を受ける事例が含まれています。</li>
+        <li>例年、日本語学校のコース開講（4月、10月）に向けて、申請が増加するため、在留資格「留学」について、審査期間が長期化する傾向にあります。</li>
+        <li>例年、4月の就職時期に向けて、申請が増加するため、就労資格について、審査期間が長期化する傾向にあります。</li>
+        <li class="imp">令和7年2月許可分には、<b>外食業分野の除外に関する注記はありません</b>。特定技能1号の認定交付・変更許可を1年前と比較する際は、算出範囲が異なる点にご注意ください。</li>
+      </ul>
+      <h4>大房行政書士事務所の実測値について</h4>
+      <ul>
+        <li class="imp"><b>起点が公表値と異なります。</b>公表値は入管が申請を受理した日を起点としますが、実測値は<b>受付通知メールを受け取った日</b>を起点とし、<b>審査完了メールを受け取った日</b>を終点としています。受付通知は受付時点で届くため、実測値は原理上わずかに短く出ます。</li>
+        <li>対象は2026年5月以降に受け付けた案件です。平均値と中央値を併記しています。</li>
+        <li><b>特定技能1号の在留資格認定証明書交付（40.1）は母数が小さく、参考値です。</b>他の区分と同列には扱えません。また、公表値は交付までの日数であり、定義そのものが異なります。</li>
+        <li>大房の実測値は当事務所の取扱案件に基づくもので、全国の傾向を示すものではありません。</li>
+      </ul>
+    </div>
+  </div>`;
+}
+function bindKikan(){
+  $('kkBack').addEventListener('click', ()=>go('shinsa'));
+  $('kkSel').addEventListener('change', e=>{ kkSel=+e.target.value; $('kkCards').innerHTML=kkCardsHTML(); });
+  $('kkMvSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    $('kkMvSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); kkMv=b.dataset.k; $('kkMovers').innerHTML=kkMoversHTML();
+  }));
+  $('kkQ').addEventListener('input', e=>{ kkQ=e.target.value.trim().toLowerCase(); $('kkTbl').innerHTML=kkTableHTML(); });
+  $('kkColSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    $('kkColSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); kkCol=b.dataset.k; $('kkTbl').innerHTML=kkTableHTML();
+  }));
 }
 
 /* ---- 簡易マークダウン ---- */
