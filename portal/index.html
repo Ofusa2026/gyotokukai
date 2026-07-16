@@ -339,7 +339,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.05</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.06</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -585,7 +585,32 @@ function mapHTML(){
     <div class="map-intro">
       <h3>なぜ、行政書士会と連携するのか</h3>
       <p>登録支援機関による違法な申請手続きのサポートを防止するため、特行会は各都道府県の行政書士会との連携を進めています。書類作成は行政書士の仕事です。現場の実態を集め、各地の行政書士会と手を組んで、適正化を図ります。</p>
-      <p class="cta">お近くの行政書士会とご縁のある方は、<b>ぜひ繋いでください。</b><a href="mailto:${ASK_TO}?subject=${encodeURIComponent('【特行会】行政書士会のご紹介')}&body=${encodeURIComponent('都道府県：\nご紹介いただける方・窓口：\n関係性：\n')}">紹介の連絡をする →</a></p>
+      <p class="cta">お近くの行政書士会とご縁のある方は、<b>ぜひ繋いでください。</b></p>
+      <button class="pbtn" id="btnIntro" style="margin-top:10px">紹介フォームを開く</button>
+      <div id="introForm" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)">
+        <label class="fl" style="display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--nezumi);margin:0 0 8px" for="inPref">都道府県</label>
+        <select id="inPref" style="width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.94rem;background:#F7F8F7;font-family:var(--gothic)">
+          <option value="">選択してください</option>
+          ${PREFS.map(p=>`<option value="${p.code}">${esc(p.name)}</option>`).join('')}
+        </select>
+        <label class="fl" style="display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--nezumi);margin:16px 0 8px" for="inContact">ご紹介いただける方・窓口</label>
+        <input type="text" id="inContact" maxlength="300" placeholder="例：〇〇県行政書士会 △△委員会の□□先生" style="width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.94rem;background:#F7F8F7;font-family:var(--gothic)">
+        <label class="fl" style="display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--nezumi);margin:16px 0 8px" for="inRelation">関係性</label>
+        <select id="inRelation" style="width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.94rem;background:#F7F8F7;font-family:var(--gothic)">
+          <option value="">選択してください</option>
+          <option>会の役員・委員を務めている</option>
+          <option>会の役員・委員と面識がある</option>
+          <option>支部の集まりで話せる関係</option>
+          <option>同期・知人として紹介できる</option>
+          <option>その他（補足に記入）</option>
+        </select>
+        <label class="fl" style="display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--nezumi);margin:16px 0 8px" for="inMsg">補足（任意）</label>
+        <textarea id="inMsg" maxlength="1000" placeholder="つなぎ方のご提案、先方の関心事など" style="width:100%;min-height:90px;padding:12px 13px;border:1px solid var(--line);border-radius:2px;font-size:.92rem;background:#F7F8F7;font-family:var(--gothic);line-height:1.8;resize:vertical"></textarea>
+        <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
+          <button class="pbtn" id="inSend">この内容で送信する</button>
+          <span id="inMsgTxt" style="font-size:.8rem"></span>
+        </div>
+      </div>
     </div>
     <div class="map-head">
       <div class="map-count">${done.length}<small> / 47</small></div>
@@ -608,6 +633,22 @@ function mapHTML(){
     </div>`;
 }
 function bindMap(){
+  const iBtn=$('btnIntro'), iForm=$('introForm');
+  iBtn.addEventListener('click',()=>{ iForm.style.display = iForm.style.display==='none'?'block':'none'; });
+  $('inSend').addEventListener('click', async ()=>{
+    const pref=$('inPref').value, contact=$('inContact').value.trim(), relation=$('inRelation').value, msg=$('inMsg').value.trim();
+    const t=$('inMsgTxt');
+    if(!pref||!contact||!relation){ t.textContent='都道府県・窓口・関係性は必須です。'; t.style.color='var(--shu)'; return; }
+    const b=$('inSend'); b.disabled=true;
+    const r=await api({action:'submit_intro', token:TOKEN, pref_code:pref, contact, relation, message:msg});
+    b.disabled=false;
+    if(r.ok){
+      iForm.innerHTML='<div style="font-family:var(--mincho);font-weight:800;color:var(--ai);font-size:1.05rem">ありがとうございます。</div><div style="font-size:.86rem;color:var(--nezumi);margin-top:6px">運営に届きました。つなぎ方を検討して、こちらからご連絡します。</div>';
+    }
+    else if(r.error==='rate'){ t.textContent='送信の間隔が短すぎます。少し待ってください。'; t.style.color='var(--shu)'; }
+    else if(r.error==='ng_word'){ t.textContent='使用できない表現が含まれています。'; t.style.color='var(--shu)'; }
+    else{ t.textContent='送信に失敗しました。'; t.style.color='var(--shu)'; }
+  });
   const note=$('mapNote');
   document.querySelectorAll('.jmap .pf').forEach((el,i)=>{
     if(el.classList.contains('partnered')){ el.classList.add('pop'); el.querySelector('rect').style.animationDelay=(i*30)+'ms'; }
