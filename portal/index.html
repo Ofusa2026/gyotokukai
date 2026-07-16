@@ -361,7 +361,7 @@ main{min-width:0}
       <button class="back" id="btnBack">メールアドレスを入れ直す</button>
     </div>
     <p class="msg" id="loginMsg"></p>
-    <p class="lp">未登録の方は <a href="../">特行会の登録ページ</a> からご登録ください。</p>
+    <p class="lp">ポータルは承認された会員のみご利用いただけます。未登録の方は <a href="../">特行会の登録ページ</a> からご登録ください（事務局の確認後にご案内します）。</p>
   </div>
 </div>
 
@@ -371,7 +371,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.07</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.08</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -955,6 +955,7 @@ function renderAdmin(){
   $('content').innerHTML = `
     <div class="stat-cards">
       <div class="scard"><div class="k">登録会員</div><div class="v">${st.registrations}</div></div>
+      <div class="scard${st.pending_members?' alert':''}"><div class="k">承認待ち会員</div><div class="v">${st.pending_members}</div></div>
       <div class="scard"><div class="k">プロフィール済</div><div class="v">${st.profiles}</div></div>
       <div class="scard${st.pending?' alert':''}"><div class="k">承認待ち質問</div><div class="v">${st.pending}</div></div>
       <div class="scard"><div class="k">掲載質問</div><div class="v">${st.questions - st.pending}</div></div>
@@ -970,7 +971,7 @@ function renderAdmin(){
     </div>
     <div class="atable-wrap">
       <table class="atable">
-        <thead><tr><th>氏名（マイページ）</th><th>事務所</th><th>都道府県</th><th>取扱/月</th><th>メール</th><th>LP登録日</th><th>状態</th></tr></thead>
+        <thead><tr><th>氏名（マイページ）</th><th>事務所</th><th>都道府県</th><th>取扱/月</th><th>メール</th><th>LP登録日</th><th>入会</th><th>操作</th></tr></thead>
         <tbody>${mem.map(m=>`
           <tr>
             <td><span class="nm">${avatarHTML(m.profile&&m.profile.photo_url, (m.profile?m.profile.name:m.reg_name), true)}<span>${esc(m.profile?m.profile.name:m.reg_name)}</span></span></td>
@@ -979,8 +980,13 @@ function renderAdmin(){
             <td>${VOLLBL[m.volume]||esc(m.volume)}</td>
             <td class="mono">${esc(m.email)}</td>
             <td class="mono">${fdate(m.registered_at)}</td>
-            <td>${m.profile?'<span class="badge hasprofile">登録済</span>':'<span class="badge noprofile">未登録</span>'}</td>
-          </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--nezumi)">該当なし</td></tr>'}
+            <td>${m.status==='approved'?'<span class="badge hasprofile">会員</span>':m.status==='rejected'?'<span class="badge rejected">却下</span>':'<span class="badge pending">承認待ち</span>'}</td>
+            <td style="white-space:nowrap">${m.status==='pending'
+              ?`<button class="abtn ok mem-ok" data-e="${esc(m.email)}" style="padding:6px 12px;font-size:.72rem">承認</button> <button class="abtn no mem-no" data-e="${esc(m.email)}" style="padding:6px 12px;font-size:.72rem">却下</button>`
+              :m.status==='rejected'
+              ?`<button class="abtn ok mem-ok" data-e="${esc(m.email)}" style="padding:6px 12px;font-size:.72rem">承認する</button>`
+              :''}</td>
+          </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--nezumi)">該当なし</td></tr>'}
         </tbody>
       </table>
     </div>
@@ -1024,11 +1030,24 @@ function renderAdmin(){
     </div>`;
 
   $('memQ').addEventListener('input', e=>{ memFilter=e.target.value.trim().toLowerCase(); renderAdmin(); });
+  document.querySelectorAll('.mem-ok').forEach(b=>b.addEventListener('click', async ()=>{
+    if(!confirm(b.dataset.e+' を承認しますか？（承認メールが本人に届きます）')) return;
+    b.disabled=true;
+    await api({action:'admin_set_member', token:TOKEN, member_email:b.dataset.e, decision:'approved'});
+    await loadAdmin();
+  }));
+  document.querySelectorAll('.mem-no').forEach(b=>b.addEventListener('click', async ()=>{
+    if(!confirm(b.dataset.e+' を却下しますか？（ポータルにログインできなくなります）')) return;
+    b.disabled=true;
+    await api({action:'admin_set_member', token:TOKEN, member_email:b.dataset.e, decision:'rejected'});
+    await loadAdmin();
+  }));
   $('csvBtn').addEventListener('click', ()=>{
-    const head=['氏名','事務所','都道府県','取扱件数月平均','メール','LP登録日','プロフィール'];
+    const STJP={approved:'会員',pending:'承認待ち',rejected:'却下'};
+    const head=['氏名','事務所','都道府県','取扱件数月平均','メール','LP登録日','入会状態','プロフィール'];
     const rows=ADMIN.members.map(m=>[
       m.profile?m.profile.name:m.reg_name, m.profile?m.profile.office:m.reg_office,
-      m.profile?m.profile.pref:'', VOLLBL[m.volume]||m.volume, m.email, fdate(m.registered_at), m.profile?'登録済':'未登録']);
+      m.profile?m.profile.pref:'', VOLLBL[m.volume]||m.volume, m.email, fdate(m.registered_at), STJP[m.status]||m.status, m.profile?'登録済':'未登録']);
     const csvEsc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
     const csv='\uFEFF'+[head].concat(rows).map(r=>r.map(csvEsc).join(',')).join('\r\n');
     const a=document.createElement('a');
