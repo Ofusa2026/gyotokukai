@@ -371,7 +371,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.08</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.09</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -410,7 +410,7 @@ const CATS = [
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
 let TOKEN = localStorage.getItem('tgk_token') || '';
-let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
+let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, MEMBER_TOTAL = 0, UNREG = 0, HIDDEN = 0, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
 async function api(payload){
@@ -465,6 +465,7 @@ async function enter(){
   PREF_MEMBERS = r.pref_members||{};
   MEMBER_TOTAL = r.member_total||0;
   UNREG = r.unregistered||0;
+  HIDDEN = r.hidden_members||0;
   [$('askBtn'),$('askBtnM')].forEach(a=>{ a.href='#'; a.addEventListener('click',e=>{e.preventDefault(); go('shitsumon');}); });
   $('whoami').textContent = (PROFILE?PROFILE.name+'　':'')+(r.email||'');
   renderNav();
@@ -665,7 +666,7 @@ function mapHTML(){
       done.concat(talking).map(p=>`<div class="row"><span class="nm">${esc(p.name)}</span><span class="st ${p.status}" style="font-family:var(--mono);font-size:.66rem">${STLBL[p.status]}</span>${p.note?'<span>'+esc(p.note)+'</span>':''}<span class="dt">${fdate(p.updated_at)}</span></div>`).join('')
     }</div>`:''}
     <div class="map-list">
-      <h4>MEMBERS ─ 会員分布（計 ${MEMBER_TOTAL}名${UNREG?'＋都道府県未登録 '+UNREG+'名':''}）</h4>
+      <h4>MEMBERS ─ 会員分布（計 ${MEMBER_TOTAL}名${HIDDEN?'＋非公開 '+HIDDEN+'名':''}${UNREG?'＋未登録 '+UNREG+'名':''}）</h4>
       ${mrows.length?`<div class="mchips">${mrows.map(x=>`<span class="mchip"><b>${esc(x.name)}</b> ${x.n}</span>`).join('')}${UNREG?`<span class="mchip un"><b>未登録</b> ${UNREG}</span>`:''}</div>`
         :(UNREG?`<div class="mchips"><span class="mchip un"><b>未登録</b> ${UNREG}</span></div>`:'<div style="font-size:.84rem;color:var(--nezumi)">まだ登録がありません。</div>')}
     </div>`;
@@ -725,6 +726,11 @@ function mypageHTML(){
       <input type="text" id="mpOffice" value="${PROFILE?esc(PROFILE.office):''}" placeholder="〇〇行政書士事務所">
       <label class="fl" for="mpPref">都道府県</label>
       <select id="mpPref"><option value="">選択してください</option>${prefOpts}</select>
+      <label class="fl">連携マップでの表示</label>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;cursor:pointer">
+        <input type="checkbox" id="mpShow" style="margin-top:5px"${(!PROFILE||PROFILE.show_in_map!==false)?' checked':''}>
+        <span>連携マップの会員分布（都道府県別の人数）に自分を含める<br><span style="font-size:.74rem;color:var(--nezumi)">氏名は表示されません。人数の集計に含まれるだけです。外すと「非公開」として人数のみ別枠で表示されます。</span></span>
+      </label>
       <div style="margin-top:22px"><button class="pbtn" id="mpSave">保存する</button></div>
       <p class="fmsg" id="mpMsg"></p>
     </div>
@@ -756,10 +762,10 @@ function bindMypage(){
     const msg=$('mpMsg');
     if(!name||!office||!pref){ msg.textContent='氏名・事務所名・都道府県は必須です。'; msg.className='fmsg show ng'; return; }
     const b=$('mpSave'); b.disabled=true;
-    const r = await api({action:'save_profile', token:TOKEN, name, office, pref_code:pref});
+    const r = await api({action:'save_profile', token:TOKEN, name, office, pref_code:pref, show_in_map:$('mpShow').checked});
     b.disabled=false;
     if(r.ok){
-      PROFILE = Object.assign(PROFILE||{}, {name, office, pref_code:parseInt(pref,10)});
+      PROFILE = Object.assign(PROFILE||{}, {name, office, pref_code:parseInt(pref,10), show_in_map:$('mpShow').checked});
       $('whoami').textContent = name;
       msg.textContent='保存しました。'; msg.className='fmsg show ok';
       renderNav();
@@ -872,7 +878,7 @@ function bindShitsumon(){
 }
 async function reloadData(){
   const r = await api({action:'get_posts', token:TOKEN});
-  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; renderNav(); }
+  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; HIDDEN=r.hidden_members||0; renderNav(); }
 }
 
 /* ---- 質問詳細＋コメント ---- */
