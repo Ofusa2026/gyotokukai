@@ -326,7 +326,8 @@ main{min-width:0}
 .kk-banner .wm{position:absolute;right:-24px;top:-24px;width:120px;height:120px;opacity:.1}
 .kk-banner .k{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:#7FB6B8}
 .kk-banner .t{display:block;font-family:var(--mincho);font-weight:800;font-size:1.2rem;margin:8px 0 6px;line-height:1.5}
-.kk-banner .d{display:block;font-size:.82rem;color:rgba(243,244,242,.75);max-width:38em;line-height:1.8}
+.kk-banner .d{display:block;font-size:.82rem;color:rgba(243,244,242,.75);max-width:36em;line-height:1.9;word-break:auto-phrase;line-break:strict;overflow-wrap:anywhere}
+.kk-banner .nb{white-space:nowrap}
 .kk-banner .go{display:block;font-family:var(--mono);font-size:.7rem;margin-top:10px;color:#7FB6B8}
 .kk-src{font-size:.76rem;color:var(--nezumi);font-family:var(--mono);letter-spacing:.03em;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:20px}
 .kk-src b{color:var(--kachi);font-family:var(--gothic);letter-spacing:0}
@@ -334,15 +335,15 @@ main{min-width:0}
 .kk-sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .kk-sh .no{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--asagi)}
 .kk-sh::after{content:"";flex:1;height:1px;background:var(--line)}
-.kk-sec h3{font-family:var(--mincho);font-weight:800;font-size:1.16rem;letter-spacing:.03em}
-.kk-lead{font-size:.86rem;color:var(--nezumi);max-width:44em;margin-top:8px}
+.kk-sec h3{font-family:var(--mincho);font-weight:800;font-size:1.16rem;letter-spacing:.03em;word-break:auto-phrase;line-break:strict}
+.kk-lead{font-size:.86rem;color:var(--nezumi);max-width:44em;margin-top:8px;word-break:auto-phrase;line-break:strict}
 .kk-defs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .kk-def{background:#fff;border:1px solid var(--line);border-radius:2px;padding:18px 20px}
 .kk-def.key{border-left:3px solid var(--asagi)}
 .kk-def .tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--nezumi);display:block;margin-bottom:5px}
 .kk-def.key .tag{color:var(--asagi)}
 .kk-def h4{font-family:var(--mincho);font-size:1rem;font-weight:600}
-.kk-def p{font-size:.8rem;color:var(--nezumi);margin-top:6px}
+.kk-def p{font-size:.8rem;color:var(--nezumi);margin-top:6px;word-break:auto-phrase;line-break:strict}
 .kk-callout{background:#fff;border-left:3px solid var(--ai);border-radius:2px;padding:12px 16px;margin-top:14px;font-size:.82rem}
 .kk-picker{background:#fff;border:1px solid var(--line);border-radius:2px;padding:22px;margin-top:18px}
 .kk-picker label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--nezumi);display:block;margin-bottom:8px}
@@ -389,14 +390,14 @@ main{min-width:0}
 .kk-crow .gap{font-family:var(--mono);font-size:.84rem;text-align:right}
 .kk-crow.note-row{border-left:3px solid var(--shu);background:#FDFAF9}
 .kk-crow.note-row .v.own{color:var(--shu)}
-.kk-refnote{font-size:.74rem;color:var(--nezumi);grid-column:1/-1;border-top:1px dashed var(--line);padding-top:9px;margin-top:3px}
+.kk-refnote{font-size:.74rem;color:var(--nezumi);grid-column:1/-1;border-top:1px dashed var(--line);padding-top:9px;margin-top:3px;word-break:auto-phrase;line-break:strict}
 @media(max-width:860px){
   .kk-defs,.kk-cards{grid-template-columns:1fr}
   .kk-crow{grid-template-columns:1fr 1fr;gap:10px}
   .kk-crow .nm{grid-column:1/-1}
   .kk-crow .gap{grid-column:1/-1;text-align:left;border-top:1px dashed var(--line);padding-top:7px}
 }
-.kk-warn{background:#FDF8F7;border:1px solid rgba(185,50,39,.3);border-radius:2px;padding:14px 18px;margin-top:16px;font-size:.8rem}
+.kk-warn{background:#FDF8F7;border:1px solid rgba(185,50,39,.3);border-radius:2px;padding:14px 18px;margin-top:16px;font-size:.8rem;line-height:1.9;word-break:auto-phrase;line-break:strict}
 .kk-warn b{color:var(--shu);font-family:var(--mincho)}
 .kk-movers{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:16px}
 .kk-mv{background:#fff;border:1px solid var(--line);border-radius:2px;padding:14px 16px}
@@ -412,7 +413,7 @@ main{min-width:0}
 .kk-notes h4{font-family:var(--mincho);font-size:.98rem;font-weight:600;margin-bottom:10px}
 .kk-notes h4:not(:first-child){margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .kk-notes ul{list-style:none}
-.kk-notes li{font-size:.82rem;color:var(--nezumi);padding:6px 0 6px 19px;position:relative;line-height:1.8}
+.kk-notes li{font-size:.82rem;color:var(--nezumi);padding:6px 0 6px 19px;position:relative;line-height:1.8;word-break:auto-phrase;line-break:strict}
 .kk-notes li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--asagi)}
 .kk-notes li.imp::before{background:var(--shu)}
 .kk-notes li b{color:var(--kachi)}
@@ -428,7 +429,7 @@ main{min-width:0}
 .kk-r.long{border-left-color:var(--shu)}
 .kk-r.long .a{color:var(--shu)}
 @media(max-width:640px){.kk-r{grid-template-columns:1fr;gap:6px}.kk-r .a{text-align:left}}
-.kk-say-note{background:#fff;border:1px solid var(--line);border-radius:2px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.9}
+.kk-say-note{background:#fff;border:1px solid var(--line);border-radius:2px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.9;word-break:auto-phrase;line-break:strict}
 .kk-say-note b{font-family:var(--mincho)}
 .kk-say-note .ng{color:var(--shu)}
 
@@ -586,7 +587,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.22</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.23</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1364,7 +1365,7 @@ function kkBanner(){
     <svg class="wm" viewBox="-80 -80 160 160" aria-hidden="true"><g fill="#F3F4F2"><use href="#p8"/></g></svg>
     <span class="k">法務省 / 令和8年5月許可分</span>
     <span class="t">在留審査処理期間（日数）</span>
-    <span class="d">資格を選べば、認定・更新・変更の日数が出ます。1年前との増減、大房行政書士事務所の実測値との対照つき。</span>
+    <span class="d"><span class="nb">特定技能1号・2号</span>の<span class="nb">認定・更新・変更</span>にかかる日数。<span class="nb">依頼者への答え方</span>と、<span class="nb">1年前との増減</span>、<span class="nb">大房の実測値</span>との対照。</span>
     <span class="go">開く →</span>
   </button>`;
 }
