@@ -414,6 +414,40 @@ main{min-width:0}
 .kk-notes li.imp::before{background:var(--shu)}
 .kk-notes li b{color:var(--kachi)}
 
+
+/* ---- 依頼者への回答 ---- */
+.kk-ans{background:#fff;border:1px solid var(--line);border-radius:2px;padding:22px;margin-top:18px}
+.kk-ansform{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px}
+.kk-ansform label{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--nezumi);display:block;margin-bottom:7px}
+.kk-ansform select,.kk-ansform input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:2px;font-size:.92rem;background:#F7F8F7;font-family:var(--gothic)}
+.kk-ansform select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--nezumi) 50%),linear-gradient(135deg,var(--nezumi) 50%,transparent 50%);
+  background-position:calc(100% - 18px) calc(50% + 1px),calc(100% - 13px) calc(50% + 1px);background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.kk-ansform select:focus,.kk-ansform input:focus{outline:none;border-color:var(--ai);background-color:#fff}
+@media(max-width:760px){.kk-ansform{grid-template-columns:1fr}}
+.kk-out{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.kk-big{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kk-b{border:1px solid var(--line);border-radius:2px;padding:18px 20px;background:#FCFDFC}
+.kk-b.pri{border-left:3px solid var(--asagi)}
+.kk-b .l{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--nezumi)}
+.kk-b .when{font-family:var(--mincho);font-weight:800;font-size:clamp(1.4rem,3.6vw,1.9rem);color:var(--ai);line-height:1.3;margin:6px 0 4px}
+.kk-b .conv{font-family:var(--mono);font-size:.76rem;color:var(--nezumi)}
+.kk-b .conv b{color:var(--kachi)}
+.kk-b.na .when{font-size:1rem;font-family:var(--gothic);font-weight:500;color:var(--nezumi)}
+@media(max-width:760px){.kk-big{grid-template-columns:1fr}}
+.kk-own2{background:rgba(46,143,145,.06);border:1px solid rgba(46,143,145,.25);border-radius:2px;padding:12px 16px;margin-top:12px;font-size:.8rem}
+.kk-own2 b{font-family:var(--mono);color:var(--ai)}
+.kk-flags{margin-top:14px;display:grid;gap:7px}
+.kk-flag{font-size:.79rem;color:var(--nezumi);padding-left:18px;position:relative;line-height:1.7}
+.kk-flag::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--shu)}
+.kk-flag b{color:var(--kachi)}
+.kk-script{margin-top:18px}
+.kk-script .sh2{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.kk-script .sh2 span{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--nezumi)}
+.kk-script .sh2 button{margin-left:auto;background:var(--shu);color:#fff;border:0;padding:7px 15px;border-radius:2px;font-size:.74rem;font-weight:700;cursor:pointer}
+.kk-script textarea{width:100%;min-height:150px;padding:14px;border:1px solid var(--line);border-radius:2px;font-size:.84rem;line-height:1.9;background:#F7F8F7;font-family:var(--gothic);resize:vertical}
+.kk-script textarea:focus{outline:none;border-color:var(--ai);background:#fff}
+.kk-caution{font-size:.76rem;color:var(--nezumi);margin-top:10px;line-height:1.7}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -568,7 +602,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.14</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.15</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1436,6 +1470,13 @@ function kkHTML(){
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">03</span></div>
+    <h3>依頼者に、いつと答えるか。</h3>
+    <p class="kk-lead">申請日を入れると、公表平均から着地の目安日を出します。そのまま送れる回答文も作ります。</p>
+    <div id="kkAnsWrap">${kkAnsHTML()}</div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">04</span></div>
     <h3>公表値と、大房の実測値。</h3>
     <p class="kk-lead">同時期（公表＝令和8年5月許可分／実測＝2026年5月以降）の、審査終了までの日数どうしで並べました。実測は平均と中央値の両方を出しています。</p>
     <div class="kk-warn"><b>測り方が違います。</b>公表値の起点は入管が申請を<b>受理した日</b>、大房の実測値の起点は<b>受付通知メールを受け取った日</b>です。受付通知はオンライン申請の受付時点で届くため、実測値は原理上わずかに短く出ます。数字を並べていますが、同じ物差しではありません。</div>
@@ -1480,7 +1521,7 @@ function kkHTML(){
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">04</span></div>
+    <div class="kk-sh"><span class="no">05</span></div>
     <h3>1年で、どう変わったか。</h3>
     <p class="kk-lead">令和7年2月許可分との比較です。<b class="kk-up">朱は長期化</b>、<b class="kk-down">浅葱は短縮</b>。伸びの大きい順に並べています（審査終了までの日数／両月に数値がある区分のみ）。</p>
     <div class="kk-tools"><div class="kk-seg" id="kkMvSeg">
@@ -1492,7 +1533,7 @@ function kkHTML(){
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">05</span></div>
+    <div class="kk-sh"><span class="no">06</span></div>
     <h3>全在留資格の一覧。</h3>
     <p class="kk-lead">令和8年5月許可分。「―」は該当データなし（公表資料で斜線の区分）。</p>
     <div class="kk-tools">
@@ -1507,7 +1548,7 @@ function kkHTML(){
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">06</span></div>
+    <div class="kk-sh"><span class="no">07</span></div>
     <h3>注記（公表資料より、省略なし）。</h3>
     <div class="kk-notes">
       <h4>令和8年5月許可分の注記</h4>
@@ -1543,6 +1584,7 @@ function kkHTML(){
   </div>`;
 }
 function bindKikan(){
+  bindKkAns();
   $('kkBack').addEventListener('click', ()=>go('shinsa'));
   $('kkSel').addEventListener('change', e=>{ kkSel=+e.target.value; $('kkCards').innerHTML=kkCardsHTML(); });
   $('kkMvSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
@@ -1554,6 +1596,146 @@ function bindKikan(){
     $('kkColSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
     b.classList.add('on'); kkCol=b.dataset.k; $('kkTbl').innerHTML=kkTableHTML();
   }));
+}
+
+
+/* ---- 依頼者への回答（審査期間から逆算） ---- */
+/* 大房の実測（審査終了まで／2026年5月以降・受付通知メール起点）
+   key: 資格名|種別  [平均, 中央値, 参考値フラグ] */
+const KKOWN = {
+  '特定技能1号|upd':[29.7,26,false],
+  '特定技能1号|chg':[46.7,44,false],
+  '特定技能2号|chg':[41.1,36,false],
+  '特定活動|chg':[32.5,27,false],
+  '特定技能1号|cert':[40.1,null,true]
+};
+const KKTYPE = {cert:'在留資格認定証明書 交付', upd:'在留期間 更新', chg:'在留資格 変更'};
+let kkAType='upd', kkASel=KK.findIndex(d=>d.n==='特定技能1号'), kkADate='';
+function kkToday(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function kkAddDays(iso, days){
+  const d=new Date(iso+'T00:00:00'); if(isNaN(d)) return null;
+  d.setDate(d.getDate()+Math.round(days));
+  const w=['日','月','火','水','木','金','土'][d.getDay()];
+  return {txt:(d.getMonth()+1)+'月'+d.getDate()+'日（'+w+'）', y:d.getFullYear(), full:d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日'};
+}
+function kkConv(days){
+  return '約 <b>'+(days/7).toFixed(1)+'</b> 週間　／　約 <b>'+(days/30.4).toFixed(1)+'</b> ヶ月';
+}
+/* 長期化フラグ（公表資料の注記に基づく） */
+const KKWORK = ['教授','芸術','宗教','報道','高度専門職','経営・管理','法律・会計業務','医療','研究','教育','技術・人文知識・国際業務','企業内転勤','介護','興行','技能','特定技能1号','特定技能2号'];
+function kkFlags(d, type, iso){
+  const f=[];
+  const m = iso ? (new Date(iso+'T00:00:00')).getMonth()+1 : null;
+  f.push('<b>追加資料（追完）を求められた場合、その提出までの日数がこの数字に含まれます。</b>公表値は追完込みの実績なので、追完が発生すると個別の案件はさらに伸びます。');
+  f.push('公表値は<b>許可になった案件の平均</b>です。不許可処分・申請取下げは含まれていません。');
+  if(m && [1,2,3].includes(m) && KKWORK.includes(d.n))
+    f.push('<b>いま就労資格の長期化時期にあたります。</b>例年、4月の就職時期に向けて申請が増加するため、審査期間が長期化する傾向があります（'+m+'月申請）。');
+  if(d.n==='留学' && m && [12,1,2,3,6,7,8,9].includes(m))
+    f.push('<b>日本語学校のコース開講（4月・10月）前の申請です。</b>この時期は申請が増加するため、「留学」の審査期間が長期化する傾向があります。');
+  if(d.n==='特定技能1号' && (type==='cert'||type==='chg'))
+    f.push('公表値は令和8年3月27日付の運用に基づき、<b>外食業分野に係る申請を除外して算出</b>されています。外食業分野の案件では前提が異なります。');
+  if(d.n==='特定活動')
+    f.push('<b>特定活動は、行おうとする活動によって審査期間が異なります。</b>この平均値は活動を問わず合算したものです。');
+  if(d.n==='技能実習' && d.s && d.s.indexOf('3号')===0 && type==='chg')
+    f.push('技能実習3号への変更には、申請後1か月以上一時帰国した後に許可を受ける事例が含まれています。');
+  if(d.n==='永住者' && type==='chg')
+    f.push('「在留資格変更等」には永住許可申請（一般永住のみ・取得申請を除く）が含まれます。');
+  return f;
+}
+function kkAnsHTML(){
+  const d=KK[kkASel], iso=kkADate||kkToday();
+  const idx = kkAType==='cert'?0:(kkAType==='upd'?2:4);
+  const shinsa = d.r8[idx];
+  const shobun = kkAType==='cert'? d.r8[0] : d.r8[idx-1];
+  const own = KKOWN[d.n+'|'+kkAType];
+
+  let boxes='';
+  if(kkAType==='cert'){
+    boxes = shobun===null
+      ? '<div class="kk-b na"><span class="l">公表なし</span><div class="when">この区分は公表されていません</div></div>'
+      : `<div class="kk-b pri"><span class="l">証明書が交付される目安</span>
+           <div class="when">${kkAddDays(iso,shobun).txt} ごろ</div>
+           <div class="conv">${kkConv(shobun)}（公表平均 ${shobun.toFixed(1)} 日／処分＝交付まで）</div></div>
+         <div class="kk-b na"><span class="l">審査終了まで</span><div class="when">認定は「審査終了までの日数」が公表されていません。</div>
+           <div class="conv" style="margin-top:6px">出るのは交付までの日数のみです。</div></div>`;
+  }else{
+    boxes = shinsa===null
+      ? '<div class="kk-b na"><span class="l">公表なし</span><div class="when">この区分は公表されていません（公表資料で斜線）</div></div>'
+      : `<div class="kk-b pri"><span class="l">結果が出る目安（審査終了）</span>
+           <div class="when">${kkAddDays(iso,shinsa).txt} ごろ</div>
+           <div class="conv">${kkConv(shinsa)}（公表平均 ${shinsa.toFixed(1)} 日）</div></div>
+         <div class="kk-b"><span class="l">受け取りまで含めた目安（処分・告知）</span>
+           <div class="when">${shobun===null?'―':kkAddDays(iso,shobun).txt+' ごろ'}</div>
+           <div class="conv">${shobun===null?'公表なし':kkConv(shobun)+'（公表平均 '+shobun.toFixed(1)+' 日）'}</div></div>`;
+  }
+
+  let ownHTML='';
+  if(own){
+    ownHTML = own[2]
+      ? `<div class="kk-own2">大房の実測：平均 <b>${own[0]}</b> 日 ─ ただし<b style="color:var(--shu)">母数が小さい参考値</b>で、公表値（交付まで）とは定義も異なります。依頼者への回答には使わないでください。</div>`
+      : `<div class="kk-own2">大房の実測（2026年5月以降）：平均 <b>${own[0]}</b> 日／中央値 <b>${own[1]}</b> 日 ─ 中央値は ${kkAddDays(iso,own[1]).txt} ごろ。中央値が平均より短いのは、一部の長い案件が平均を押し上げているためです。<b>受付通知メール起点</b>のため公表値より原理上わずかに短く出ます。</div>`;
+  }
+
+  const flags = kkFlags(d,kkAType,iso).map(t=>`<div class="kk-flag">${t}</div>`).join('');
+
+  /* 回答文 */
+  let script='';
+  const nm = kkLbl(d);
+  if(kkAType==='cert' && shobun!==null){
+    const t=kkAddDays(iso,shobun);
+    script = `${nm}の在留資格認定証明書の交付についてです。\n\n`
+      + `法務省が公表している直近の実績（令和8年5月許可分）では、申請の受理から交付までが平均 ${shobun.toFixed(1)} 日、およそ ${(shobun/30.4).toFixed(1)} ヶ月です。\n`
+      + `${kkAddDays(iso,0).full}に申請した場合、単純計算では ${t.full} ごろが目安になります。\n\n`
+      + `ただし、これはあくまで平均です。入管から追加資料を求められた場合は、その提出までの日数も期間に含まれるため、さらに時間がかかります。確定的な日付をお約束できるものではない点、ご了承ください。\n`
+      + `進捗に動きがありましたら、その都度ご連絡いたします。`;
+  }else if(shinsa!==null){
+    const t1=kkAddDays(iso,shinsa), t2=shobun!==null?kkAddDays(iso,shobun):null;
+    script = `${nm}の${kkAType==='upd'?'在留期間更新':'在留資格変更'}についてです。\n\n`
+      + `法務省が公表している直近の実績（令和8年5月許可分）では、申請の受理から審査が終わるまでが平均 ${shinsa.toFixed(1)} 日、およそ ${(shinsa/30.4).toFixed(1)} ヶ月です。\n`
+      + `${kkAddDays(iso,0).full}に申請した場合、単純計算では ${t1.full} ごろに結果が出る見込みとなります。\n`
+      + (t2?`なお、審査が終わったあと入管の窓口で在留カードをお受け取りいただく必要があり、その受け取りまで含めた平均は ${shobun.toFixed(1)} 日（${t2.full} ごろ）です。\n`:'')
+      + `\nただし、これはあくまで平均です。入管から追加資料を求められた場合は、その提出までの日数も期間に含まれるため、さらに時間がかかります。確定的な日付をお約束できるものではない点、ご了承ください。\n`
+      + `進捗に動きがありましたら、その都度ご連絡いたします。`;
+  }else{
+    script = 'この区分は法務省の公表資料に数値がないため、目安をお示しできません。';
+  }
+
+  return `<div class="kk-ans">
+    <div class="kk-ansform">
+      <div><label for="kkASel">在留資格</label>
+        <select id="kkASel">${KK.map((x,i)=>`<option value="${i}"${i===kkASel?' selected':''}>${esc(kkLbl(x))}</option>`).join('')}</select></div>
+      <div><label for="kkAType">申請の種類</label>
+        <select id="kkAType">
+          <option value="cert"${kkAType==='cert'?' selected':''}>認定証明書 交付</option>
+          <option value="upd"${kkAType==='upd'?' selected':''}>在留期間 更新</option>
+          <option value="chg"${kkAType==='chg'?' selected':''}>在留資格 変更</option>
+        </select></div>
+      <div><label for="kkADate">申請日（受理日）</label>
+        <input type="date" id="kkADate" value="${iso}"></div>
+    </div>
+    <div class="kk-out">
+      <div class="kk-big">${boxes}</div>
+      ${ownHTML}
+      <div class="kk-flags">${flags}</div>
+      <div class="kk-script">
+        <div class="sh2"><span>依頼者への回答文（そのまま送れます）</span><button id="kkCopy">コピー</button></div>
+        <textarea id="kkScript" readonly>${esc(script)}</textarea>
+        <p class="kk-caution">公表されているのは<b>平均値のみ</b>で、案件ごとのばらつき（最短・最長）は公表されていません。「◯〜◯ヶ月」という幅は、根拠のある数字として出せないため出していません。日付を確約せず、平均であることを必ず添えてお伝えください。</p>
+      </div>
+    </div>
+  </div>`;
+}
+function bindKkAns(){
+  const rr=()=>{ $('kkAnsWrap').innerHTML=kkAnsHTML(); bindKkAns(); };
+  $('kkASel').addEventListener('change', e=>{ kkASel=+e.target.value; rr(); });
+  $('kkAType').addEventListener('change', e=>{ kkAType=e.target.value; rr(); });
+  $('kkADate').addEventListener('change', e=>{ kkADate=e.target.value; rr(); });
+  $('kkCopy').addEventListener('click', async ()=>{
+    const ta=$('kkScript'), b=$('kkCopy');
+    try{ await navigator.clipboard.writeText(ta.value); }
+    catch(_){ ta.removeAttribute('readonly'); ta.select(); document.execCommand('copy'); ta.setAttribute('readonly','readonly'); }
+    b.textContent='コピーしました'; setTimeout(()=>b.textContent='コピー',1600);
+  });
 }
 
 /* ---- 簡易マークダウン ---- */
