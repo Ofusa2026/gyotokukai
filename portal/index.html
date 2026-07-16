@@ -586,7 +586,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.20</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.21</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1384,40 +1384,27 @@ function kkCardsHTML(){
        + kkCard('在留資格 変更', d.r8[4], '審査終了まで', d.r8[3], '処分（告知）まで', kkD(d.r8[4],d.r7[4]));
 }
 function kkMoversHTML(){
-  let rows=[];
-  if(kkMv==='cert'){
-    rows = KK.filter(d=>d.r8[0]!==null&&d.r7[0]!==null)
-      .map(d=>({nm:kkLbl(d),sub:'認定証明書 交付／処分（交付）まで',o:d.r7[0],v:d.r8[0],d:kkD(d.r8[0],d.r7[0])}))
-      .sort((a,b)=>b.d-a.d).slice(0,8);
-  }else{
-    const all=[];
-    KK.forEach(d=>{
-      if(d.r8[2]!==null&&d.r7[2]!==null) all.push({nm:kkLbl(d),sub:'更新／審査終了まで',o:d.r7[2],v:d.r8[2],d:kkD(d.r8[2],d.r7[2])});
-      if(d.r8[4]!==null&&d.r7[4]!==null) all.push({nm:kkLbl(d),sub:'変更／審査終了まで',o:d.r7[4],v:d.r8[4],d:kkD(d.r8[4],d.r7[4])});
-    });
-    rows = all.sort((a,b)=> kkMv==='up' ? b.d-a.d : a.d-b.d).slice(0,8);
-  }
-  return rows.map(r=>`<div class="kk-mv ${r.d>0?'u':'d'}">
-    <div class="nm">${esc(r.nm)}<br><small>${r.sub}</small></div>
-    <div class="fig"><span class="old">${r.o.toFixed(1)}</span><span class="kk-${r.d>0?'up':'down'}">→</span><span class="new kk-${r.d>0?'up':'down'}">${r.v.toFixed(1)}</span></div>
-    <div class="d">${kkDH(r.d)}</div>
-  </div>`).join('');
+  const T=[['特定技能1号',0,'認定／交付まで'],['特定技能1号',2,'更新／審査終了まで'],['特定技能1号',4,'変更／審査終了まで'],
+           ['特定技能2号',0,'認定／交付まで'],['特定技能2号',2,'更新／審査終了まで'],['特定技能2号',4,'変更／審査終了まで']];
+  return T.map(([n,idx,sub])=>{
+    const d=KK.find(x=>x.n===n&&!x.s);
+    const o=d.r7[idx], v=d.r8[idx], df=kkD(v,o);
+    return `<div class="kk-mv ${df>0?'u':'d'}">
+      <div class="nm">${esc(n)}<br><small>${sub}</small></div>
+      <div class="fig"><span class="old">${o.toFixed(1)}</span><span class="kk-${df>0?'up':'down'}">→</span><span class="new kk-${df>0?'up':'down'}">${v.toFixed(1)}</span></div>
+      <div class="d">${kkDH(df)}</div>
+    </div>`;
+  }).join('');
 }
 function kkTableHTML(){
-  const sho = kkCol!=='shinsa', shin = kkCol!=='shobun';
-  const cols=(sho?1:0)+(shin?1:0);
   const head=`<thead>
-    <tr><th rowspan="2">在留資格</th><th class="g">認定証明書 交付</th><th class="g" colspan="${cols}">在留期間 更新</th><th class="g" colspan="${cols}">在留資格 変更</th></tr>
-    <tr><th class="g">処分（交付）まで</th>
-      ${sho?'<th class="g">処分まで</th>':''}${shin?`<th class="${sho?'':'g'}">審査終了まで</th>`:''}
-      ${sho?'<th class="g">処分まで</th>':''}${shin?`<th class="${sho?'':'g'}">審査終了まで</th>`:''}
-    </tr></thead>`;
-  const rows=KK.filter(d=>!kkQ||kkLbl(d).toLowerCase().includes(kkQ));
+    <tr><th rowspan="2">在留資格</th><th class="g">認定証明書 交付</th><th class="g" colspan="2">在留期間 更新</th><th class="g" colspan="2">在留資格 変更</th></tr>
+    <tr><th class="g">処分（交付）まで</th><th class="g">処分まで</th><th>審査終了まで</th><th class="g">処分まで</th><th>審査終了まで</th></tr></thead>`;
+  const rows=KK.filter(d=>d.n==='特定技能1号'||d.n==='特定技能2号');
   const cell=(v,cls)=> v===null?`<td class="nav ${cls||''}">―</td>`:`<td class="${cls||''}">${v.toFixed(1)}</td>`;
-  const body=rows.length?rows.map(d=>`<tr><th>${esc(kkLbl(d))}</th>${cell(d.r8[0],'g')}
-    ${sho?cell(d.r8[1],'g'):''}${shin?cell(d.r8[2],sho?'key':'g key'):''}
-    ${sho?cell(d.r8[3],'g'):''}${shin?cell(d.r8[4],sho?'key':'g key'):''}</tr>`).join('')
-    :`<tr><td colspan="6" style="text-align:center;color:var(--nezumi);font-family:var(--gothic)">該当する在留資格がありません。</td></tr>`;
+  const body=rows.map(d=>`<tr><th>${esc(kkLbl(d))}</th>${cell(d.r8[0],'g')}
+    ${cell(d.r8[1],'g')}${cell(d.r8[2],'key')}
+    ${cell(d.r8[3],'g')}${cell(d.r8[4],'key')}</tr>`).join('');
   return head+'<tbody>'+body+'</tbody>';
 }
 function kkHTML(){
@@ -1455,7 +1442,7 @@ function kkHTML(){
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">03</span></div>
     <h3>依頼者に聞かれたら、こう答える。</h3>
-    <p class="kk-lead">「審査ってどれくらいかかりますか」への標準的な答えです。公表平均（令和8年5月許可分）に<b>1ヶ月の余裕を足した幅</b>でお伝えします。他の在留資格は下の一覧をご覧ください。</p>
+    <p class="kk-lead">「審査ってどれくらいかかりますか」への標準的な答えです。公表平均（令和8年5月許可分）に<b>1ヶ月の余裕を足した幅</b>でお伝えします。他の在留資格は「在留資格から調べる」で引けます。</p>
     <div class="kk-say">${kkSayHTML()}</div>
     <div class="kk-say-note">
       <b>なぜ幅で答えるのか。</b><br>
@@ -1522,27 +1509,14 @@ function kkHTML(){
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">05</span></div>
     <h3>1年で、どう変わったか。</h3>
-    <p class="kk-lead">令和7年2月許可分との比較です。<b class="kk-up">朱は長期化</b>、<b class="kk-down">浅葱は短縮</b>。伸びの大きい順に並べています（審査終了までの日数／両月に数値がある区分のみ）。</p>
-    <div class="kk-tools"><div class="kk-seg" id="kkMvSeg">
-      <button class="${kkMv==='up'?'on':''}" data-k="up">長期化した順</button>
-      <button class="${kkMv==='down'?'on':''}" data-k="down">短縮した順</button>
-      <button class="${kkMv==='cert'?'on':''}" data-k="cert">認定（交付まで）</button>
-    </div></div>
+    <p class="kk-lead">令和7年2月許可分との比較です。<b class="kk-up">朱は長期化</b>、<b class="kk-down">浅葱は短縮</b>。</p>
     <div class="kk-movers" id="kkMovers">${kkMoversHTML()}</div>
   </div>
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">06</span></div>
-    <h3>全在留資格の一覧。</h3>
-    <p class="kk-lead">令和8年5月許可分。「―」は該当データなし（公表資料で斜線の区分）。</p>
-    <div class="kk-tools">
-      <input type="search" id="kkQ" placeholder="在留資格で絞り込む（例：特定技能）" value="${esc(kkQ)}">
-      <div class="kk-seg" id="kkColSeg">
-        <button class="${kkCol==='shinsa'?'on':''}" data-k="shinsa">審査終了まで</button>
-        <button class="${kkCol==='shobun'?'on':''}" data-k="shobun">処分まで</button>
-        <button class="${kkCol==='both'?'on':''}" data-k="both">両方</button>
-      </div>
-    </div>
+    <h3>特定技能の数字、まとめ。</h3>
+    <p class="kk-lead">令和8年5月許可分。浅葱地が審査終了までの日数です。</p>
     <div class="kk-twrap"><table class="kk-tbl" id="kkTbl">${kkTableHTML()}</table></div>
   </div>
 
@@ -1585,15 +1559,6 @@ function kkHTML(){
 function bindKikan(){
   $('kkBack').addEventListener('click', ()=>go('shinsa'));
   $('kkSel').addEventListener('change', e=>{ kkSel=+e.target.value; $('kkCards').innerHTML=kkCardsHTML(); });
-  $('kkMvSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    $('kkMvSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on'); kkMv=b.dataset.k; $('kkMovers').innerHTML=kkMoversHTML();
-  }));
-  $('kkQ').addEventListener('input', e=>{ kkQ=e.target.value.trim().toLowerCase(); $('kkTbl').innerHTML=kkTableHTML(); });
-  $('kkColSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    $('kkColSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on'); kkCol=b.dataset.k; $('kkTbl').innerHTML=kkTableHTML();
-  }));
 }
 
 
