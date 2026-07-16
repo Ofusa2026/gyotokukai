@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>特定技能行政書士勉強会（特行会）｜完全無料・全国の行政書士で特定技能の情報を共有する</title>
+<meta name="description" content="特定技能に特化した全国の行政書士コミュニティ。完全無料。全国でセミナーを定期開催（第1回は福岡）。審査基準・契約書・申請ノウハウを全部出して、業界の底上げと受注拡大を目指します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ai:#1E3B6E;        /* 藍 */
+  --kachi:#0B1220;     /* 褐返（かちがえし） */
+  --asagi:#2E8F91;     /* 浅葱 */
+  --shu:#B93227;       /* 朱（印章） */
+  --shiro:#F3F4F2;     /* 白練 */
+  --nezumi:#6E7681;    /* 鼠 */
+  --line:rgba(11,18,32,.14);
+  --mincho:"Shippori Mincho B1",serif;
+  --gothic:"Zen Kaku Gothic New",sans-serif;
+  --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--shiro);color:var(--kachi);
+  font-family:var(--gothic);font-weight:400;line-height:1.85;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+img,svg{display:block}
+.wrap{width:min(1080px,92vw);margin-inline:auto}
+
+/* ---------- 藍地の反物テクスチャ ---------- */
+.indigo{
+  background-color:var(--ai);
+  background-image:
+    linear-gradient(rgba(11,18,32,.55),rgba(11,18,32,.55)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px);
+  color:var(--shiro);
+}
+
+/* ---------- ヘッダー ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(10px);
+  background:rgba(243,244,242,.86);
+  border-bottom:1px solid var(--line);
+}
+.bar{display:flex;align-items:center;gap:14px;height:62px}
+.bar .mark{width:32px;height:32px;flex:none}
+.bar b{font-family:var(--mincho);font-weight:800;font-size:1.05rem;letter-spacing:.14em}
+.bar nav{margin-left:auto;display:flex;gap:26px;font-size:.82rem;font-weight:500}
+.bar nav a{text-decoration:none;color:var(--nezumi)}
+.bar nav a:hover{color:var(--ai)}
+.bar .btn-mini{
+  margin-left:22px;background:var(--shu);color:#fff;text-decoration:none;
+  padding:8px 16px;border-radius:2px;font-size:.8rem;font-weight:700;letter-spacing:.05em;
+}
+@media(max-width:860px){.bar nav{display:none}.bar .btn-mini{margin-left:auto}}
+
+/* ---------- ヒーロー ---------- */
+.hero{padding:clamp(56px,9vw,110px) 0 clamp(48px,7vw,84px);overflow:hidden}
+.hero .inner{display:grid;grid-template-columns:1fr 300px;gap:clamp(30px,5vw,64px);align-items:center}
+.eyebrow{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;
+  color:var(--asagi);margin-bottom:22px;
+}
+.hero h1{
+  font-family:var(--mincho);font-weight:800;
+  font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.36;letter-spacing:.02em;
+}
+.hero h1 .rev{
+  background:var(--shiro);color:var(--kachi);
+  padding:0 .18em;margin:0 -.04em;
+}
+.hero p.lead{
+  margin-top:26px;max-width:34em;font-size:1rem;color:rgba(243,244,242,.82);
+}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn{
+  display:inline-block;text-decoration:none;padding:15px 30px;border-radius:2px;
+  font-weight:700;letter-spacing:.06em;font-size:.94rem;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn-primary{background:var(--shu);color:#fff;box-shadow:0 0 0 0 rgba(185,50,39,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px -8px rgba(185,50,39,.8)}
+.btn-ghost{border:1px solid rgba(243,244,242,.4);color:var(--shiro)}
+.btn-ghost:hover{border-color:var(--shiro);transform:translateY(-2px)}
+.facts{
+  display:flex;flex-wrap:wrap;gap:0;margin-top:48px;
+  border-top:1px solid rgba(243,244,242,.18);
+}
+.facts div{
+  flex:1 1 120px;padding:18px 20px 0 0;
+}
+.facts dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:rgba(243,244,242,.5)}
+.facts dd{font-family:var(--mincho);font-weight:600;font-size:1.35rem;margin-top:4px}
+.crestbox{display:grid;place-items:center}
+.crestbox svg{width:min(300px,72vw);height:auto}
+@media(max-width:860px){
+  .hero .inner{grid-template-columns:1fr}
+  .crestbox{order:-1}
+  .crestbox svg{width:min(190px,46vw)}
+}
+
+/* 紋のアニメーション */
+.crest-spin{transform-origin:center;animation:bloom 1.5s cubic-bezier(.2,.9,.2,1) both}
+@keyframes bloom{from{transform:rotate(-24deg) scale(.82);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- 汎用セクション ---------- */
+section{padding:clamp(64px,9vw,110px) 0;scroll-margin-top:72px}
+.kicker{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.26em;color:var(--asagi);
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.kicker::after{content:"";height:1px;flex:1;background:var(--line)}
+.indigo .kicker::after{background:rgba(243,244,242,.2)}
+h2{
+  font-family:var(--mincho);font-weight:800;
+  font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.5;letter-spacing:.03em;
+}
+h2 + .sub{margin-top:16px;max-width:40em;color:var(--nezumi);font-size:.95rem}
+.indigo h2 + .sub{color:rgba(243,244,242,.7)}
+
+/* ---------- 課題 ---------- */
+.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:44px;border:1px solid var(--line)}
+.probs > div{background:var(--shiro);padding:32px 26px}
+.probs h3{font-family:var(--mincho);font-size:1.12rem;font-weight:600;line-height:1.6;margin-bottom:12px}
+.probs p{font-size:.88rem;color:var(--nezumi)}
+@media(max-width:860px){.probs{grid-template-columns:1fr}}
+
+/* ---------- やること ---------- */
+.acts{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:44px}
+.act{
+  border:1px solid rgba(243,244,242,.18);padding:30px 28px;border-radius:2px;
+  background:rgba(243,244,242,.03);
+}
+.act .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--asagi)}
+.act h3{font-family:var(--mincho);font-size:1.24rem;font-weight:600;margin:10px 0 12px}
+.act p{font-size:.88rem;color:rgba(243,244,242,.72)}
+@media(max-width:860px){.acts{grid-template-columns:1fr}}
+
+/* ---------- 適正化 ---------- */
+#seisei{background:#FFFFFF;border-top:3px solid var(--shu);position:relative}
+#seisei .kicker{color:var(--shu)}
+#seisei .kicker::after{background:rgba(185,50,39,.25)}
+#seisei h2{max-width:22em}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:46px;border:1px solid var(--line)}
+.pillar{background:#FFFFFF;padding:30px 26px}
+.pillar .idx{
+  width:30px;height:30px;border:1.5px solid var(--shu);color:var(--shu);border-radius:2px;
+  display:grid;place-items:center;font-family:var(--mono);font-size:.72rem;margin-bottom:16px;
+}
+.pillar h3{font-family:var(--mincho);font-size:1.1rem;font-weight:600;margin-bottom:10px}
+.pillar p{font-size:.86rem;color:var(--nezumi)}
+@media(max-width:860px){.pillars{grid-template-columns:1fr}}
+
+/* ---------- 運営元 ---------- */
+.org{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px);align-items:start;margin-top:44px}
+.org .name{font-family:var(--mincho);font-weight:800;font-size:1.5rem;letter-spacing:.04em}
+.org .stance{margin-top:18px;font-size:.92rem;color:var(--nezumi)}
+.stats{border-top:1px solid var(--line)}
+.stat{display:flex;align-items:baseline;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.stat .fig{font-family:var(--mincho);font-weight:800;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--ai);letter-spacing:.01em;line-height:1;white-space:nowrap}
+.stat .fig small{font-size:.9rem;margin-left:2px}
+.stat .cap{font-size:.84rem;color:var(--nezumi);margin-left:auto;text-align:right}
+@media(max-width:860px){.org{grid-template-columns:1fr}}
+
+/* ---------- セミナー ---------- */
+.seminar{border:1px solid var(--line);background:#fff;padding:clamp(28px,4vw,44px);margin-top:40px;border-radius:2px}
+.seminar dl{display:grid;grid-template-columns:100px 1fr;gap:14px 20px;margin-top:24px;font-size:.92rem}
+.seminar dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--nezumi);padding-top:5px}
+.topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.topics span{border:1px solid var(--ai);color:var(--ai);font-size:.78rem;padding:5px 12px;border-radius:2px;font-weight:500}
+
+/* ---------- 予定 ---------- */
+.plan{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:0 auto 44px;text-align:left;max-width:760px}
+.plan div{background:#FFFFFF;padding:26px 24px}
+.plan .when{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;color:var(--shu)}
+.plan h3{font-family:var(--mincho);font-size:1.08rem;font-weight:600;margin:8px 0 8px}
+.plan p{font-size:.84rem;color:var(--nezumi)}
+@media(max-width:860px){.plan{grid-template-columns:1fr}}
+
+/* ---------- 登録フォーム ---------- */
+.form{max-width:520px;margin:0 auto;text-align:left;border:1px solid var(--line);background:#FFFFFF;padding:clamp(26px,4vw,38px);border-radius:2px}
+.field{margin-bottom:22px}
+.field label{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--nezumi);margin-bottom:9px}
+.field label .req{color:var(--shu);margin-left:6px;letter-spacing:0}
+.field input,.field select{
+  width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:2px;
+  font-family:var(--gothic);font-size:.95rem;color:var(--kachi);background:#F7F8F7;
+  transition:border-color .18s ease,background .18s ease;
+}
+.field select{
+  appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--nezumi) 50%),linear-gradient(135deg,var(--nezumi) 50%,transparent 50%);
+  background-position:calc(100% - 20px) calc(50% + 1px),calc(100% - 15px) calc(50% + 1px);
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--ai);background:#fff}
+.field input.err,.field select.err{border-color:var(--shu);background:#FDF6F5}
+.form button{
+  width:100%;border:0;cursor:pointer;font-family:var(--gothic);font-size:.96rem;
+  background:var(--shu);color:#fff;padding:16px;border-radius:2px;font-weight:700;letter-spacing:.06em;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.form button:hover{transform:translateY(-2px);box-shadow:0 10px 26px -8px rgba(185,50,39,.7)}
+.form button:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.msg{margin-top:16px;font-size:.86rem;line-height:1.7;display:none}
+.msg.show{display:block}
+.msg.ok{color:var(--ai)}
+.msg.ng{color:var(--shu)}
+.done{text-align:center;padding:20px 0}
+.done .mk{font-family:var(--mincho);font-size:1.3rem;font-weight:800;color:var(--ai);margin-bottom:10px}
+.done p{font-size:.9rem;color:var(--nezumi)}
+
+/* ---------- 登録 ---------- */
+.entry{text-align:center}
+.entry h2{font-size:clamp(1.7rem,4vw,2.6rem)}
+.seal{
+  width:96px;height:96px;margin:0 auto 30px;
+  border:3px solid var(--shu);border-radius:4px;
+  display:grid;place-items:center;color:var(--shu);
+  font-family:var(--mincho);font-weight:800;font-size:1.5rem;line-height:1.15;
+  letter-spacing:.06em;transform:rotate(-6deg);opacity:.92;
+}
+.entry .note{font-family:var(--mono);font-size:.72rem;color:var(--nezumi);margin-top:20px;letter-spacing:.1em}
+
+/* ---------- フッター ---------- */
+footer{border-top:1px solid rgba(243,244,242,.16);padding:40px 0;font-size:.78rem}
+footer .fin{display:flex;flex-wrap:wrap;gap:16px;align-items:center;color:rgba(243,244,242,.55)}
+footer .fin b{font-family:var(--mincho);letter-spacing:.14em;color:var(--shiro);font-size:.92rem}
+footer .fin span{margin-left:auto}
+
+/* ---------- スクロール表示 ---------- */
+.rise{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rise.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rise{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:2px solid var(--asagi);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- 紋の定義 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="petals">
+      <g id="p8">
+        <path id="petal" d="M0,-49 C13,-42 17,-24 9,-9 L0,-4 L-9,-9 C-17,-24 -13,-42 0,-49 Z"/>
+        <use href="#petal" transform="rotate(45)"/>
+        <use href="#petal" transform="rotate(90)"/>
+        <use href="#petal" transform="rotate(135)"/>
+        <use href="#petal" transform="rotate(180)"/>
+        <use href="#petal" transform="rotate(225)"/>
+        <use href="#petal" transform="rotate(270)"/>
+        <use href="#petal" transform="rotate(315)"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap bar">
+    <svg class="mark" viewBox="-80 -80 160 160" aria-hidden="true">
+      <circle r="72" fill="none" stroke="#1E3B6E" stroke-width="7"/>
+      <circle r="61" fill="none" stroke="#1E3B6E" stroke-width="3"/>
+      <g fill="#1E3B6E"><use href="#p8"/></g>
+      <circle r="15" fill="#1E3B6E"/>
+    </svg>
+    <b>特行会</b>
+    <nav>
+      <a href="#about">趣旨</a>
+      <a href="#do">やること</a>
+      <a href="#seisei">適正化</a>
+      <a href="#seminar">全国セミナー</a>
+      <a href="#org">運営元</a>
+    </nav>
+    <a class="btn-mini" href="#entry">無料で登録</a>
+  </div>
+</header>
+
+<!-- ヒーロー -->
+<div class="hero indigo">
+  <div class="wrap inner">
+    <div>
+      <p class="eyebrow">TOKUGYOKAI &nbsp;/&nbsp; 特定技能行政書士勉強会 &nbsp;/&nbsp; 2026.09.01 START</p>
+      <h1>特定技能の情報を、<br>全国の行政書士で<br><span class="rev">交換しませんか。</span></h1>
+      <p class="lead">
+        審査の傾向も、通った書類の型も、手元の1件だけでは見えてきません。特定技能に関わる情報だけを持ち寄って、お互いに出し合う場所です。セミナーも全国各地で開きます。すべて完全無料。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#entry">無料で参加登録する</a>
+      </div>
+      <dl class="facts">
+        <div><dt>始動</dt><dd>2026.9.1</dd></div>
+        <div><dt>参加費</dt><dd>完全無料</dd></div>
+        <div><dt>対象</dt><dd>行政書士</dd></div>
+        <div><dt>セミナー</dt><dd>全国で開催</dd></div>
+      </dl>
+    </div>
+    <div class="crestbox">
+      <svg class="crest-spin" viewBox="-80 -80 160 160" role="img" aria-label="特行会の紋">
+        <circle r="72" fill="none" stroke="#F3F4F2" stroke-width="7"/>
+        <circle r="61" fill="none" stroke="#F3F4F2" stroke-width="3"/>
+        <g fill="#F3F4F2"><use href="#p8"/></g>
+        <circle r="17" fill="#1E3B6E" stroke="#F3F4F2" stroke-width="3"/>
+        <text x="0" y="6.5" text-anchor="middle" fill="#F3F4F2"
+              font-family="Shippori Mincho B1,serif" font-weight="800" font-size="19">特</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- 趣旨 -->
+<section id="about">
+  <div class="wrap">
+    <p class="kicker rise">なぜつくるのか</p>
+    <h2 class="rise">行政書士の底上げが、いちばんの目的です。</h2>
+    <p class="sub rise">
+      申請の質が上がれば差戻しと追完が減り、入管の審査は標準化に向かいます。そして「特定技能ならあの人に頼める」という状態が増えれば、受注件数はそのまま増える。底上げと受注拡大は、同じ話の表と裏です。
+    </p>
+    <div class="probs">
+      <div class="rise">
+        <h3>情報が出回らない</h3>
+        <p>ノウハウは事務所の中に閉じたまま。他の事務所がどう出しているかは、誰も教えてくれません。</p>
+      </div>
+      <div class="rise">
+        <h3>分野ごとに要件が違う</h3>
+        <p>16分野。それぞれに固有の要件があり、1人で全部を追い切るのは時間がかかります。</p>
+      </div>
+      <div class="rise">
+        <h3>審査方針が読めない</h3>
+        <p>同じ書類でも局によって反応が違う。手元の1件だけでは、傾向は永遠に見えてきません。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- やること -->
+<section id="do" class="indigo">
+  <div class="wrap">
+    <p class="kicker rise">特行会でやること</p>
+    <h2 class="rise">持ち寄る。共有する。全部出す。</h2>
+    <p class="sub rise">会員が使えるのは、以下のプラットフォームと定例の場です。すべて無料で、退会も自由です。</p>
+    <div class="acts">
+      <div class="act rise">
+        <p class="tag">INFO</p>
+        <h3>会員ポータルでの情報発信</h3>
+        <p>制度改正、運用の変更、現場で拾った一次情報。特定技能に関わる話題だけを、会員ポータルにまとめて配信します。</p>
+      </div>
+      <div class="act rise">
+        <p class="tag">PLATFORM</p>
+        <h3>審査基準・審査方針の共有</h3>
+        <p>どの書き方が通り、どこで追完が来たか。会員の実例を集約して、局ごとの傾向が見える状態にします。</p>
+      </div>
+      <div class="act rise">
+        <p class="tag">Q&amp;A</p>
+        <h3>質問コーナー（管理付き）</h3>
+        <p>投げれば誰かが答える場所。運営が内容を管理するので、雑談ではなく実務の答えだけが残ります。こちらもポータル上で。</p>
+      </div>
+      <div class="act rise">
+        <p class="tag">NATIONWIDE</p>
+        <h3>全国でのセミナー・情報交換会</h3>
+        <p>各地を回って定期的に開催します。オンラインでも同時に配信。終わったあとの情報交換会まで含めて、すべて無料です。</p>
+      </div>
+      <div class="act rise">
+        <p class="tag">PRACTICE</p>
+        <h3>受注を増やす側の話</h3>
+        <p>登録支援機関との関わり方、商品設計、営業、採用、AIの使い方。知識だけあっても件数は増えないので、そこもやります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 適正化 -->
+<section id="seisei">
+  <div class="wrap">
+    <p class="kicker rise">適正化</p>
+    <h2 class="rise">書類作成は、行政書士の仕事です。</h2>
+    <p class="sub rise">
+      行政書士法が改正された今も、違法に書類作成を続けている登録支援機関が数多くあります。一つの事務所が声を上げても、この状況は動きません。全国の行政書士会と連携できるだけの規模を持った組織にすることが、特行会をつくるもう一つの理由です。
+    </p>
+    <div class="pillars">
+      <div class="pillar rise">
+        <div class="idx">01</div>
+        <h3>実態を集める</h3>
+        <p>どの地域で、どういう形で行われているのか。会員から事例を集約して、話を一人の体感ではなく事実の束にします。</p>
+      </div>
+      <div class="pillar rise">
+        <div class="idx">02</div>
+        <h3>行政書士会へつなぐ</h3>
+        <p>セミナーの開催ごとに、その地域の行政書士会へご挨拶に伺います。全国の会と接点を持ち、動かせる状態をつくります。</p>
+      </div>
+      <div class="pillar rise">
+        <div class="idx">03</div>
+        <h3>適正な受け皿になる</h3>
+        <p>減らすだけでは現場が回りません。登録支援機関との適正な関わり方を共有し、行政書士が引き受けられる体制を並行してつくります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 運営元 -->
+<section id="org">
+  <div class="wrap">
+    <p class="kicker rise">運営元</p>
+    <h2 class="rise">情報は、まず私たちが出します。</h2>
+    <p class="sub rise">持ち寄る場所とはいえ、最初に誰かが出さなければ始まりません。特行会は大房行政書士法人が運営します。日々の案件で分かったことを、隠さずこの場に出していきます。</p>
+    <div class="org">
+      <div class="rise">
+        <p class="name">大房行政書士法人</p>
+        <p class="stance">特定技能の申請を、毎月まとまった件数で扱い続けています。グループ会社で登録支援機関も運営しているため、行政書士側からの景色と、支援機関側からの景色の両方をお伝えできます。どこで追完が来て、どう直せば通ったのか。実例ベースで共有します。</p>
+      </div>
+      <div class="stats rise">
+        <div class="stat">
+          <span class="fig">700<small>件／月</small></span>
+          <span class="cap">特定技能の申請取扱</span>
+        </div>
+        <div class="stat">
+          <span class="fig">15,000<small>件以上</small></span>
+          <span class="cap">累計の申請実績</span>
+        </div>
+        <div class="stat">
+          <span class="fig">登録支援機関</span>
+          <span class="cap">グループ会社にて運営</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- セミナー -->
+<section id="seminar" class="indigo">
+  <div class="wrap">
+    <p class="kicker rise">全国セミナー</p>
+    <h2 class="rise">全国を回ります。第1回は福岡から。</h2>
+    <p class="sub rise">2026年9月1日、福岡から始めます。以降も開催地の行政書士会にご挨拶をしたうえで、各地を回って定期的に開きます。参加費は無料。オンラインでも同時に配信します。</p>
+    <div class="seminar rise" style="background:rgba(243,244,242,.05);border-color:rgba(243,244,242,.2)">
+      <dl>
+        <dt>第1回</dt><dd>2026年9月1日（火）／ 福岡</dd>
+        <dt>会場・時間</dt><dd>準備中。決まりしだい、登録いただいた方にご案内します</dd>
+        <dt>参加費</dt><dd>無料</dd>
+        <dt>内容</dt>
+        <dd>
+          <div class="topics" style="margin-top:2px">
+            <span style="border-color:rgba(243,244,242,.5);color:#F3F4F2">AIの実務活用</span>
+            <span style="border-color:rgba(243,244,242,.5);color:#F3F4F2">売上の上げ方</span>
+            <span style="border-color:rgba(243,244,242,.5);color:#F3F4F2">営業の仕方</span>
+            <span style="border-color:rgba(243,244,242,.5);color:#F3F4F2">商品設計</span>
+            <span style="border-color:rgba(243,244,242,.5);color:#F3F4F2">採用</span>
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 登録 -->
+<section id="entry" class="entry">
+  <div class="wrap">
+    <div class="seal rise">特行<br>之會</div>
+    <h2 class="rise">登録は無料。<br>やめるのも自由です。</h2>
+    <p class="sub rise" style="margin-inline:auto">
+      特定技能に関わる情報だけを共有する、全国の行政書士のための場所です。まずは登録して、会員ポータルの公開と第1回・福岡セミナーの案内を受け取ってください。
+    </p>
+    <div class="plan rise">
+      <div>
+        <p class="when">2026.08</p>
+        <h3>会員ポータル リリース予定</h3>
+        <p>情報発信、審査基準の共有、質問コーナー。すべてこのポータル上で行います。登録いただいた方に、公開と同時にご案内します。</p>
+      </div>
+      <div>
+        <p class="when">2026.09.01</p>
+        <h3>始動 ／ 第1回・福岡</h3>
+        <p>特行会の活動開始日です。同日、福岡で第1回のセミナーを開きます。会場と時間は準備中です。</p>
+      </div>
+    </div>
+    <div class="form rise">
+      <div id="fields">
+        <div class="field">
+          <label for="f-name">氏名<span class="req">必須</span></label>
+          <input type="text" id="f-name" autocomplete="name" placeholder="大房 太郎">
+        </div>
+        <div class="field">
+          <label for="f-office">事務所名<span class="req">必須</span></label>
+          <input type="text" id="f-office" autocomplete="organization" placeholder="〇〇行政書士事務所">
+        </div>
+        <div class="field">
+          <label for="f-volume">特定技能の取扱件数（月平均）<span class="req">必須</span></label>
+          <select id="f-volume">
+            <option value="">選択してください</option>
+            <option value="0">0件</option>
+            <option value="1-10">1〜10件</option>
+            <option value="11-100">11〜100件</option>
+            <option value="100+">100件〜</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-email">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="f-email" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <button type="button" id="f-submit">無料で参加登録する</button>
+        <p class="msg ng" id="f-msg"></p>
+      </div>
+      <div class="done" id="f-done" style="display:none">
+        <p class="mk">登録を受け付けました</p>
+        <p>会員ポータルの公開と、第1回・福岡セミナーのご案内をお送りします。少々お待ちください。</p>
+      </div>
+    </div>
+    <p class="note rise">対象：行政書士 ／ 参加費 0円</p>
+  </div>
+</section>
+
+<footer class="indigo">
+  <div class="wrap fin">
+    <svg width="26" height="26" viewBox="-80 -80 160 160" aria-hidden="true">
+      <circle r="72" fill="none" stroke="#F3F4F2" stroke-width="8"/>
+      <g fill="#F3F4F2"><use href="#p8"/></g>
+    </svg>
+    <b>特定技能行政書士勉強会</b>
+    <span>&copy; 特行会 &nbsp;<em style="font-style:normal;opacity:.5;font-family:var(--mono);font-size:.66rem">ver.20260716.01</em></span>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll('.rise').forEach((el,i)=>{
+  el.style.transitionDelay = (i % 4) * 70 + 'ms';
+  io.observe(el);
+});
+
+/* ===== 登録フォーム =====
+   ▼ 送信先を設定してください（Google Apps Script のウェブアプリURL、Formspree など）
+      空のままだと送信できません。 */
+const ENDPOINT = "";
+
+const $ = (id)=>document.getElementById(id);
+const msg = $('f-msg');
+
+function show(t){ msg.textContent = t; msg.classList.add('show'); }
+
+$('f-submit').addEventListener('click', async ()=>{
+  const data = {
+    name:   $('f-name').value.trim(),
+    office: $('f-office').value.trim(),
+    volume: $('f-volume').value,
+    email:  $('f-email').value.trim()
+  };
+  const ids = {name:'f-name', office:'f-office', volume:'f-volume', email:'f-email'};
+  let bad = null;
+  Object.keys(ids).forEach(k=>{
+    const el = $(ids[k]);
+    const empty = !data[k];
+    el.classList.toggle('err', empty);
+    if(empty && !bad) bad = el;
+  });
+  if(bad){ show('未入力の項目があります。'); bad.focus(); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
+    $('f-email').classList.add('err'); show('メールアドレスの形式をご確認ください。'); $('f-email').focus(); return;
+  }
+  msg.classList.remove('show');
+
+  const btn = $('f-submit');
+  btn.disabled = true; btn.textContent = '送信中…';
+
+  if(!ENDPOINT){
+    btn.disabled = false; btn.textContent = '無料で参加登録する';
+    show('送信先が未設定です。HTML内の ENDPOINT にフォームの送信先URLを設定してください。');
+    return;
+  }
+  try{
+    await fetch(ENDPOINT, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
+    });
+    $('fields').style.display = 'none';
+    $('f-done').style.display = 'block';
+  }catch(e){
+    btn.disabled = false; btn.textContent = '無料で参加登録する';
+    show('送信に失敗しました。時間をおいて、もう一度お試しください。');
+  }
+});
+
+/* ===== ページ内リンクのスクロール ===== */
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    const id = a.getAttribute('href');
+    if(id === '#') return;
+    const target = document.querySelector(id);
+    if(!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.pageYOffset - 66;
+    window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+    history.replaceState(null,'',id);
+    if(id === '#entry'){
+      const f = document.getElementById('f-name');
+      if(f) setTimeout(()=>f.focus({preventScroll:true}), reduce ? 0 : 650);
+    }
+  });
+});
+</script>
+</body>
+</html>
