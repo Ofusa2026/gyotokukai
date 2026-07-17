@@ -440,6 +440,21 @@ main{min-width:0}
 .kk-say-note b{font-family:var(--mincho)}
 .kk-say-note .ng{color:var(--shu)}
 
+
+/* ---- 入管別 ---- */
+.kk-kyoku{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:2px;margin-top:18px}
+.kk-kt{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px}
+.kk-kt thead th{background:#F0F2F4;font-size:.66rem;font-weight:700;letter-spacing:.05em;color:var(--ai);padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.kk-kt thead th.g{border-left:1px solid var(--line)}
+.kk-kt tbody th{font-family:var(--mincho);font-weight:600;font-size:.92rem;text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap;background:#FAFBFA}
+.kk-kt tbody th .ref{font-family:var(--mono);font-size:.56rem;color:var(--shu);margin-left:6px;font-weight:400;letter-spacing:.06em}
+.kk-kt tbody td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);font-size:.9rem}
+.kk-kt tbody td.g{border-left:1px solid var(--line)}
+.kk-kt tbody td .med{display:block;font-size:.68rem;color:var(--nezumi);margin-top:2px}
+.kk-kt tbody td.fast{color:var(--asagi);font-weight:500}
+.kk-kt tbody td.slow{color:var(--shu);font-weight:500}
+.kk-kt tbody tr:hover td,.kk-kt tbody tr:hover th{background:#F5F8F8}
+
 /* ============ モバイル ============ */
 .mhead{display:none}
 @media(max-width:900px){
@@ -594,7 +609,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.28</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.29</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1522,20 +1537,33 @@ function kkHTML(){
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">05</span></div>
+    <h3>入管によって、こんなに違う。</h3>
+    <p class="kk-lead">大房の実測（特定技能・2026年5月以降の受付）を、申請先の入管別に集計しました。<b class="kk-down">浅葱は平均より早い</b>、<b class="kk-up">朱は平均より遅い</b>。</p>
+    ${kkKyokuHTML()}
+    <div class="kk-warn" style="border-color:rgba(46,143,145,.3);background:rgba(46,143,145,.06)">
+      <b style="color:var(--asagi)">読むときの注意。</b><br>
+      これは<b>大房が扱った案件の実測</b>であって、その入管の公式な処理速度ではありません。法務省は入管別の日数を公表していないため、比べられる公表値もありません。<br>
+      <b>「参考」と付いた入管は、集計のもとになった件数が少なめです。</b>数字が振れやすいので、傾向として見てください。<br>
+      案件の中身（分野・企業・書類の状態）も入管ごとに偏ります。この差がそのまま入管の速さとは限りません。<b>依頼者に「◯◯入管は早い」と断定して伝えるのは避けてください。</b>
+    </div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">06</span></div>
     <h3>1年で、どう変わったか。</h3>
     <p class="kk-lead">令和7年2月許可分との比較です。<b class="kk-up">朱は長期化</b>、<b class="kk-down">浅葱は短縮</b>。</p>
     <div class="kk-movers" id="kkMovers">${kkMoversHTML()}</div>
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">06</span></div>
+    <div class="kk-sh"><span class="no">07</span></div>
     <h3>特定技能の数字、まとめ。</h3>
     <p class="kk-lead">令和8年5月許可分。浅葱地が審査終了までの日数です。</p>
     <div class="kk-twrap"><table class="kk-tbl" id="kkTbl">${kkTableHTML()}</table></div>
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">07</span></div>
+    <div class="kk-sh"><span class="no">08</span></div>
     <h3>注記（公表資料より、省略なし）。</h3>
     <div class="kk-notes">
       <h4>令和8年5月許可分の注記</h4>
@@ -1572,6 +1600,8 @@ function kkHTML(){
         <li>対象は2026年5月以降に受け付けた案件です。平均値と中央値を併記しています。</li>
         <li><b>特定技能1号の在留資格認定証明書交付（40.1）は母数が小さく、参考値です。</b>他の区分と同列には扱えません。また、公表値は交付までの日数であり、定義そのものが異なります。</li>
         <li>大房の実測値は当事務所の取扱案件に基づくもので、全国の傾向を示すものではありません。</li>
+        <li><b>入管別の集計について。</b>申請の受付番号から申請先の入管と申請種別（更新・変更）を判定し、特定技能に係る申請（受付番号2文字目が「Ｖ」）のみを対象としています。1号・2号は区別していません。対象は2026年5月以降に受け付けた案件で、受付通知メールから審査完了メールまでの日数です。</li>
+        <li><b>入管別の日数は、法務省は公表していません。</b>したがって公表値との比較はできず、大房の実測のみをお示ししています。「参考」と付した入管は集計のもとになった件数が少なく、平均が振れやすい点にご注意ください。</li>
       </ul>
     </div>
   </div>`;
@@ -1602,6 +1632,37 @@ function kkSayHTML(){
       <div class="a">${esc(say)}<small>公表平均 ${v.toFixed(1)} 日＝約 ${(v/30.4).toFixed(1)} ヶ月（${lbl}）に、1ヶ月の余裕</small></div>
     </div>`;
   }).join('');
+}
+
+
+/* ---- 入管別の実測（大房／特定技能・受付通知メール→審査完了メール／2026年5月以降の受付） ----
+   [局名, 更新平均, 更新中央値, 変更平均, 変更中央値, 母数が少ない] */
+const KKKYOKU=[
+ ['東京',   18.2,19, 29.4,27, false],
+ ['大阪',   32.8,33, 36.4,34, false],
+ ['神戸',   39.0,39, 23.2,22, false],
+ ['名古屋', 42.5,45, 49.2,51, false],
+ ['福岡',   23.0,23, 30.6,26, false],
+ ['横浜',   51.1,54, 56.5,56, true],
+ ['仙台',   17.2,22, 18.7,13, true],
+ ['札幌',   37.9,42, 32.8,35, true],
+ ['広島',   51.2,55, 56.3,55, true],
+ ['那覇',   45.5,46, 35.9,36, true],
+ ['高松',   28.6,29, 57.0,57, true]
+];
+function kkKyokuHTML(){
+  const avg = a => a.reduce((x,y)=>x+y,0)/a.length;
+  const uAll = avg(KKKYOKU.map(r=>r[1])), cAll = avg(KKKYOKU.map(r=>r[3]));
+  const cls = (v,base) => v <= base-5 ? 'fast' : (v >= base+5 ? 'slow' : '');
+  return `<div class="kk-kyoku"><table class="kk-kt">
+    <thead><tr><th>入管</th><th class="g">更新</th><th class="g">変更</th></tr></thead>
+    <tbody>${KKKYOKU.map(([n,ua,um,ca,cm,ref])=>`
+      <tr>
+        <th>${esc(n)}${ref?'<span class="ref">参考</span>':''}</th>
+        <td class="g ${cls(ua,uAll)}">${ua.toFixed(1)} 日<span class="med">中央値 ${um}</span></td>
+        <td class="g ${cls(ca,cAll)}">${ca.toFixed(1)} 日<span class="med">中央値 ${cm}</span></td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
 }
 
 /* ---- 簡易マークダウン ---- */
