@@ -609,7 +609,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.37</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.38</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -643,7 +643,7 @@ main{min-width:0}
 const API = 'https://vzpahholgvkvwtwooejf.supabase.co/functions/v1/portal';
 const ASK_TO = 'mail@gyosei-cambo.com';
 const CATS = [
-  ['home','ホーム'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['chuui','申請時注意点'],['qa','Q&A'],
+  ['home','ホーム'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['chuui','申請時注意点'],['flow','申請の流れ'],['tpl','参考テンプレート'],['qa','Q&A'],
   ['shitsumon','質問箱'],['case','ケーススタディ'],['tool','資料・ツール'],['zuiji','随時届出チェッカー'],['seminar','セミナー'],['mypage','マイページ']
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
@@ -714,7 +714,7 @@ function count(k){
   if(k==='home') return '';
   if(k==='map') return PREFS.filter(p=>p.status==='partnered').length+'/47';
   if(k==='shitsumon') return QUESTIONS.length + (IS_ADMIN&&PENDING.length?('+'+PENDING.length):'');
-  if(k==='mypage'||k==='admin'||k==='zuiji') return '';
+  if(k==='mypage'||k==='admin'||k==='zuiji'||k==='flow'||k==='tpl') return '';
   if(k==='chuui') return '5';
   // 審査情報には記事のほかに「在留審査処理期間」が常設されているため、その1件を含める
   if(k==='shinsa') return POSTS.filter(p=>p.category==='shinsa').length + 1;
@@ -759,6 +759,8 @@ function render(){
   if(view==='kikan'){ $('viewTitle').textContent='審査情報'; c.innerHTML = kkHTML(); bindKikan(); window.scrollTo({top:0}); return; }
   if(view==='zuiji'){ renderZuiji(); return; }
   if(view==='chuui'){ c.innerHTML = chuuiHTML(); window.scrollTo({top:0}); return; }
+  if(view==='flow'){ c.innerHTML = flowHTML(); window.scrollTo({top:0}); return; }
+  if(view==='tpl'){ c.innerHTML = tplHTML(); window.scrollTo({top:0}); return; }
   if(view==='search'){ c.innerHTML = listHTML(POSTS.filter(match)); bindList(); return; }
   let rows = POSTS.filter(p=>p.category===view).filter(match);
   let head = '';
@@ -1434,6 +1436,88 @@ function kkTableHTML(){
     ${cell(d.r8[1],'g')}${cell(d.r8[2],'key')}
     ${cell(d.r8[3],'g')}${cell(d.r8[4],'key')}</tr>`).join('');
   return head+'<tbody>'+body+'</tbody>';
+}
+
+
+/* ---- 申請の流れ（特定技能・標準フロー） ---- */
+function flowHTML(){
+  return `
+  <div class="kk-src">
+    特定技能の在留資格申請（オンライン申請）の標準的な流れです。<br>
+    実務では修正・追完により一部の工程を往復することがあります。
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">01</span></div>
+    <h3>受任・ヒアリング</h3>
+    <p class="kk-lead">所属機関（受入れ企業）と申請人の双方から情報を集めます。</p>
+    <p>会社情報（許可・保険・決算）、申請人情報（経歴・資格・現在の在留状況）、雇用条件をヒアリングシート等で確認。ここの精度がそのまま後工程の手戻りの少なさに直結します。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">02</span></div>
+    <h3>雇用条件書（1-6号）の作成・企業確認</h3>
+    <p class="kk-lead">ヒアリング内容をもとに雇用条件書を作成し、企業に内容確認を依頼します。</p>
+    <p>基本給・労働時間・休日・手当を確定させる工程です。企業から修正依頼があれば反映して再送付します（修正の往復が発生しうる工程です）。</p>
+    <div class="kk-callout">賃金・労働時間はここで固めたものが以後の全書類の基準になります。後から動かすと全書類の作り直しになるため、この段階で確定させてください。</div>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">03</span></div>
+    <h3>申請人サイン書類の準備</h3>
+    <p class="kk-lead">雇用契約書・雇用条件書など、申請人の署名が必要な書類一式を作成し、署名のうえ返送してもらいます。</p>
+    <p>署名はアルファベットで。返送書類は署名の有無・記入漏れを受領時に確認します。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">04</span></div>
+    <h3>企業押印書類の準備</h3>
+    <p class="kk-lead">押印欄のある様式を企業へ送付し、押印のうえ返送してもらいます。</p>
+    <p>サイン書類と並行して進められます。返送時に朱印の有無を必ず確認（「申請時注意点」04参照）。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">05</span></div>
+    <h3>提出書類一式の作成（スキャン）</h3>
+    <p class="kk-lead">提出書類一覧表の番号順に全書類をスキャンし、1本にまとめます。</p>
+    <p>税証明・協議会証明書等の収集書類もここで揃えます。見切れ・不鮮明・添付漏れの最終チェックはこの段階で（「申請時注意点」参照）。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">06</span></div>
+    <h3>オンライン申請・受付番号の取得</h3>
+    <p class="kk-lead">在留申請オンラインシステムから申請します。</p>
+    <p>申請後、入管庁から「申請受付番号のお知らせ」メールが届きます。受付番号は以後の照会・追完対応の起点になるため必ず案件記録に紐づけて保管します。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">07</span></div>
+    <h3>審査・追完対応</h3>
+    <p class="kk-lead">審査中に不備があると「追完依頼」メールが届きます。</p>
+    <p>追完は企業側で用意する書類と申請人側で用意する書類に分かれます。どちらのボールかを切り分けて依頼し、期限内に追加提出します。審査が終わると「審査完了のお知らせ」（更新・変更）または「電子在留資格認定証明書の交付」（認定）のメールが届きます。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">08</span></div>
+    <h3>許可・受取・完了</h3>
+    <p class="kk-lead">在留カード（更新・変更）は郵送交付か窓口受取のいずれかで受け取ります。</p>
+    <p>郵送交付は取り寄せに1〜2週間程度かかります。受取確認後に案件をクローズし、次回更新の在留期限を管理台帳に登録して完了です。</p>
+    <div class="kk-callout">完了はゴールではなく次の起点です。在留期限の管理を仕組み化しておくと、次回更新の受任漏れ・期限切迫を防げます。</div>
+  </div>
+  `;
+}
+
+/* ---- 参考テンプレート（コンテンツは順次追加） ---- */
+function tplHTML(){
+  return `
+  <div class="kk-src">
+    実務で使える参考テンプレートを掲載していきます。
+  </div>
+  <div class="kk-sec">
+    <h3>準備中</h3>
+    <p class="kk-lead">テンプレートは順次追加されます。しばらくお待ちください。</p>
+  </div>
+  `;
 }
 
 /* ---- 申請時注意点（追完事例より・常設） ---- */
