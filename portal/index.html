@@ -609,7 +609,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.41</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.42</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -917,7 +917,7 @@ function mapHTML(){
     <div class="map-list">
       <h4>MEMBERS ─ 都道府県別の会員（計 ${MEMBER_TOTAL}名${UNREG?'＋都道府県未登録 '+UNREG+'名':''}）</h4>
       ${mrows.length?mrows.map(x=>{
-        const offices = PREF_OFFICES[x.code]||[];
+        const offices = [...new Set(PREF_OFFICES[x.code]||[])];
         const hid = PREF_HIDDEN[x.code]||0;
         return `<div class="prow">
           <div class="ph"><b>${esc(x.name)}</b><span class="pn">${x.n}名</span></div>
