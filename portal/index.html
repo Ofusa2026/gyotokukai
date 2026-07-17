@@ -277,6 +277,33 @@ main{min-width:0}
 .pbtn.ghost{background:#fff;color:var(--shu);border:1px solid var(--shu)}
 
 
+/* ============ コメント・要望（右下フローティング） ============ */
+#fbWidget{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:var(--gothic)}
+#fbCollapsedBtn{display:none;align-items:center;gap:8px;background:var(--ai);color:#fff;border:none;border-radius:999px;padding:12px 20px;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(30,59,110,.34)}
+#fbCollapsedBtn:hover{background:var(--ai2)}
+#fbPanel{width:min(92vw,360px);background:#fff;border:1px solid var(--line);border-radius:2px;box-shadow:0 12px 38px rgba(11,18,32,.22);overflow:hidden}
+.fb-h{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ai);color:#fff;padding:11px 14px}
+.fb-h span{font-size:.84rem;font-weight:700}
+.fb-h button{background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:2px;width:26px;height:26px;cursor:pointer;font-size:16px;line-height:1;font-weight:700}
+.fb-h button:hover{background:rgba(255,255,255,.34)}
+.fb-b{padding:14px 15px;max-height:70vh;overflow:auto}
+.fb-note{font-size:.7rem;color:var(--nezumi);line-height:1.7;margin-bottom:9px}
+#fbBody{width:100%;box-sizing:border-box;min-height:78px;border:1px solid var(--line);border-radius:2px;padding:9px 11px;font-size:.86rem;font-family:var(--gothic);resize:vertical;background:#fff}
+#fbBody:focus{outline:none;border-color:var(--ai)}
+.fb-act{display:flex;justify-content:flex-end;margin-top:9px}
+#fbSend{background:var(--ai);color:#fff;border:none;border-radius:2px;padding:9px 24px;font-size:.82rem;font-weight:700;cursor:pointer}
+#fbSend:hover{background:var(--ai2)}
+#fbSend:disabled{opacity:.5;cursor:default}
+#fbMsg{font-size:.72rem;margin-top:6px}
+.fb-hist{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}
+.fb-hist h5{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--nezumi);margin-bottom:6px}
+.fb-hist .scroll{max-height:180px;overflow-y:auto;padding-right:4px}
+.fb-row{border:1px solid var(--line);border-radius:2px;padding:8px 10px;margin-bottom:6px;background:#FAFBFA}
+.fb-row .m{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:.6rem;color:var(--nezumi);margin-bottom:3px}
+.fb-row .t{font-size:.78rem;color:var(--kachi);white-space:pre-wrap;word-break:break-word}
+.fb-st.open{color:#B8860B;font-weight:700}
+.fb-st.done{color:var(--asagi);font-weight:700}
+
 /* ============ 管理画面 ============ */
 .stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:34px}
 .scard{background:#fff;border:1px solid var(--line);border-radius:2px;padding:16px 18px}
@@ -296,6 +323,14 @@ main{min-width:0}
 .afilter input{padding:9px 13px;border:1px solid var(--line);border-radius:2px;font-size:.86rem;background:#fff;min-width:220px}
 .afilter input:focus{outline:none;border-color:var(--ai)}
 .acsv{margin-left:auto;background:#fff;border:1px solid var(--ai);color:var(--ai);padding:8px 16px;border-radius:2px;font-size:.78rem;font-weight:700}
+.fbrow{background:#fff;border:1px solid var(--line);border-radius:2px;padding:13px 16px;margin-bottom:8px}
+.fbrow.open{border-left:3px solid var(--shu)}
+.fbrow .h{display:flex;gap:10px;align-items:center;font-size:.78rem;margin-bottom:6px;flex-wrap:wrap}
+.fbrow .h b{font-size:.86rem}
+.fbrow .h .of{color:var(--nezumi)}
+.fbrow .h .dt{margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--nezumi)}
+.fbrow .b{font-size:.86rem;white-space:pre-wrap;word-break:break-word;line-height:1.8}
+.fbrow .a{margin-top:9px;display:flex;gap:8px;align-items:center}
 .postrow{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;margin-bottom:8px;font-size:.86rem}
 .postrow .cat{font-family:var(--mono);font-size:.62rem;color:var(--asagi);white-space:nowrap}
 .postrow .ttl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -611,7 +646,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.51</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.52</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -650,7 +685,7 @@ const CATS = [
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
 let TOKEN = localStorage.getItem('tgk_token') || '';
-let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, PREF_OFFICES = {}, PREF_HIDDEN = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
+let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], MYFB = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, PREF_OFFICES = {}, PREF_HIDDEN = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
 async function api(payload){
@@ -699,6 +734,7 @@ async function enter(){
   PREFS = r.prefs||[];
   QUESTIONS = r.questions||[];
   MYQ = r.my_questions||[];
+  MYFB = r.my_feedback||[];
   PENDING = r.pending||[];
   PROFILE = r.profile||null;
   IS_ADMIN = !!r.is_admin;
@@ -710,6 +746,7 @@ async function enter(){
   [$('askBtn'),$('askBtnM')].forEach(a=>{ a.href='#'; a.addEventListener('click',e=>{e.preventDefault(); go('shitsumon');}); });
   $('whoami').textContent = (PROFILE?PROFILE.name+'　':'')+(r.email||'');
   renderNav();
+  mountFeedback();
   go(PROFILE ? 'home' : 'mypage');
 }
 function count(k){
@@ -1137,7 +1174,7 @@ function bindShitsumon(){
 }
 async function reloadData(){
   const r = await api({action:'get_posts', token:TOKEN});
-  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; PREF_OFFICES=r.pref_offices||{}; PREF_HIDDEN=r.pref_hidden||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; renderNav(); }
+  if(r.ok){ POSTS=r.posts; PREFS=r.prefs; QUESTIONS=r.questions; MYQ=r.my_questions; MYFB=r.my_feedback||[]; PENDING=r.pending; PROFILE=r.profile; IS_ADMIN=!!r.is_admin; PREF_MEMBERS=r.pref_members||{}; PREF_OFFICES=r.pref_offices||{}; PREF_HIDDEN=r.pref_hidden||{}; MEMBER_TOTAL=r.member_total||0; UNREG=r.unregistered||0; renderNav(); }
 }
 
 /* ---- 質問詳細＋コメント ---- */
@@ -1201,6 +1238,71 @@ async function loadComments(id){
 }
 
 
+/* ---- コメント・要望（右下フローティング） ---- */
+let FB_COLLAPSED = false;
+function mountFeedback(){
+  if($('fbWidget')) return;
+  try{ FB_COLLAPSED = localStorage.getItem('tgk_fb_collapsed')==='1'; }catch(e){}
+  const w=document.createElement('div'); w.id='fbWidget';
+  w.innerHTML = `
+    <button id="fbCollapsedBtn">💬 コメント・要望</button>
+    <div id="fbPanel">
+      <div class="fb-h"><span>💬 コメント・要望</span><button id="fbMin" title="小さくする">–</button></div>
+      <div class="fb-b">
+        <div class="fb-note">ポータルへのご意見・ご要望、記事のリクエスト、不具合のご連絡などをお送りください。運営（大房）にのみ届きます。ポータルには掲載されません。</div>
+        <textarea id="fbBody" maxlength="2000" placeholder="お気づきの点をご自由にどうぞ"></textarea>
+        <div class="fb-act"><button id="fbSend">送信</button></div>
+        <p id="fbMsg"></p>
+        <div id="fbHist"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(w);
+  $('fbMin').addEventListener('click', fbToggle);
+  $('fbCollapsedBtn').addEventListener('click', fbToggle);
+  $('fbSend').addEventListener('click', sendFeedback);
+  fbApply(); renderFbHist();
+}
+function fbToggle(){
+  FB_COLLAPSED=!FB_COLLAPSED;
+  try{ localStorage.setItem('tgk_fb_collapsed', FB_COLLAPSED?'1':'0'); }catch(e){}
+  fbApply();
+}
+function fbApply(){
+  const b=$('fbCollapsedBtn'), p=$('fbPanel');
+  if(b) b.style.display = FB_COLLAPSED?'inline-flex':'none';
+  if(p) p.style.display = FB_COLLAPSED?'none':'block';
+}
+function renderFbHist(){
+  const box=$('fbHist'); if(!box) return;
+  if(!MYFB.length){ box.innerHTML=''; return; }
+  box.innerHTML = `<div class="fb-hist"><h5>送信履歴（${MYFB.length}）</h5><div class="scroll">`+
+    MYFB.map(f=>`<div class="fb-row">
+      <div class="m"><span class="fb-st ${f.status==='done'?'done':'open'}">${f.status==='done'?'対応済':'未対応'}</span><span>${fdate(f.created_at)}</span></div>
+      <div class="t">${esc(f.body)}</div>
+    </div>`).join('')+'</div></div>';
+}
+async function sendFeedback(){
+  const bd=($('fbBody').value||'').trim();
+  const msg=$('fbMsg'), btn=$('fbSend');
+  if(!bd){ msg.style.color='var(--shu)'; msg.textContent='内容を入力してください。'; return; }
+  btn.disabled=true; btn.textContent='送信中…'; msg.textContent='';
+  try{
+    const r=await api({action:'submit_feedback', token:TOKEN, body:bd});
+    if(r.ok){
+      msg.style.color='var(--asagi)'; msg.textContent='✓ 送信しました。ありがとうございます。';
+      $('fbBody').value='';
+      if(r.feedback) MYFB.unshift(r.feedback);
+      renderFbHist();
+    }else{
+      msg.style.color='var(--shu)';
+      msg.textContent = r.error==='rate' ? '送信間隔が短すぎます。少し待って再度お試しください。'
+        : r.error==='too_long' ? '2,000文字以内でお願いします。'
+        : '送信に失敗しました。時間をおいて再度お試しください。';
+    }
+  }catch(e){ msg.style.color='var(--shu)'; msg.textContent='送信エラーが発生しました。'; }
+  btn.disabled=false; btn.textContent='送信';
+}
+
 /* ---- 管理画面 ---- */
 let ADMIN = null, memFilter = '';
 async function loadAdmin(){
@@ -1226,6 +1328,23 @@ function renderAdmin(){
       <div class="scard"><div class="k">掲載質問</div><div class="v">${st.questions - st.pending}</div></div>
       <div class="scard"><div class="k">コメント</div><div class="v">${st.comments}</div></div>
       <div class="scard"><div class="k">紹介</div><div class="v">${st.intros}</div></div>
+      <div class="scard${st.feedback_open?' alert':''}"><div class="k">未対応コメント</div><div class="v">${st.feedback_open||0}</div></div>
+    </div>
+
+    <div class="sect"><div class="sect-h"><h3>コメント・要望</h3></div>
+      ${(ADMIN.feedback||[]).length?(ADMIN.feedback||[]).map(f=>`
+        <div class="fbrow${f.status==='done'?'':' open'}" data-id="${f.id}">
+          <div class="h">
+            <b>${esc(f.member)}</b>${f.office?`<span class="of">${esc(f.office)}</span>`:''}
+            <span class="badge ${f.status==='done'?'hasprofile':'pending'}">${f.status==='done'?'対応済':'未対応'}</span>
+            <span class="dt">${fdate(f.created_at)}</span>
+          </div>
+          <div class="b">${esc(f.body)}</div>
+          <div class="a">
+            <button class="abtn ${f.status==='done'?'no':'ok'} fb-done" data-d="${f.status==='done'?'0':'1'}" style="padding:6px 14px;font-size:.72rem">${f.status==='done'?'未対応に戻す':'✅ 対応済みにする'}</button>
+            <span class="mono" style="font-size:.66rem;color:var(--nezumi)">${esc(f.email)}</span>
+          </div>
+        </div>`).join(''):'<div style="font-size:.86rem;color:var(--nezumi)">まだ届いていません。</div>'}
     </div>
 
     <div class="sect-h"><h3>会員一覧</h3></div>
@@ -1294,6 +1413,11 @@ function renderAdmin(){
         </div>`).join('')}
     </div>`;
 
+  document.querySelectorAll('.fb-done').forEach(b=>b.addEventListener('click', async ()=>{
+    const row=b.closest('.fbrow'); b.disabled=true;
+    const r=await api({action:'admin_feedback_done', token:TOKEN, feedback_id:row.dataset.id, done:b.dataset.d==='1'});
+    if(r.ok){ await loadAdmin(); } else { b.disabled=false; alert('更新に失敗しました。'); }
+  }));
   $('memQ').addEventListener('input', e=>{ memFilter=e.target.value.trim().toLowerCase(); renderAdmin(); });
   document.querySelectorAll('.mem-ok').forEach(b=>b.addEventListener('click', async ()=>{
     if(!confirm(b.dataset.e+' を承認しますか？（承認メールが本人に届きます）')) return;
