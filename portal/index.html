@@ -646,7 +646,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.52</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.53</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1305,6 +1305,28 @@ async function sendFeedback(){
 
 /* ---- 管理画面 ---- */
 let ADMIN = null, memFilter = '';
+// 承認待ちを1件ずつ admin_set_member で承認する（＝1件ずつ承認メールが飛ぶ）。
+// 途中で中断・失敗しても、成功した分だけが承認済みになり、再実行で残りから続けられる。
+async function bulkApprove(){
+  const targets = ADMIN.members.filter(m=>m.status==='pending');
+  if(!targets.length) return;
+  if(!confirm(`承認待ちの${targets.length}名を全員承認します。\n\n1名ずつに承認メール（ポータルURLの案内）が届きます。送信後は取り消せません。\n\n実行しますか？`)) return;
+  const btn=$('bulkOk'); btn.disabled=true;
+  let ok=0; const failed=[];
+  for(let i=0;i<targets.length;i++){
+    const m=targets[i];
+    btn.textContent=`承認中… ${i+1}/${targets.length}`;
+    try{
+      const r=await api({action:'admin_set_member', token:TOKEN, member_email:m.email, decision:'approved'});
+      if(r.ok) ok++; else failed.push(m.email);
+    }catch(e){ failed.push(m.email); }
+  }
+  await reloadData();
+  await loadAdmin();
+  alert(failed.length
+    ? `${ok}名を承認しました。\n\n${failed.length}名は失敗したため承認待ちのまま残っています：\n`+failed.join('\n')+`\n\nもう一度「まとめて承認」を押すと残りだけ再実行します。`
+    : `${ok}名を承認しました。全員に承認メールを送信しています。`);
+}
 async function loadAdmin(){
   const r = await api({action:'admin_overview', token:TOKEN});
   if(!r.ok){ $('content').innerHTML='<div class="empty">権限がありません。</div>'; return; }
@@ -1351,7 +1373,8 @@ function renderAdmin(){
     <div class="afilter">
       <input type="search" id="memQ" placeholder="氏名・事務所・メールで絞り込み" value="${esc(memFilter)}">
       <span style="font-size:.78rem;color:var(--nezumi)">${mem.length} / ${ADMIN.members.length} 名</span>
-      <button class="acsv" id="csvBtn">CSVで保存</button>
+      ${st.pending_members?`<button class="acsv" id="bulkOk" style="margin-left:auto;border-color:var(--shu);color:var(--shu)">承認待ち${st.pending_members}名をまとめて承認</button>`:''}
+      <button class="acsv" id="csvBtn"${st.pending_members?' style="margin-left:0"':''}>CSVで保存</button>
     </div>
     <div class="atable-wrap">
       <table class="atable">
@@ -1413,6 +1436,7 @@ function renderAdmin(){
         </div>`).join('')}
     </div>`;
 
+  if($('bulkOk')) $('bulkOk').addEventListener('click', bulkApprove);
   document.querySelectorAll('.fb-done').forEach(b=>b.addEventListener('click', async ()=>{
     const row=b.closest('.fbrow'); b.disabled=true;
     const r=await api({action:'admin_feedback_done', token:TOKEN, feedback_id:row.dataset.id, done:b.dataset.d==='1'});
