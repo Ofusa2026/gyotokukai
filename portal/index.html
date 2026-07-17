@@ -339,7 +339,7 @@ main{min-width:0}
 .kk-src{line-height:2}
 .kk-sec{margin-bottom:38px}
 .kk-sh{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.kk-sh .no{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--asagi)}
+.kk-sh .no{font-family:var(--mono);font-size:1rem;font-weight:700;letter-spacing:.16em;color:var(--asagi)}
 .kk-sh::after{content:"";flex:1;height:1px;background:var(--line)}
 .kk-sec h3{font-family:var(--mincho);font-weight:800;font-size:1.34rem;letter-spacing:.03em;word-break:auto-phrase;line-break:strict}
 .kk-lead{font-size:.84rem;color:var(--nezumi);max-width:44em;margin-top:10px;word-break:auto-phrase;line-break:strict}
@@ -611,7 +611,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.46</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.47</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1461,14 +1461,14 @@ function flowHTML(){
     <h3>雇用条件書（1-6号）の作成・企業確認</h3>
     <p class="kk-lead">ヒアリング内容をもとに雇用条件書を作成し、企業に内容確認を依頼します。</p>
     <p>基本給・労働時間・休日・手当を確定させる工程です。企業から修正依頼があれば反映して再送付します（修正の往復が発生しうる工程です）。</p>
-    <div class="kk-callout">賃金・労働時間はここで固めたものが以後の全書類の基準になります。後から動かすと全書類の作り直しになりかねないため、この段階で確定させておくのが安全です。</div>
+    <div class="kk-callout">賃金・労働時間等の雇用条件はここで固めたものが以後の全書類の基準になります。後から動かすと全書類の作り直しになりかねないため、この段階で確定させておくのが安全です。</div>
   </div>
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">03</span></div>
     <h3>申請人サイン書類の準備</h3>
     <p class="kk-lead">雇用契約書・雇用条件書など、申請人の署名が必要な書類一式を作成し、署名のうえ返送してもらいます。</p>
-    <p>署名は原則アルファベットで。返送書類は署名の有無・記入漏れを受領時に確認します。</p>
+    <p>署名は原則アルファベットで（建設はアルファベットのフルネームが必須）。返送書類は署名の有無・記入漏れを受領時に確認します。</p>
   </div>
 
   <div class="kk-sec">
@@ -1487,20 +1487,27 @@ function flowHTML(){
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">06</span></div>
-    <h3>オンライン申請・受付番号の取得</h3>
-    <p class="kk-lead">在留申請オンラインシステムから申請します。</p>
-    <p>申請後、入管庁から「申請受付番号のお知らせ」メールが届きます。受付番号は以後の照会・追完対応の起点になるため、案件記録に紐づけて保管しておくと安心です。</p>
+    <h3>申請書類一式の確認</h3>
+    <p class="kk-lead">まとめた書類一式を、申請人・所属機関の双方に確認してもらいます。</p>
+    <p>氏名・生年月日・雇用条件などの記載内容に誤りがないか、当事者の目でも確認してもらう工程です。ここで気づけた誤りは修正で済みますが、申請後に発覚すると追完・取下げにつながります。</p>
   </div>
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">07</span></div>
+    <h3>申請（オンライン／窓口）</h3>
+    <p class="kk-lead">在留申請オンラインシステム、または管轄の地方出入国在留管理局の窓口で申請します。</p>
+    <p>オンライン申請の場合、申請後に入管庁から「申請受付番号のお知らせ」メールが届きます。受付番号は以後の照会・追完対応の起点になるため、案件記録に紐づけて保管しておくと安心です。</p>
+  </div>
+
+  <div class="kk-sec">
+    <div class="kk-sh"><span class="no">08</span></div>
     <h3>審査・追完対応</h3>
     <p class="kk-lead">審査中に不備があると「追完依頼」メールが届きます。</p>
     <p>追完は企業側で用意する書類と申請人側で用意する書類に分かれます。どちらのボールかを切り分けて依頼し、期限内に追加提出します。審査が終わると「審査完了のお知らせ」（更新・変更）または「電子在留資格認定証明書の交付」（認定）のメールが届きます。</p>
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">08</span></div>
+    <div class="kk-sh"><span class="no">09</span></div>
     <h3>許可・受取・完了</h3>
     <p class="kk-lead">在留カード（更新・変更）は郵送交付か窓口受取のいずれかで受け取ります。</p>
     <p>郵送交付は取り寄せに1〜2週間程度かかることがあります。受取確認後に案件をクローズし、次回更新の在留期限を管理台帳に登録して完了です。</p>
