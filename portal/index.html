@@ -609,7 +609,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.42</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.43</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -774,7 +774,7 @@ function render(){
       if(region) rows = rows.filter(p=>p.region===region);
     }
   }
-  c.innerHTML = head + listHTML(rows);
+  c.innerHTML = head + ((view==='shinsa' && !rows.length) ? '' : listHTML(rows));
   if($('kkGo')) $('kkGo').addEventListener('click', ()=>{ view='kikan'; renderNav(); render(); });
   c.querySelectorAll('.rg').forEach(b=>b.addEventListener('click',()=>{ region=b.dataset.r; render(); }));
   bindList();
