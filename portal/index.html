@@ -609,7 +609,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.35</i></div>
+      <div><b>特行会</b><i>MEMBER PORTAL ver.20260717.36</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -715,7 +715,7 @@ function count(k){
   if(k==='map') return PREFS.filter(p=>p.status==='partnered').length+'/47';
   if(k==='shitsumon') return QUESTIONS.length + (IS_ADMIN&&PENDING.length?('+'+PENDING.length):'');
   if(k==='mypage'||k==='admin'||k==='zuiji') return '';
-  if(k==='chuui') return '7';
+  if(k==='chuui') return '6';
   // 審査情報には記事のほかに「在留審査処理期間」が常設されているため、その1件を含める
   if(k==='shinsa') return POSTS.filter(p=>p.category==='shinsa').length + 1;
   return POSTS.filter(p=>p.category===k).length;
@@ -1475,24 +1475,17 @@ function chuuiHTML(){
 
   <div class="kk-sec">
     <div class="kk-sh"><span class="no">05</span></div>
-    <h3>賃金額は、全書類で1円単位まで一致させる。</h3>
-    <p class="kk-lead">雇用条件書・賃金の支払（別紙）・申請情報・（建設は）受入計画認定証の突合を。</p>
-    <p>これらの間で基本給が食い違うと追完になります。提出前に全書類を横に並べて、金額の一致を確認してください。</p>
-  </div>
-
-  <div class="kk-sec">
-    <div class="kk-sh"><span class="no">06</span></div>
     <h3>スキャンの見切れ・不鮮明に注意。</h3>
     <p class="kk-lead">内容以前の問題で、再提出を求められます。</p>
     <p>合格証明書等の<b>四隅の番号や枠</b>が切れている、解像度不足で判読できない場合は差し戻しの対象です。アップロード前に全体が写っているかを確認してください。</p>
   </div>
 
   <div class="kk-sec">
-    <div class="kk-sh"><span class="no">07</span></div>
+    <div class="kk-sh"><span class="no">06</span></div>
     <h3>変則的な事情には、理由書を先回りで。</h3>
     <p class="kk-lead">書類間の「見かけの不一致」は、説明がなければ追完で聞かれます。</p>
     <p>所属機関名が認定時と異なる、転職歴がある、非課税の年がある等の事情がある場合は、<b>最初から理由書を添付</b>しておくと追完を防げます。</p>
-    <div class="kk-callout">追完は1往復で審査が数週間延びます。ここに挙げた7項目だけで追完全体の大半を占めており、提出前チェックの費用対効果が最も高い領域です。</div>
+    <div class="kk-callout">追完は1往復で審査が数週間延びます。ここに挙げた6項目だけで追完全体の大半を占めており、提出前チェックの費用対効果が最も高い領域です。</div>
   </div>
   `;
 }
