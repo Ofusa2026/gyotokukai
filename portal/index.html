@@ -705,7 +705,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.54</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.55</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1354,7 +1354,7 @@ async function loadComments(id){
 
 
 /* ---- 審査実測データ ---- */
-let SHINSA = null, SHINSA_CANPOST = false, JS_FILTER = 'all', JS_ADMIN_TAB = 'single';
+let SHINSA = null, SHINSA_CANPOST = false, SHINSA_MINE = [], SHINSA_PENDING = [], JS_FILTER = 'all', JS_ADMIN_TAB = 'single', JS_MEMBER_OPEN = false;
 const ZLABEL = { ss1:'特定技能1号', ss2:'特定技能2号', tk:'特定活動（移行準備）' };
 const MLABEL = { online:'オンライン', window:'窓口' };
 function daysBetween(a, b){ return Math.round((new Date(b+'T00:00:00Z') - new Date(a+'T00:00:00Z')) / 86400000); }
@@ -1368,6 +1368,8 @@ async function loadJissoku(){
   if(!r.ok){ $('content').innerHTML='<div class="empty">読み込みに失敗しました。</div>'; return; }
   SHINSA = (r.records||[]).map(x=>({...x, days:daysBetween(x.applied_date,x.approved_date)}));
   SHINSA_CANPOST = !!r.can_post;
+  SHINSA_MINE = r.my_shinsa||[];
+  SHINSA_PENDING = (r.pending_shinsa||[]).map(x=>({...x, days:daysBetween(x.applied_date,x.approved_date)}));
   renderJissoku();
   window.scrollTo({top:0});
 }
@@ -1426,6 +1428,10 @@ function jissokuHTML(){
       <p class="kk-lead">大房行政書士事務所が実際に扱った申請の、<b>申請日から許可日までの日数</b>を蓄積したものです。区分別の平均・中央値と、入管官署別の内訳を表示しています。</p>
       <div class="kk-warn" style="margin:10px 0"><b>読み方の注意。</b>これは大房の取扱案件の実測であり、全国の傾向や各入管の公式な処理速度を示すものではありません。件数が少ない区分・官署は平均が振れやすい点にご留意ください。（現在はデータ蓄積の初期段階です。）</div>
 
+      ${SHINSA_CANPOST ? shinsaPendingHTML() : ''}
+      ${!SHINSA_CANPOST ? memberSubmitHTML() : ''}
+      ${myShinsaHTML()}
+
       <div class="js-agg">${cards}</div>
 
       <h3 style="margin:22px 0 2px;font-size:1rem">入管官署別</h3>
@@ -1475,6 +1481,53 @@ function jissokuAdminHTML(){
     </div>
   </div>`;
 }
+function shinsaPendingHTML(){
+  if(!SHINSA_PENDING.length) return '';
+  return `
+  <div class="admin-pend" style="margin:14px 0">
+    <h3>承認待ちの投稿（${SHINSA_PENDING.length}件）</h3>
+    ${SHINSA_PENDING.map(r=>`<div class="pq" data-id="${r.id}">
+      <div class="t">${ZLABEL[r.zairyu]}${r.tetsuzuki?'／'+esc(r.tetsuzuki):''}　—　${esc(r.bureau)}（${MLABEL[r.method]||''}）</div>
+      <div class="b">申請 ${r.applied_date} → 許可 ${r.approved_date}　＝ <b>${r.days}日</b>${r.note?'　／ '+esc(r.note):''}</div>
+      <div class="who">${esc(r.author_name||'')}${r.author_office?'（'+esc(r.author_office)+'）':''}　${fdate(r.created_at)}</div>
+      <div class="acts"><button class="abtn ok" data-d="approved">承認して反映</button><button class="abtn no" data-d="rejected">却下</button></div>
+    </div>`).join('')}
+  </div>`;
+}
+function memberSubmitHTML(){
+  return `
+  <div class="js-admin" style="border-style:solid;background:#fff">
+    <h4>データを投稿する（承認後に反映されます）</h4>
+    <div style="display:${JS_MEMBER_OPEN?'block':'none'}" id="jsMemberForm">
+      <div class="grid">
+        <div><label>在留区分</label><select id="jsZ"><option value="ss1">特定技能1号</option><option value="ss2">特定技能2号</option><option value="tk">特定活動（移行準備）</option></select></div>
+        <div><label>手続（任意）</label><select id="jsT"><option value="">—</option><option>認定</option><option>変更</option><option>更新</option><option>その他</option></select></div>
+        <div><label>入管官署</label><input type="text" id="jsB" placeholder="例：東京"></div>
+        <div><label>申請方法</label><select id="jsM"><option value="online">オンライン</option><option value="window">窓口</option></select></div>
+        <div><label>申請日</label><input type="date" id="jsAp"></div>
+        <div><label>許可日</label><input type="date" id="jsAc"></div>
+      </div>
+      <div style="margin-top:8px"><label>メモ（任意・分野など）</label><input type="text" id="jsN" placeholder="例：外食業"></div>
+      <p class="js-note">投稿内容は運営（大房）の承認後に、実測データに反映されます。氏名は公開されません（集計・入管別の内訳にのみ使われます）。</p>
+      <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+        <button class="pbtn" id="jsMemberAdd">投稿する</button>
+        <button class="pbtn sec" id="jsMemberCancel">やめる</button>
+        <span class="fmsg" id="jsMemberMsg"></span>
+      </div>
+    </div>
+    <div style="display:${JS_MEMBER_OPEN?'none':'block'}">
+      <button class="pbtn" id="jsMemberOpen">＋ 実測データを投稿する</button>
+    </div>
+  </div>`;
+}
+function myShinsaHTML(){
+  if(!SHINSA_MINE.length) return '';
+  return `
+  <div class="mypend" style="margin:12px 0">
+    <h4 style="font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--nezumi);margin-bottom:6px">あなたの投稿（未反映）</h4>
+    ${SHINSA_MINE.map(r=>`<div class="row"><span>${ZLABEL[r.zairyu]}／${esc(r.bureau)}／申請 ${r.applied_date}→許可 ${r.approved_date}</span><span class="badge ${r.status}">${r.status==='pending'?'承認待ち':'非承認'}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--nezumi)">${fdate(r.created_at)}</span></div>`).join('')}
+  </div>`;
+}
 function bindJissoku(){
   $('jsBack').addEventListener('click', ()=>go('shinsa'));
   const seg=$('jsSeg'); if(seg) seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ JS_FILTER=b.dataset.z; renderJissoku(); }));
@@ -1487,6 +1540,34 @@ function bindJissoku(){
     const r=await api({action:'admin_delete_shinsa', token:TOKEN, record_id:tr.dataset.id});
     if(r.ok){ await loadJissoku(); } else alert('削除に失敗しました。');
   }));
+  // 会員：投稿フォームの開閉と送信
+  if($('jsMemberOpen')) $('jsMemberOpen').addEventListener('click',()=>{
+    if(!PROFILE){ alert('先にマイページで氏名・事務所名・都道府県をご登録ください。'); go('mypage'); return; }
+    JS_MEMBER_OPEN=true; renderJissoku();
+  });
+  if($('jsMemberCancel')) $('jsMemberCancel').addEventListener('click',()=>{ JS_MEMBER_OPEN=false; renderJissoku(); });
+  if($('jsMemberAdd')) $('jsMemberAdd').addEventListener('click', addShinsaMember);
+  // 管理者：承認待ちの承認/却下
+  document.querySelectorAll('.admin-pend .pq').forEach(el=>{
+    el.querySelectorAll('.abtn').forEach(b=>b.addEventListener('click', async ()=>{
+      b.disabled=true;
+      const r=await api({action:'shinsa_moderate', token:TOKEN, record_id:el.dataset.id, decision:b.dataset.d});
+      if(r.ok){ await loadJissoku(); } else { b.disabled=false; alert('処理に失敗しました。'); }
+    }));
+  });
+}
+async function addShinsaMember(){
+  const msg=$('jsMemberMsg');
+  const payload={ action:'member_add_shinsa', token:TOKEN,
+    zairyu:$('jsZ').value, tetsuzuki:$('jsT').value, bureau:$('jsB').value.trim(),
+    method:$('jsM').value, applied_date:$('jsAp').value, approved_date:$('jsAc').value, note:$('jsN').value.trim() };
+  if(!payload.bureau||!payload.applied_date||!payload.approved_date){ msg.textContent='入管官署・申請日・許可日は必須です。'; msg.className='fmsg show ng'; return; }
+  const b=$('jsMemberAdd'); b.disabled=true;
+  const r=await api(payload); b.disabled=false;
+  if(r.ok){ JS_MEMBER_OPEN=false; await loadJissoku(); }
+  else if(r.error==='rate'){ msg.textContent='投稿の間隔が短すぎます。少し待ってください。'; msg.className='fmsg show ng'; }
+  else if(r.error==='ng_word'){ msg.textContent='不適切な表現が含まれている可能性があります。'; msg.className='fmsg show ng'; }
+  else{ msg.textContent=(JS_ERR[r.error]?JS_ERR[r.error]+'を確認してください。':'投稿に失敗しました。'); msg.className='fmsg show ng'; }
 }
 const JS_ERR = { zairyu:'在留区分', method:'申請方法', bureau:'入管官署', applied_date:'申請日', approved_date:'許可日', date_order:'日付の前後（許可日が申請日より前）' };
 async function addShinsaSingle(){
@@ -1832,7 +1913,7 @@ function kkBanner(){
 }
 function jsBanner(){
   return `<button type="button" class="kk-banner" id="jsGo" style="--kk-accent:var(--asagi)">
-    <span class="k">大房 実測データ / 蓄積中</span>
+    <span class="k">実測データ / 会員投稿できます（承認制）</span>
     <span class="t">審査実測データ（申請日→許可日）</span>
     <span class="d"><span class="nb">特定技能1号・2号</span>と<span class="nb">特定活動（移行準備）</span>について、大房が実際に<span class="nb">何日で許可が出たか</span>を蓄積。<span class="nb">区分別の平均・中央値</span>と<span class="nb">入管官署別</span>の内訳。</span>
     <span class="go">データを見る<span class="ar">→</span></span>
