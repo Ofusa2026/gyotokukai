@@ -277,6 +277,65 @@ main{min-width:0}
 .pbtn.ghost{background:#fff;color:var(--shu);border:1px solid var(--shu)}
 
 
+/* ============ 審査実測データ ============ */
+.js-agg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 4px}
+@media(max-width:640px){.js-agg{grid-template-columns:1fr}}
+.js-card{background:#fff;border:1px solid var(--line);border-radius:2px;padding:14px 16px;border-top:2px solid var(--ai)}
+.js-card .ct{font-size:.78rem;font-weight:700;color:var(--kachi)}
+.js-card .n{font-family:var(--mono);font-size:.62rem;color:var(--nezumi);margin-top:2px}
+.js-card .main{font-size:1.9rem;font-weight:700;color:var(--ai);line-height:1.2;margin-top:8px}
+.js-card .main small{font-size:.8rem;font-weight:400;color:var(--nezumi);margin-left:2px}
+.js-card .med{font-size:.72rem;color:var(--nezumi);margin-top:2px}
+.js-card.empty .main{color:var(--nezumi);font-size:1rem;font-weight:400;margin-top:12px}
+.js-seg{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.js-seg button{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 15px;font-size:.76rem;font-family:var(--gothic);cursor:pointer;color:var(--sumi)}
+.js-seg button.on{background:var(--ai);color:#fff;border-color:var(--ai)}
+.js-bureau{width:100%;border-collapse:collapse;margin-top:8px;font-size:.8rem}
+.js-bureau th,.js-bureau td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left}
+.js-bureau th{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--nezumi);font-weight:400}
+.js-bureau td.num{text-align:right;font-variant-numeric:tabular-nums}
+.js-tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:.78rem}
+.js-tbl th,.js-tbl td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap}
+.js-tbl th{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:var(--nezumi);font-weight:400}
+.js-tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.js-tbl .zbadge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.68rem;font-weight:700}
+.js-tbl .z-ss1{background:#E8F0FB;color:var(--ai)}
+.js-tbl .z-ss2{background:#EAF3EC;color:#2E6B43}
+.js-tbl .z-tk{background:#FBF0E4;color:#9A5B18}
+.js-tbl .mmethod{font-size:.66rem;color:var(--nezumi)}
+.js-tbl .delx{border:none;background:none;color:var(--shu);cursor:pointer;font-size:.9rem}
+.js-note{font-size:.72rem;color:var(--nezumi);line-height:1.8;margin-top:6px}
+.js-admin{background:#FAFBFA;border:1px dashed var(--line);border-radius:2px;padding:14px 16px;margin:16px 0}
+.js-admin h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;color:var(--nezumi);margin-bottom:10px}
+.js-admin .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.js-admin .grid{grid-template-columns:1fr}}
+.js-admin label{display:block;font-size:.68rem;color:var(--nezumi);margin-bottom:3px}
+.js-admin input,.js-admin select,.js-admin textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:2px;padding:7px 9px;font-size:.82rem;font-family:var(--gothic);background:#fff}
+.js-admin textarea{min-height:80px;resize:vertical;font-family:var(--mono);font-size:.76rem}
+.js-tabs{display:flex;gap:8px;margin-bottom:12px}
+.js-tabs button{flex:1;background:#fff;border:1px solid var(--line);border-radius:2px;padding:7px;font-size:.78rem;cursor:pointer;font-family:var(--gothic)}
+.js-tabs button.on{background:var(--kachi);color:#fff;border-color:var(--kachi)}
+
+/* ============ Q&A タグ・検索・解決 ============ */
+.qa-search{position:relative;margin-bottom:10px}
+.qa-search input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:999px;padding:9px 16px 9px 38px;font-size:.86rem;font-family:var(--gothic)}
+.qa-search input:focus{outline:none;border-color:var(--asagi)}
+.qa-search .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--nezumi);font-size:.9rem}
+.qtags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.qtag{display:inline-block;background:#EAF3EC;color:#2E6B43;border:none;border-radius:999px;padding:2px 10px;font-size:.68rem;cursor:pointer;font-family:var(--gothic)}
+.qtag.on{background:var(--asagi);color:#fff}
+.qtag.mini{background:#F0F2F0;color:var(--nezumi);cursor:default;font-size:.64rem;padding:1px 8px}
+.qbadge-resolved{display:inline-block;background:#EAF3EC;color:#2E6B43;border-radius:2px;padding:1px 8px;font-size:.66rem;font-weight:700;margin-right:6px}
+.qa-filterbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.qa-clear{background:none;border:none;color:var(--asagi);font-size:.72rem;cursor:pointer;text-decoration:underline}
+.cm.best{border:1px solid #7FB08A;background:#F4FAF5;border-radius:4px;padding:8px}
+.best-tag{display:inline-block;background:#2E6B43;color:#fff;border-radius:2px;padding:1px 8px;font-size:.64rem;font-weight:700;margin-left:6px}
+.qmeta-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0;padding:10px 12px;background:#FAFBFA;border:1px solid var(--line);border-radius:2px}
+.qmeta-bar .lb{font-size:.72rem;color:var(--nezumi)}
+.qmeta-bar button{background:#fff;border:1px solid var(--line);border-radius:2px;padding:6px 14px;font-size:.74rem;cursor:pointer;font-family:var(--gothic)}
+.qmeta-bar button.on{background:#2E6B43;color:#fff;border-color:#2E6B43}
+.cm .pickbest{border:1px solid #7FB08A;background:#fff;color:#2E6B43;border-radius:2px;padding:3px 10px;font-size:.66rem;cursor:pointer;margin-left:8px}
+
 /* ============ コメント・要望（右下フローティング） ============ */
 #fbWidget{position:fixed;right:18px;bottom:18px;z-index:9999;font-family:var(--gothic)}
 #fbCollapsedBtn{display:none;align-items:center;gap:8px;background:var(--ai);color:#fff;border:none;border-radius:999px;padding:12px 20px;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(30,59,110,.34)}
@@ -646,7 +705,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.53</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.54</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -685,6 +744,7 @@ const CATS = [
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
 let TOKEN = localStorage.getItem('tgk_token') || '';
+let QA_SEARCH = '', QA_TAG = '';
 let POSTS = [], PREFS = [], QUESTIONS = [], MYQ = [], MYFB = [], PENDING = [], PROFILE = null, IS_ADMIN = false, PREF_MEMBERS = {}, PREF_OFFICES = {}, PREF_HIDDEN = {}, MEMBER_TOTAL = 0, UNREG = 0, view = 'home', region = '', query = '';
 
 const $ = id => document.getElementById(id);
@@ -798,6 +858,7 @@ function render(){
   if(view==='shitsumon'){ c.innerHTML = shitsumonHTML(); bindShitsumon(); return; }
   if(view==='admin'){ c.innerHTML = '<div class="loading">読み込み中…</div>'; loadAdmin(); return; }
   if(view==='kikan'){ $('viewTitle').textContent='審査情報'; c.innerHTML = kkHTML(); bindKikan(); window.scrollTo({top:0}); return; }
+  if(view==='jissoku'){ loadJissoku(); return; }
   if(view==='zuiji'){ renderZuiji(); return; }
   if(view==='chuui'){ c.innerHTML = chuuiHTML(); window.scrollTo({top:0}); return; }
   if(view==='flow'){ c.innerHTML = flowHTML(); window.scrollTo({top:0}); return; }
@@ -807,6 +868,7 @@ function render(){
   if(view==='tool' && !query) head += tplHTML();
   if(view==='shinsa'){
     head += kkBanner();
+    head += jsBanner();
     const rs=[...new Set(POSTS.filter(p=>p.category==='shinsa'&&p.region).map(p=>p.region))];
     if(rs.length){
       head += '<div class="regions">'+
@@ -817,6 +879,7 @@ function render(){
   }
   c.innerHTML = head + (((view==='shinsa'||view==='tool') && !rows.length) ? '' : listHTML(rows));
   if($('kkGo')) $('kkGo').addEventListener('click', ()=>{ view='kikan'; renderNav(); render(); });
+  if($('jsGo')) $('jsGo').addEventListener('click', ()=>{ view='jissoku'; renderNav(); render(); });
   c.querySelectorAll('.rg').forEach(b=>b.addEventListener('click',()=>{ region=b.dataset.r; render(); }));
   bindList();
 }
@@ -1116,11 +1179,27 @@ function shitsumonHTML(){
       <h4 style="font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--nezumi);margin-bottom:6px">あなたの投稿（未掲載）</h4>
       ${MYQ.map(q=>`<div class="row"><span>${esc(q.title)}</span><span class="badge ${q.status}">${q.status==='pending'?'承認待ち':'非掲載'}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--nezumi)">${fdate(q.created_at)}</span></div>`).join('')}
     </div>`:'';
-  const list = QUESTIONS.length ? QUESTIONS.map(q=>`
+  // 全タグ集計
+  const tagCount = {};
+  QUESTIONS.forEach(q=>(q.tags||[]).forEach(t=>{ tagCount[t]=(tagCount[t]||0)+1; }));
+  const topTags = Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,14);
+  // 絞り込み
+  const kw = QA_SEARCH.trim().toLowerCase();
+  const filtered = QUESTIONS.filter(q=>{
+    if(QA_TAG && !(q.tags||[]).includes(QA_TAG)) return false;
+    if(kw){ const hay=(q.title+' '+q.body+' '+(q.tags||[]).join(' ')).toLowerCase(); if(!hay.includes(kw)) return false; }
+    return true;
+  });
+  const searchBar = QUESTIONS.length ? `
+    <div class="qa-search"><span class="ic">🔍</span><input type="text" id="qaSearch" placeholder="質問を検索（タイトル・本文・タグ）" value="${esc(QA_SEARCH)}"></div>
+    ${topTags.length?`<div class="qtags">${topTags.map(([t,n])=>`<button class="qtag${QA_TAG===t?' on':''}" data-t="${esc(t)}">${esc(t)} <span style="opacity:.6">${n}</span></button>`).join('')}</div>`:''}
+    ${(QA_TAG||QA_SEARCH)?`<div class="qa-filterbar"><span class="lb" style="font-size:.72rem;color:var(--nezumi)">${filtered.length}件${QA_TAG?'　タグ：'+esc(QA_TAG):''}</span><button class="qa-clear" id="qaClear">絞り込みを解除</button></div>`:''}` : '';
+  const list = QUESTIONS.length ? (filtered.length ? filtered.map(q=>`
     <div class="qitem" data-id="${q.id}">
       <div class="qm">${avatarHTML(q.author_photo,q.author_name,true)}<span><b>${esc(q.author_name)}</b>${q.author_office?'　'+esc(q.author_office):''}</span><span class="cc">💬 ${q.comment_count}　${fdate(q.created_at)}</span></div>
-      <h3>${esc(q.title)}</h3>
-    </div>`).join('') : '<div class="empty">掲載中の質問はまだありません。最初の質問をどうぞ。</div>';
+      <h3>${q.resolved?'<span class="qbadge-resolved">✓ 解決済み</span>':''}${esc(q.title)}</h3>
+      ${(q.tags||[]).length?`<div class="qtags">${q.tags.map(t=>`<span class="qtag mini">${esc(t)}</span>`).join('')}</div>`:''}
+    </div>`).join('') : '<div class="empty">条件に合う質問が見つかりませんでした。</div>') : '<div class="empty">掲載中の質問はまだありません。最初の質問をどうぞ。</div>';
   return `
     ${admin}
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">
@@ -1132,6 +1211,8 @@ function shitsumonHTML(){
       <input type="text" id="qTitle" maxlength="120" placeholder="例：特定技能2号の実務経験の疎明について">
       <label class="fl" for="qBody">質問内容</label>
       <textarea id="qBody" maxlength="2000" placeholder="状況と、聞きたいことを具体的に。"></textarea>
+      <label class="fl" for="qTags">タグ（任意・カンマ区切り・最大6個）</label>
+      <input type="text" id="qTags" maxlength="160" placeholder="例：特定技能2号, 実務経験, 立証">
       <div style="margin-top:18px;display:flex;gap:10px">
         <button class="pbtn" id="qSubmit">投稿する（承認後に掲載）</button>
         <button class="pbtn sec" id="qCancel">やめる</button>
@@ -1139,6 +1220,7 @@ function shitsumonHTML(){
       <p class="fmsg" id="qMsg"></p>
     </div>
     ${mine}
+    ${searchBar}
     <div style="margin-top:10px">${list}</div>`;
 }
 function bindShitsumon(){
@@ -1150,9 +1232,10 @@ function bindShitsumon(){
   if($('qCancel')) $('qCancel').addEventListener('click',()=>{ form.style.display='none'; });
   $('qSubmit').addEventListener('click', async ()=>{
     const title=$('qTitle').value.trim(), qb=$('qBody').value.trim(), msg=$('qMsg');
+    const tags=($('qTags')?$('qTags').value.trim():'');
     if(!title||!qb){ msg.textContent='タイトルと内容を入力してください。'; msg.className='fmsg show ng'; return; }
     const b=$('qSubmit'); b.disabled=true;
-    const r=await api({action:'ask_question', token:TOKEN, title, body:qb});
+    const r=await api({action:'ask_question', token:TOKEN, title, body:qb, tags});
     b.disabled=false;
     if(r.ok){
       MYQ.unshift({id:'',title,status:'pending',created_at:new Date().toISOString()});
@@ -1162,6 +1245,12 @@ function bindShitsumon(){
     else if(r.error==='profile_required'){ msg.textContent='先にマイページの登録が必要です。'; msg.className='fmsg show ng'; }
     else{ msg.textContent='投稿に失敗しました。'; msg.className='fmsg show ng'; }
   });
+  if($('qaSearch')){
+    const si=$('qaSearch');
+    si.addEventListener('input', ()=>{ QA_SEARCH=si.value; const pos=si.selectionStart; render(); const n=$('qaSearch'); if(n){ n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){} } });
+  }
+  document.querySelectorAll('.qtag[data-t]').forEach(b=>b.addEventListener('click',()=>{ QA_TAG = (QA_TAG===b.dataset.t?'':b.dataset.t); render(); }));
+  if($('qaClear')) $('qaClear').addEventListener('click',()=>{ QA_TAG=''; QA_SEARCH=''; render(); });
   document.querySelectorAll('.qitem').forEach(el=>el.addEventListener('click',()=>openQuestion(el.dataset.id)));
   document.querySelectorAll('.admin-pend .pq').forEach(el=>{
     el.querySelectorAll('.abtn').forEach(b=>b.addEventListener('click', async e=>{
@@ -1187,8 +1276,14 @@ async function openQuestion(id){
       <div class="qm" style="display:flex;gap:10px;align-items:center;font-size:.8rem;color:var(--nezumi)">
         ${avatarHTML(q.author_photo,q.author_name,true)}<span><b style="color:var(--kachi)">${esc(q.author_name)}</b>${q.author_office?'　'+esc(q.author_office):''}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.66rem">${fdate(q.created_at)}</span>
       </div>
-      <h1>${esc(q.title)}</h1>
+      <h1>${q.resolved?'<span class="qbadge-resolved">✓ 解決済み</span>':''}${esc(q.title)}</h1>
+      ${(q.tags||[]).length?`<div class="qtags">${q.tags.map(t=>`<span class="qtag mini">${esc(t)}</span>`).join('')}</div>`:''}
       <div class="abody" style="white-space:pre-wrap">${esc(q.body)}</div>
+      ${(q.mine||IS_ADMIN)?`<div class="qmeta-bar">
+        <span class="lb">投稿者・運営メニュー：</span>
+        <button id="qResolve" class="${q.resolved?'on':''}">${q.resolved?'✓ 解決済み（解除する）':'解決済みにする'}</button>
+        <span class="lb" style="opacity:.7">ベストアンサーは各コメントの「ベストにする」から選べます。</span>
+      </div>`:''}
       <div class="cwrap">
         <h4>COMMENTS</h4>
         <div id="cAdmin"></div>
@@ -1212,31 +1307,217 @@ async function openQuestion(id){
     else if(r.error==='rate'){ msg.textContent='間隔が短すぎます。少し待ってください。'; }
     else{ msg.textContent='送信に失敗しました。'; }
   });
+  if($('qResolve')) $('qResolve').addEventListener('click', async ()=>{
+    const b=$('qResolve'); b.disabled=true;
+    const r=await api({action:'set_question_meta', token:TOKEN, question_id:id, resolved:!q.resolved});
+    if(r.ok){ await reloadData(); openQuestion(id); } else { b.disabled=false; alert('更新に失敗しました。'); }
+  });
   loadComments(id);
   window.scrollTo({top:0});
 }
 async function loadComments(id){
+  const q = QUESTIONS.find(x=>x.id===id) || {};
+  const canPick = q.mine || IS_ADMIN;   // ベストアンサーを選べるのは質問投稿者・管理者
   const r = await api({action:'get_comments', token:TOKEN, question_id:id});
   const cs = r.comments||[];
-  const admin = cs.filter(c=>c.is_admin), member = cs.filter(c=>!c.is_admin);
-  const cmHTML = c=>`
-    <div class="cm${c.is_admin?' admin':''}" data-id="${c.id}">
+  const cmHTML = c=>{
+    const isBest = q.best_comment_id && c.id===q.best_comment_id;
+    return `
+    <div class="cm${c.is_admin?' admin':''}${isBest?' best':''}" data-id="${c.id}">
       ${avatarHTML(c.author_photo, c.author_name, true)}
       <div class="cbody">
-        <div class="chead"><b>${esc(c.author_name)}</b><span class="dt">${fdate(c.created_at)}</span>${(c.mine||IS_ADMIN)?'<button class="del">削除</button>':''}</div>
+        <div class="chead"><b>${esc(c.author_name)}</b>${isBest?'<span class="best-tag">★ ベストアンサー</span>':''}<span class="dt">${fdate(c.created_at)}</span>${(c.mine||IS_ADMIN)?'<button class="del">削除</button>':''}${(canPick&&!isBest)?'<button class="pickbest">ベストにする</button>':''}${(canPick&&isBest)?'<button class="pickbest" data-unset="1">解除</button>':''}</div>
         <div class="ctext">${esc(c.body)}</div>
       </div>
     </div>`;
-  $('cAdmin').innerHTML = admin.map(cmHTML).join('');
-  $('cList').innerHTML = member.length?member.map(cmHTML).join(''):'<div style="font-size:.84rem;color:var(--nezumi);padding:8px 0">コメントはまだありません。</div>';
+  };
+  // ベストアンサーを最上部に固定、それ以外は 運営→会員 の順
+  const best = cs.filter(c=>q.best_comment_id&&c.id===q.best_comment_id);
+  const rest = cs.filter(c=>!(q.best_comment_id&&c.id===q.best_comment_id));
+  const admin = rest.filter(c=>c.is_admin), member = rest.filter(c=>!c.is_admin);
+  $('cAdmin').innerHTML = best.map(cmHTML).join('') + admin.map(cmHTML).join('');
+  $('cList').innerHTML = member.length?member.map(cmHTML).join(''):(best.length||admin.length?'':'<div style="font-size:.84rem;color:var(--nezumi);padding:8px 0">コメントはまだありません。</div>');
   document.querySelectorAll('.cm .del').forEach(b=>b.addEventListener('click', async ()=>{
     if(!confirm('このコメントを削除しますか？')) return;
     const el=b.closest('.cm');
     const r=await api({action:'delete_comment', token:TOKEN, comment_id:el.dataset.id});
     if(r.ok) loadComments(id);
   }));
+  document.querySelectorAll('.cm .pickbest').forEach(b=>b.addEventListener('click', async ()=>{
+    const el=b.closest('.cm'); b.disabled=true;
+    const unset = b.dataset.unset==='1';
+    const r=await api({action:'set_question_meta', token:TOKEN, question_id:id, best_comment_id: unset?null:el.dataset.id});
+    if(r.ok){ await reloadData(); const nq=QUESTIONS.find(x=>x.id===id)||{}; q.best_comment_id=nq.best_comment_id; loadComments(id); }
+    else { b.disabled=false; alert('設定に失敗しました。'); }
+  }));
 }
 
+
+/* ---- 審査実測データ ---- */
+let SHINSA = null, SHINSA_CANPOST = false, JS_FILTER = 'all', JS_ADMIN_TAB = 'single';
+const ZLABEL = { ss1:'特定技能1号', ss2:'特定技能2号', tk:'特定活動（移行準備）' };
+const MLABEL = { online:'オンライン', window:'窓口' };
+function daysBetween(a, b){ return Math.round((new Date(b+'T00:00:00Z') - new Date(a+'T00:00:00Z')) / 86400000); }
+function median(arr){ if(!arr.length) return null; const s=[...arr].sort((x,y)=>x-y); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
+function mean(arr){ return arr.length? arr.reduce((a,b)=>a+b,0)/arr.length : null; }
+
+async function loadJissoku(){
+  $('viewTitle').textContent='審査情報';
+  $('content').innerHTML='<div class="loading">読み込み中…</div>';
+  const r = await api({action:'get_shinsa', token:TOKEN});
+  if(!r.ok){ $('content').innerHTML='<div class="empty">読み込みに失敗しました。</div>'; return; }
+  SHINSA = (r.records||[]).map(x=>({...x, days:daysBetween(x.applied_date,x.approved_date)}));
+  SHINSA_CANPOST = !!r.can_post;
+  renderJissoku();
+  window.scrollTo({top:0});
+}
+function renderJissoku(){
+  $('content').innerHTML = jissokuHTML();
+  bindJissoku();
+}
+function jissokuAgg(zairyu){
+  const recs = SHINSA.filter(r=>r.zairyu===zairyu);
+  const days = recs.map(r=>r.days);
+  return { n:recs.length, mean:mean(days), median:median(days) };
+}
+function jissokuHTML(){
+  const cards = ['ss1','ss2','tk'].map(z=>{
+    const a = jissokuAgg(z);
+    if(!a.n) return `<div class="js-card empty"><span class="ct">${ZLABEL[z]}</span><div class="main">データなし</div></div>`;
+    return `<div class="js-card">
+      <span class="ct">${ZLABEL[z]}</span><span class="n">${a.n}件</span>
+      <div class="main">${a.mean.toFixed(1)}<small>日（平均）</small></div>
+      <div class="med">中央値 ${a.median} 日</div>
+    </div>`;
+  }).join('');
+
+  // 入管別（フィルタ適用）
+  const filtered = JS_FILTER==='all' ? SHINSA : SHINSA.filter(r=>r.zairyu===JS_FILTER);
+  const byB = {};
+  filtered.forEach(r=>{ (byB[r.bureau]=byB[r.bureau]||[]).push(r.days); });
+  const bureauRows = Object.entries(byB).map(([b,ds])=>({b, n:ds.length, mean:mean(ds), median:median(ds)}))
+    .sort((x,y)=>x.mean-y.mean);
+  const bureauTable = bureauRows.length ? `
+    <table class="js-bureau">
+      <thead><tr><th>入管官署</th><th style="text-align:right">件数</th><th style="text-align:right">平均(日)</th><th style="text-align:right">中央値(日)</th></tr></thead>
+      <tbody>${bureauRows.map(r=>`<tr><td>${esc(r.b)}</td><td class="num">${r.n}</td><td class="num">${r.mean.toFixed(1)}</td><td class="num">${r.median}</td></tr>`).join('')}</tbody>
+    </table>` : '<div class="js-note">この区分のデータはまだありません。</div>';
+
+  // 生データ一覧（フィルタ適用・新しい順）
+  const rows = filtered.map(r=>`
+    <tr data-id="${r.id}">
+      <td><span class="zbadge z-${r.zairyu}">${ZLABEL[r.zairyu]}</span>${r.tetsuzuki?'<br><span class="mmethod">'+esc(r.tetsuzuki)+'</span>':''}</td>
+      <td>${esc(r.bureau)}<br><span class="mmethod">${MLABEL[r.method]||''}</span></td>
+      <td>${r.applied_date}</td>
+      <td>${r.approved_date}</td>
+      <td class="num"><b>${r.days}</b></td>
+      ${SHINSA_CANPOST?`<td><button class="delx" title="削除">✕</button></td>`:''}
+    </tr>`).join('');
+  const table = filtered.length ? `
+    <table class="js-tbl">
+      <thead><tr><th>区分／手続</th><th>入管／方法</th><th>申請日</th><th>許可日</th><th style="text-align:right">日数</th>${SHINSA_CANPOST?'<th></th>':''}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table>` : '<div class="js-note">この区分のデータはまだありません。</div>';
+
+  return `
+    <div class="backbar"><button id="jsBack">← 審査情報へ戻る</button></div>
+    <div class="article" style="border-top-color:var(--ai)">
+      <h1 style="margin-bottom:4px">審査実測データ</h1>
+      <p class="kk-lead">大房行政書士事務所が実際に扱った申請の、<b>申請日から許可日までの日数</b>を蓄積したものです。区分別の平均・中央値と、入管官署別の内訳を表示しています。</p>
+      <div class="kk-warn" style="margin:10px 0"><b>読み方の注意。</b>これは大房の取扱案件の実測であり、全国の傾向や各入管の公式な処理速度を示すものではありません。件数が少ない区分・官署は平均が振れやすい点にご留意ください。（現在はデータ蓄積の初期段階です。）</div>
+
+      <div class="js-agg">${cards}</div>
+
+      <h3 style="margin:22px 0 2px;font-size:1rem">入管官署別</h3>
+      <div class="js-seg" id="jsSeg">
+        <button data-z="all"${JS_FILTER==='all'?' class="on"':''}>すべて</button>
+        <button data-z="ss1"${JS_FILTER==='ss1'?' class="on"':''}>特定技能1号</button>
+        <button data-z="ss2"${JS_FILTER==='ss2'?' class="on"':''}>特定技能2号</button>
+        <button data-z="tk"${JS_FILTER==='tk'?' class="on"':''}>特定活動（移行準備）</button>
+      </div>
+      ${bureauTable}
+
+      ${SHINSA_CANPOST ? jissokuAdminHTML() : ''}
+
+      <h3 style="margin:24px 0 2px;font-size:1rem">データ一覧（${filtered.length}件）</h3>
+      ${table}
+    </div>`;
+}
+function jissokuAdminHTML(){
+  return `
+  <div class="js-admin">
+    <h4>データ入力（管理者のみ）</h4>
+    <div class="js-tabs">
+      <button data-t="single"${JS_ADMIN_TAB==='single'?' class="on"':''}>1件ずつ入力</button>
+      <button data-t="bulk"${JS_ADMIN_TAB==='bulk'?' class="on"':''}>まとめて貼り付け</button>
+    </div>
+    <div id="jsSingle" style="display:${JS_ADMIN_TAB==='single'?'block':'none'}">
+      <div class="grid">
+        <div><label>在留区分</label><select id="jsZ"><option value="ss1">特定技能1号</option><option value="ss2">特定技能2号</option><option value="tk">特定活動（移行準備）</option></select></div>
+        <div><label>手続（任意）</label><select id="jsT"><option value="">—</option><option>認定</option><option>変更</option><option>更新</option><option>その他</option></select></div>
+        <div><label>入管官署</label><input type="text" id="jsB" placeholder="例：東京"></div>
+        <div><label>申請方法</label><select id="jsM"><option value="online">オンライン</option><option value="window">窓口</option></select></div>
+        <div><label>申請日</label><input type="date" id="jsAp"></div>
+        <div><label>許可日</label><input type="date" id="jsAc"></div>
+      </div>
+      <div style="margin-top:8px"><label>メモ（任意）</label><input type="text" id="jsN" placeholder="分野など"></div>
+      <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+        <button class="pbtn" id="jsAdd">追加する</button><span class="fmsg" id="jsMsg"></span>
+      </div>
+    </div>
+    <div id="jsBulk" style="display:${JS_ADMIN_TAB==='bulk'?'block':'none'}">
+      <label>1行1件。タブまたはカンマ区切りで <b>区分 / 入管 / 方法 / 申請日 / 許可日</b>（任意で 手続 / メモ を追加可）</label>
+      <textarea id="jsBulkTxt" placeholder="特定技能1号　東京　オンライン　2026-05-01　2026-05-28　変更
+特定技能2号,大阪,窓口,2026/05/10,2026/06/20"></textarea>
+      <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+        <button class="pbtn" id="jsBulkAdd">一括で追加</button><span class="fmsg" id="jsBulkMsg"></span>
+      </div>
+    </div>
+  </div>`;
+}
+function bindJissoku(){
+  $('jsBack').addEventListener('click', ()=>go('shinsa'));
+  const seg=$('jsSeg'); if(seg) seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ JS_FILTER=b.dataset.z; renderJissoku(); }));
+  if(!SHINSA_CANPOST) return;
+  document.querySelectorAll('.js-tabs button').forEach(b=>b.addEventListener('click',()=>{ JS_ADMIN_TAB=b.dataset.t; renderJissoku(); }));
+  if($('jsAdd')) $('jsAdd').addEventListener('click', addShinsaSingle);
+  if($('jsBulkAdd')) $('jsBulkAdd').addEventListener('click', addShinsaBulk);
+  document.querySelectorAll('.js-tbl .delx').forEach(b=>b.addEventListener('click', async ()=>{
+    const tr=b.closest('tr'); if(!confirm('この1件を削除しますか？')) return;
+    const r=await api({action:'admin_delete_shinsa', token:TOKEN, record_id:tr.dataset.id});
+    if(r.ok){ await loadJissoku(); } else alert('削除に失敗しました。');
+  }));
+}
+const JS_ERR = { zairyu:'在留区分', method:'申請方法', bureau:'入管官署', applied_date:'申請日', approved_date:'許可日', date_order:'日付の前後（許可日が申請日より前）' };
+async function addShinsaSingle(){
+  const msg=$('jsMsg');
+  const payload={ action:'admin_add_shinsa', token:TOKEN,
+    zairyu:$('jsZ').value, tetsuzuki:$('jsT').value, bureau:$('jsB').value.trim(),
+    method:$('jsM').value, applied_date:$('jsAp').value, approved_date:$('jsAc').value, note:$('jsN').value.trim() };
+  if(!payload.bureau||!payload.applied_date||!payload.approved_date){ msg.textContent='入管官署・申請日・許可日は必須です。'; msg.className='fmsg show ng'; return; }
+  const b=$('jsAdd'); b.disabled=true;
+  const r=await api(payload); b.disabled=false;
+  if(r.ok){ await loadJissoku(); }
+  else{ msg.textContent=(JS_ERR[r.error]?JS_ERR[r.error]+'を確認してください。':'追加に失敗しました。'); msg.className='fmsg show ng'; }
+}
+async function addShinsaBulk(){
+  const msg=$('jsBulkMsg');
+  const lines=$('jsBulkTxt').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(!lines.length){ msg.textContent='貼り付けてください。'; msg.className='fmsg show ng'; return; }
+  const rows=lines.map(l=>{
+    const c=l.split(/\t|,|　+/).map(x=>x.trim());
+    return { zairyu:c[0], bureau:c[1], method:c[2], applied_date:c[3], approved_date:c[4], tetsuzuki:c[5]||'', note:c[6]||'' };
+  });
+  const b=$('jsBulkAdd'); b.disabled=true;
+  const r=await api({action:'admin_bulk_shinsa', token:TOKEN, rows}); b.disabled=false;
+  if(r.ok){
+    if(r.errors&&r.errors.length){
+      msg.className='fmsg show';
+      msg.innerHTML=`${r.inserted}件追加。${r.errors.length}行は取り込めませんでした（${r.errors.slice(0,5).map(e=>e.line+'行目:'+(JS_ERR[e.reason]||e.reason)).join(' / ')}${r.errors.length>5?' …':''}）。`;
+      SHINSA=null; setTimeout(loadJissoku, 2500);
+    } else { await loadJissoku(); }
+  } else { msg.textContent = r.error==='too_many'?'一度に投入できるのは500件までです。':'取り込みに失敗しました。'; msg.className='fmsg show ng'; }
+}
 
 /* ---- コメント・要望（右下フローティング） ---- */
 let FB_COLLAPSED = false;
@@ -1547,6 +1828,14 @@ function kkBanner(){
     <span class="t">在留審査処理期間（日数）</span>
     <span class="d"><span class="nb">特定技能1号・2号</span>の<span class="nb">認定・更新・変更</span>にかかる日数。<span class="nb">依頼者への答え方</span>と、<span class="nb">1年前との増減</span>、<span class="nb">大房の実測値</span>との対照。</span>
     <span class="go">日数を見る<span class="ar">→</span></span>
+  </button>`;
+}
+function jsBanner(){
+  return `<button type="button" class="kk-banner" id="jsGo" style="--kk-accent:var(--asagi)">
+    <span class="k">大房 実測データ / 蓄積中</span>
+    <span class="t">審査実測データ（申請日→許可日）</span>
+    <span class="d"><span class="nb">特定技能1号・2号</span>と<span class="nb">特定活動（移行準備）</span>について、大房が実際に<span class="nb">何日で許可が出たか</span>を蓄積。<span class="nb">区分別の平均・中央値</span>と<span class="nb">入管官署別</span>の内訳。</span>
+    <span class="go">データを見る<span class="ar">→</span></span>
   </button>`;
 }
 function kkCard(title, main, mainLbl, sub, subLbl, dv, noSub){
