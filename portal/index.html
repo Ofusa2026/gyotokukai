@@ -720,7 +720,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.58</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.59</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -754,7 +754,7 @@ main{min-width:0}
 const API = 'https://vzpahholgvkvwtwooejf.supabase.co/functions/v1/portal';
 const ASK_TO = 'mail@gyosei-cambo.com';
 const CATS = [
-  ['home','ホーム'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['chuui','申請時注意点'],['flow','申請の流れ'],['qa','Q&A'],
+  ['home','ホーム'],['topics','ニュース'],['map','連携マップ'],['news','お知らせ'],['shinsa','審査情報'],['chuui','申請時注意点'],['flow','申請の流れ'],['qa','Q&A'],
   ['shitsumon','質問箱'],['case','ケーススタディ'],['tool','資料・ツール'],['zuiji','随時届出チェッカー'],['seminar','セミナー'],['mypage','マイページ']
 ];
 const CATNAME = Object.fromEntries(CATS); CATNAME['admin']='管理';
@@ -1900,7 +1900,7 @@ function renderAdmin(){
       <div class="formbox">
         <label class="fl">カテゴリ</label>
         <select id="apCat">
-          <option value="news">お知らせ</option><option value="shinsa">審査情報</option><option value="qa">Q&A</option>
+          <option value="topics">ニュース</option><option value="news">お知らせ</option><option value="shinsa">審査情報</option><option value="qa">Q&A</option>
           <option value="case">ケーススタディ</option><option value="tool">資料・ツール</option><option value="seminar">セミナー</option>
         </select>
         <label class="fl">地域（審査情報のみ・任意）</label>
