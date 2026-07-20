@@ -705,7 +705,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.55</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.56</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -1669,6 +1669,36 @@ async function sendFeedback(){
 let ADMIN = null, memFilter = '';
 // 承認待ちを1件ずつ admin_set_member で承認する（＝1件ずつ承認メールが飛ぶ）。
 // 途中で中断・失敗しても、成功した分だけが承認済みになり、再実行で残りから続けられる。
+async function sendBroadcast(isTest){
+  const subject=$('bcSubject').value.trim(), body=$('bcBody').value.trim(), msg=$('bcMsg');
+  if(!subject||!body){ msg.textContent='件名と本文を入力してください。'; msg.className='fmsg show ng'; return; }
+  const approved = ADMIN.members.filter(m=>m.status==='approved').length;
+  if(!isTest){
+    if(!confirm(`承認済みの会員 ${approved}名 全員に送信します。\n\n件名：${subject}\n\n送信後は取り消せません。実行しますか？`)) return;
+  }
+  const tb=$('bcTest'), sb=$('bcSend');
+  tb.disabled=true; sb.disabled=true;
+  msg.className='fmsg show'; msg.textContent = isTest?'テスト送信中…':'送信中…（人数によっては少し時間がかかります）';
+  const r=await api({action:'admin_broadcast', token:TOKEN, subject, body, test:isTest});
+  tb.disabled=false; sb.disabled=false;
+  if(r.ok){
+    if(r.test){ msg.className='fmsg show ok'; msg.textContent='✓ テストメールを '+r.to+' に送信しました。内容を確認してください。'; }
+    else {
+      const fail=(r.failed||[]).length;
+      msg.className='fmsg show '+(fail?'':'ok');
+      msg.textContent = fail
+        ? `${r.sent}/${r.total}名へ送信。${fail}名は失敗しました（${(r.failed||[]).slice(0,5).join(', ')}${fail>5?' …':''}）。時間をおいて再送してください。`
+        : `✓ ${r.sent}名 全員へ送信しました。`;
+      if(!fail){ $('bcSubject').value=''; $('bcBody').value=''; }
+    }
+  } else {
+    msg.className='fmsg show ng';
+    msg.textContent = r.error==='no_recipients' ? '送信対象の会員がいません。'
+      : r.error==='too_long' ? '件名200字・本文20,000字以内でお願いします。'
+      : r.error==='forbidden' ? '権限がありません。'
+      : '送信に失敗しました。';
+  }
+}
 async function bulkApprove(){
   const targets = ADMIN.members.filter(m=>m.status==='pending');
   if(!targets.length) return;
@@ -1713,6 +1743,23 @@ function renderAdmin(){
       <div class="scard"><div class="k">コメント</div><div class="v">${st.comments}</div></div>
       <div class="scard"><div class="k">紹介</div><div class="v">${st.intros}</div></div>
       <div class="scard${st.feedback_open?' alert':''}"><div class="k">未対応コメント</div><div class="v">${st.feedback_open||0}</div></div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><h3>会員へ一斉メール</h3></div>
+      <div class="formbox" style="margin-top:4px">
+        <p style="font-size:.78rem;color:var(--nezumi);margin-bottom:12px">承認済みの会員 <b>${ADMIN.members.filter(m=>m.status==='approved').length}名</b> 全員に、同じ内容のメールを送ります。宛先はBCCで送られ、受信者どうしにアドレスは見えません。</p>
+        <label class="fl" for="bcSubject">件名</label>
+        <input type="text" id="bcSubject" maxlength="200" placeholder="例：【特行会】8月勉強会のご案内">
+        <label class="fl" for="bcBody">本文</label>
+        <textarea id="bcBody" maxlength="20000" placeholder="本文を入力してください。改行はそのまま反映されます。" style="min-height:180px"></textarea>
+        <p style="font-size:.72rem;color:var(--nezumi);margin-top:6px">末尾にはポータルのURLが自動で付きます。リンクや装飾は付きません（プレーンテキストの本文がそのまま送られます）。</p>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="pbtn sec" id="bcTest">自分宛にテスト送信</button>
+          <button class="pbtn" id="bcSend">全員へ送信</button>
+          <span class="fmsg" id="bcMsg"></span>
+        </div>
+      </div>
     </div>
 
     <div class="sect"><div class="sect-h"><h3>コメント・要望</h3></div>
@@ -1799,6 +1846,8 @@ function renderAdmin(){
     </div>`;
 
   if($('bulkOk')) $('bulkOk').addEventListener('click', bulkApprove);
+  if($('bcTest')) $('bcTest').addEventListener('click', ()=>sendBroadcast(true));
+  if($('bcSend')) $('bcSend').addEventListener('click', ()=>sendBroadcast(false));
   document.querySelectorAll('.fb-done').forEach(b=>b.addEventListener('click', async ()=>{
     const row=b.closest('.fbrow'); b.disabled=true;
     const r=await api({action:'admin_feedback_done', token:TOKEN, feedback_id:row.dataset.id, done:b.dataset.d==='1'});
