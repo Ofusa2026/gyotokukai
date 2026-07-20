@@ -376,6 +376,7 @@ main{min-width:0}
 .atable tr:last-child td{border-bottom:none}
 .atable .nm{display:flex;align-items:center;gap:9px;white-space:nowrap}
 .atable .mono{font-family:var(--mono);font-size:.7rem;color:var(--nezumi)}
+.atable th:nth-child(5),.atable td:nth-child(5){width:100%}  /* メール列に余白を吸わせ、空の操作列が広がらないようにする */
 .badge.noprofile{background:#E9EBE8;color:var(--nezumi)}
 .badge.hasprofile{background:#DCEAEA;color:var(--asagi)}
 .afilter{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
@@ -705,7 +706,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.56</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.57</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
