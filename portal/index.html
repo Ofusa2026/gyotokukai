@@ -383,6 +383,13 @@ main{min-width:0}
 .afilter input{padding:9px 13px;border:1px solid var(--line);border-radius:2px;font-size:.86rem;background:#fff;min-width:220px}
 .afilter input:focus{outline:none;border-color:var(--ai)}
 .acsv{margin-left:auto;background:#fff;border:1px solid var(--ai);color:var(--ai);padding:8px 16px;border-radius:2px;font-size:.78rem;font-weight:700}
+.clientbox{margin:22px 0 4px;border:1px solid var(--line);border-radius:3px;background:var(--washi,#FBFAF7);overflow:hidden}
+.clientbox .cb-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;background:#F3F4F2;border-bottom:1px solid var(--line)}
+.clientbox .cb-h span{font-size:.82rem;font-weight:700;color:var(--sumi,#1a1a1a)}
+.cb-copy{border:1px solid var(--ai,#26456e);background:var(--ai,#26456e);color:#fff;border-radius:3px;padding:6px 16px;font-size:.76rem;cursor:pointer;white-space:nowrap}
+.cb-copy.done{background:#2E6B43;border-color:#2E6B43}
+.clientbox .cb-note{padding:8px 14px 0;font-size:.72rem;color:var(--nezumi)}
+.clientbox .cb-body{margin:8px 14px 14px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:2px;font-family:inherit;font-size:.82rem;line-height:1.85;color:#333;white-space:pre-wrap;word-break:break-word;max-height:320px;overflow:auto}
 .bc-seg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 2px}
 .bc-radio{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:2px;padding:8px 14px;font-size:.82rem;cursor:pointer}
 .bc-radio input{accent-color:var(--ai)}
@@ -720,7 +727,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.59</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.60</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -953,10 +960,17 @@ function openPost(id){
       <div class="meta"><span class="cat">${CATNAME[p.category]||p.category}${p.region?'・'+esc(p.region):''}</span><span>${fdate(p.created_at)}</span></div>
       <h1>${esc(p.title)}</h1>
       <div class="abody">${md(p.body)}</div>
+      ${p.client_body?`<div class="clientbox"><div class="cb-h"><span>顧客（所属機関・登録支援機関）向けの文面</span><button class="cb-copy" id="cbCopy">コピー</button></div><div class="cb-note">下のボタンでコピーして、そのまま顧客へのメール等に貼り付けられます。</div><pre class="cb-body" id="cbBody">${esc(p.client_body)}</pre></div>`:''}
       ${rel.length?`<div class="rel"><h4>同じカテゴリの記事</h4>${rel.map(r=>`<button class="r" data-id="${r.id}">${esc(r.title)}</button>`).join('')}</div>`:''}
     </div>`;
   $('backList').addEventListener('click',()=>{ view=back==='search'?'home':back; go(view); });
   $('content').querySelectorAll('.rel .r').forEach(b=>b.addEventListener('click',()=>openPost(b.dataset.id)));
+  if($('cbCopy')) $('cbCopy').addEventListener('click', async ()=>{
+    const txt = p.client_body || '';
+    try{ await navigator.clipboard.writeText(txt); }
+    catch(_){ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+    const b=$('cbCopy'); const o=b.textContent; b.textContent='✓ コピーしました'; b.classList.add('done'); setTimeout(()=>{ b.textContent=o; b.classList.remove('done'); }, 1800);
+  });
   window.scrollTo({top:0});
 }
 
@@ -1909,6 +1923,8 @@ function renderAdmin(){
         <input type="text" id="apTitle">
         <label class="fl">本文（## 見出し、- 箇条書き、**強調** が使えます）</label>
         <textarea id="apBody" style="min-height:180px"></textarea>
+        <label class="fl">顧客（所属機関・登録支援機関）向け文面（任意）</label>
+        <textarea id="apClient" style="min-height:120px" placeholder="行政書士が顧客にそのまま転送できる文面。入力すると記事に「コピー」ボタンが表示されます。空欄ならボタンは出ません。"></textarea>
         <label style="display:flex;gap:8px;align-items:center;margin-top:14px;font-size:.84rem"><input type="checkbox" id="apPin">ホームに固定表示する</label>
         <div style="margin-top:16px"><button class="pbtn" id="apSend">投稿する</button></div>
         <p class="fmsg" id="apMsg"></p>
@@ -1965,7 +1981,7 @@ function renderAdmin(){
   });
   $('apSend').addEventListener('click', async ()=>{
     const msg=$('apMsg');
-    const payload={action:'admin_create_post', token:TOKEN, category:$('apCat').value, region:$('apRegion').value.trim(), title:$('apTitle').value.trim(), body:$('apBody').value.trim(), pinned:$('apPin').checked};
+    const payload={action:'admin_create_post', token:TOKEN, category:$('apCat').value, region:$('apRegion').value.trim(), title:$('apTitle').value.trim(), body:$('apBody').value.trim(), client_body:($('apClient')?$('apClient').value.trim():''), pinned:$('apPin').checked};
     if(!payload.title||!payload.body){ msg.textContent='タイトルと本文を入力してください。'; msg.className='fmsg show ng'; return; }
     const b=$('apSend'); b.disabled=true;
     const r=await api(payload); b.disabled=false;
