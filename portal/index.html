@@ -383,6 +383,20 @@ main{min-width:0}
 .afilter input{padding:9px 13px;border:1px solid var(--line);border-radius:2px;font-size:.86rem;background:#fff;min-width:220px}
 .afilter input:focus{outline:none;border-color:var(--ai)}
 .acsv{margin-left:auto;background:#fff;border:1px solid var(--ai);color:var(--ai);padding:8px 16px;border-radius:2px;font-size:.78rem;font-weight:700}
+.bc-seg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 2px}
+.bc-radio{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:2px;padding:8px 14px;font-size:.82rem;cursor:pointer}
+.bc-radio input{accent-color:var(--ai)}
+.bc-radio span{color:var(--nezumi);font-size:.76rem}
+.bcjob{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:2px;padding:11px 14px;margin-bottom:7px;font-size:.82rem}
+.bcjob.scheduled{border-left:3px solid var(--asagi)}
+.bcjob .st{font-family:var(--mono);font-size:.62rem;padding:1px 8px;border-radius:999px}
+.bcjob .st.scheduled{background:#E3F0F4;color:#1B6E86}
+.bcjob .st.sent{background:#EAF3EC;color:#2E6B43}
+.bcjob .st.failed{background:#FBE9E7;color:var(--shu)}
+.bcjob .st.canceled{background:#F0F0F0;color:var(--nezumi)}
+.bcjob .sub{font-weight:600;max-width:44ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bcjob .meta{color:var(--nezumi);font-family:var(--mono);font-size:.66rem}
+.bcjob .cancel{margin-left:auto;border:1px solid var(--line);background:#fff;color:var(--shu);border-radius:2px;padding:5px 12px;font-size:.72rem;cursor:pointer}
 .fbrow{background:#fff;border:1px solid var(--line);border-radius:2px;padding:13px 16px;margin-bottom:8px}
 .fbrow.open{border-left:3px solid var(--shu)}
 .fbrow .h{display:flex;gap:10px;align-items:center;font-size:.78rem;margin-bottom:6px;flex-wrap:wrap}
@@ -706,7 +720,7 @@ main{min-width:0}
   <aside>
     <div class="brand">
       <svg viewBox="-80 -80 160 160" aria-hidden="true"><use href="#crest-w"/></svg>
-      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.57</i></div>
+      <div><b>特行会ポータル</b><i>MEMBER PORTAL ver.20260717.58</i></div>
     </div>
     <nav id="nav"></nav>
     <div class="side-foot">
@@ -756,6 +770,7 @@ async function api(payload){
 }
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function fdate(s){const d=new Date(s);return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');}
+function fdatetime(s){const d=new Date(s);return fdate(s)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function lmsg(t, ok){const m=$('loginMsg');m.textContent=t;m.className='msg show '+(ok?'ok':'ng');}
 
 /* ---- ログイン ---- */
@@ -1670,35 +1685,82 @@ async function sendFeedback(){
 let ADMIN = null, memFilter = '';
 // 承認待ちを1件ずつ admin_set_member で承認する（＝1件ずつ承認メールが飛ぶ）。
 // 途中で中断・失敗しても、成功した分だけが承認済みになり、再実行で残りから続けられる。
+function bcSegLabel(seg){ return seg==='unregistered' ? 'プロフィール未登録の人' : '承認済み会員 全員'; }
 async function sendBroadcast(isTest){
   const subject=$('bcSubject').value.trim(), body=$('bcBody').value.trim(), msg=$('bcMsg');
+  const segment=document.querySelector('input[name=bcSeg]:checked').value;
+  const when=document.querySelector('input[name=bcWhen]:checked').value;
   if(!subject||!body){ msg.textContent='件名と本文を入力してください。'; msg.className='fmsg show ng'; return; }
-  const approved = ADMIN.members.filter(m=>m.status==='approved').length;
-  if(!isTest){
-    if(!confirm(`承認済みの会員 ${approved}名 全員に送信します。\n\n件名：${subject}\n\n送信後は取り消せません。実行しますか？`)) return;
+  const cnt = segment==='unregistered' ? ADMIN.members.filter(m=>m.status==='approved'&&!m.profile).length : ADMIN.members.filter(m=>m.status==='approved').length;
+  const tb=$('bcTest'), sbn=$('bcSend');
+
+  // テスト送信（宛先・予約に関係なく自分宛）
+  if(isTest){
+    tb.disabled=true; sbn.disabled=true; msg.className='fmsg show'; msg.textContent='テスト送信中…';
+    const r=await api({action:'admin_broadcast', token:TOKEN, subject, body, test:true});
+    tb.disabled=false; sbn.disabled=false;
+    if(r.ok){ msg.className='fmsg show ok'; msg.textContent='✓ テストメールを '+r.to+' に送信しました。'; }
+    else { msg.className='fmsg show ng'; msg.textContent='テスト送信に失敗しました。'; }
+    return;
   }
-  const tb=$('bcTest'), sb=$('bcSend');
-  tb.disabled=true; sb.disabled=true;
-  msg.className='fmsg show'; msg.textContent = isTest?'テスト送信中…':'送信中…（人数によっては少し時間がかかります）';
-  const r=await api({action:'admin_broadcast', token:TOKEN, subject, body, test:isTest});
-  tb.disabled=false; sb.disabled=false;
+
+  // 予約送信
+  if(when==='later'){
+    const at=$('bcAt').value;
+    if(!at){ msg.textContent='送信日時を指定してください。'; msg.className='fmsg show ng'; return; }
+    const iso=new Date(at).toISOString();
+    if(new Date(at).getTime() < Date.now()){ msg.textContent='未来の日時を指定してください。'; msg.className='fmsg show ng'; return; }
+    if(!confirm(`【予約送信】\n宛先：${bcSegLabel(segment)}（送信時点の該当者）\n日時：${at.replace('T',' ')}\n件名：${subject}\n\nこの内容で予約しますか？`)) return;
+    sbn.disabled=true; msg.className='fmsg show'; msg.textContent='予約を登録中…';
+    const r=await api({action:'admin_broadcast_schedule', token:TOKEN, subject, body, segment, scheduled_at:iso});
+    sbn.disabled=false;
+    if(r.ok){ msg.className='fmsg show ok'; msg.textContent='✓ 予約しました。'; $('bcSubject').value=''; $('bcBody').value=''; $('bcAt').value=''; loadBroadcastJobs(); }
+    else { msg.className='fmsg show ng'; msg.textContent = r.error==='past'?'過去の日時は指定できません。':r.error==='too_long'?'件名200字・本文2万字以内で。':'予約に失敗しました。'; }
+    return;
+  }
+
+  // 即時送信
+  if(!confirm(`${bcSegLabel(segment)}（${cnt}名）に今すぐ送信します。\n\n件名：${subject}\n\n送信後は取り消せません。実行しますか？`)) return;
+  tb.disabled=true; sbn.disabled=true; msg.className='fmsg show'; msg.textContent='送信中…（人数によっては少し時間がかかります）';
+  const r=await api({action:'admin_broadcast', token:TOKEN, subject, body, segment, test:false});
+  tb.disabled=false; sbn.disabled=false;
   if(r.ok){
-    if(r.test){ msg.className='fmsg show ok'; msg.textContent='✓ テストメールを '+r.to+' に送信しました。内容を確認してください。'; }
-    else {
-      const fail=(r.failed||[]).length;
-      msg.className='fmsg show '+(fail?'':'ok');
-      msg.textContent = fail
-        ? `${r.sent}/${r.total}名へ送信。${fail}名は失敗しました（${(r.failed||[]).slice(0,5).join(', ')}${fail>5?' …':''}）。時間をおいて再送してください。`
-        : `✓ ${r.sent}名 全員へ送信しました。`;
-      if(!fail){ $('bcSubject').value=''; $('bcBody').value=''; }
-    }
+    const fail=(r.failed||[]).length;
+    msg.className='fmsg show '+(fail?'':'ok');
+    msg.textContent = fail
+      ? `${r.sent}/${r.total}名へ送信。${fail}名は失敗（${(r.failed||[]).slice(0,5).join(', ')}${fail>5?' …':''}）。時間をおいて再送を。`
+      : `✓ ${r.sent}名へ送信しました。`;
+    if(!fail){ $('bcSubject').value=''; $('bcBody').value=''; }
   } else {
     msg.className='fmsg show ng';
-    msg.textContent = r.error==='no_recipients' ? '送信対象の会員がいません。'
-      : r.error==='too_long' ? '件名200字・本文20,000字以内でお願いします。'
-      : r.error==='forbidden' ? '権限がありません。'
-      : '送信に失敗しました。';
+    msg.textContent = r.error==='no_recipients' ? '送信対象がいません。' : r.error==='too_long' ? '件名200字・本文2万字以内で。' : r.error==='forbidden' ? '権限がありません。' : '送信に失敗しました。';
   }
+}
+async function loadBroadcastJobs(){
+  const box=$('bcJobs'); if(!box) return;
+  const r=await api({action:'admin_broadcast_jobs', token:TOKEN});
+  if(!r.ok){ box.innerHTML=''; return; }
+  // 宛先件数を最新化
+  if(r.recipients){ if($('bcCntAll')) $('bcCntAll').textContent='（'+r.recipients.all+'名）'; if($('bcCntUnreg')) $('bcCntUnreg').textContent='（'+r.recipients.unregistered+'名）'; }
+  const jobs=r.jobs||[];
+  if(!jobs.length){ box.innerHTML=''; return; }
+  const stLbl={scheduled:'予約中',sent:'送信済',failed:'失敗',canceled:'取消'};
+  const segLbl={all:'全員',unregistered:'未登録のみ'};
+  box.innerHTML = `<h4 style="font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;color:var(--nezumi);margin:6px 0 8px">予約・送信履歴</h4>`+
+    jobs.map(j=>`<div class="bcjob ${j.status}" data-id="${j.id}">
+      <span class="st ${j.status}">${stLbl[j.status]||j.status}</span>
+      <span class="sub">${esc(j.subject)}</span>
+      <span class="meta">${segLbl[j.segment]||j.segment}／${fdatetime(j.scheduled_at)}${j.status==='sent'?`　→ ${j.sent}/${j.total}名`:''}${j.status==='failed'?`　（失敗${j.failed}）`:''}</span>
+      ${j.status==='scheduled'?'<button class="cancel">予約取消</button>':''}
+    </div>`).join('');
+  box.querySelectorAll('.bcjob').forEach(el=>{
+    const c=el.querySelector('.cancel');
+    if(c) c.addEventListener('click', async ()=>{
+      if(!confirm('この予約を取り消しますか？')) return;
+      const r=await api({action:'admin_broadcast_cancel', token:TOKEN, job_id:el.dataset.id});
+      if(r.ok) loadBroadcastJobs();
+    });
+  });
 }
 async function bulkApprove(){
   const targets = ADMIN.members.filter(m=>m.status==='pending');
@@ -1729,6 +1791,8 @@ async function loadAdmin(){
 const VOLLBL = {'0':'0件','1-10':'1〜10件','11-100':'11〜100件','100+':'100件〜'};
 function renderAdmin(){
   const st = ADMIN.stats;
+  const bcAll = ADMIN.members.filter(m=>m.status==='approved').length;
+  const bcUnreg = ADMIN.members.filter(m=>m.status==='approved' && !m.profile).length;
   const mem = ADMIN.members.filter(m=>{
     if(!memFilter) return true;
     const t = (m.reg_name+m.reg_office+m.email+(m.profile?m.profile.name+m.profile.office+m.profile.pref:'')).toLowerCase();
@@ -1749,18 +1813,34 @@ function renderAdmin(){
     <div class="sect">
       <div class="sect-h"><h3>会員へ一斉メール</h3></div>
       <div class="formbox" style="margin-top:4px">
-        <p style="font-size:.78rem;color:var(--nezumi);margin-bottom:12px">承認済みの会員 <b>${ADMIN.members.filter(m=>m.status==='approved').length}名</b> 全員に、同じ内容のメールを送ります。宛先はBCCで送られ、受信者どうしにアドレスは見えません。</p>
+        <label class="fl">宛先</label>
+        <div class="bc-seg">
+          <label class="bc-radio"><input type="radio" name="bcSeg" value="all" checked> 承認済み会員 全員<span id="bcCntAll">（${bcAll}名）</span></label>
+          <label class="bc-radio"><input type="radio" name="bcSeg" value="unregistered"> プロフィール未登録の人のみ<span id="bcCntUnreg">（${bcUnreg}名）</span></label>
+        </div>
         <label class="fl" for="bcSubject">件名</label>
         <input type="text" id="bcSubject" maxlength="200" placeholder="例：【特行会】8月勉強会のご案内">
         <label class="fl" for="bcBody">本文</label>
         <textarea id="bcBody" maxlength="20000" placeholder="本文を入力してください。改行はそのまま反映されます。" style="min-height:180px"></textarea>
-        <p style="font-size:.72rem;color:var(--nezumi);margin-top:6px">末尾にはポータルのURLが自動で付きます。リンクや装飾は付きません（プレーンテキストの本文がそのまま送られます）。</p>
+        <p style="font-size:.72rem;color:var(--nezumi);margin-top:6px">宛先はBCCで送られ、受信者どうしにアドレスは見えません。末尾にポータルURLが自動で付きます（本文はプレーンテキスト）。</p>
+
+        <label class="fl" style="margin-top:16px">送信のタイミング</label>
+        <div class="bc-seg">
+          <label class="bc-radio"><input type="radio" name="bcWhen" value="now" checked> すぐ送る</label>
+          <label class="bc-radio"><input type="radio" name="bcWhen" value="later"> 日時を指定して予約</label>
+        </div>
+        <div id="bcWhenBox" style="display:none;margin-top:8px">
+          <input type="datetime-local" id="bcAt" style="font-family:var(--gothic)">
+          <span style="font-size:.72rem;color:var(--nezumi);margin-left:8px">この端末の時刻（日本時間）で送信されます。</span>
+        </div>
+
         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
           <button class="pbtn sec" id="bcTest">自分宛にテスト送信</button>
-          <button class="pbtn" id="bcSend">全員へ送信</button>
+          <button class="pbtn" id="bcSend">送信する</button>
           <span class="fmsg" id="bcMsg"></span>
         </div>
       </div>
+      <div id="bcJobs" style="margin-top:16px"></div>
     </div>
 
     <div class="sect"><div class="sect-h"><h3>コメント・要望</h3></div>
@@ -1849,6 +1929,10 @@ function renderAdmin(){
   if($('bulkOk')) $('bulkOk').addEventListener('click', bulkApprove);
   if($('bcTest')) $('bcTest').addEventListener('click', ()=>sendBroadcast(true));
   if($('bcSend')) $('bcSend').addEventListener('click', ()=>sendBroadcast(false));
+  document.querySelectorAll('input[name=bcWhen]').forEach(r=>r.addEventListener('change',()=>{
+    $('bcWhenBox').style.display = (document.querySelector('input[name=bcWhen]:checked').value==='later')?'block':'none';
+  }));
+  if($('bcJobs')) loadBroadcastJobs();
   document.querySelectorAll('.fb-done').forEach(b=>b.addEventListener('click', async ()=>{
     const row=b.closest('.fbrow'); b.disabled=true;
     const r=await api({action:'admin_feedback_done', token:TOKEN, feedback_id:row.dataset.id, done:b.dataset.d==='1'});
